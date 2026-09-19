@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartaz Fácil - Layout Original Ajustado</title>
+    <title>Cartaz Fácil - Layout Fiel Original</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Biblioteca de Leitura de Código de Barras via Câmera -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,900;1,900&display=swap');
+        
+        .fonte-cartaz {
+            font-family: 'Montserrat', sans-serif;
+        }
+
         @media print {
             body { background-color: white !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             body * { visibility: hidden; }
@@ -25,7 +32,7 @@
     <header class="bg-blue-600 border-b border-blue-700 p-4 shadow-md">
         <div class="max-w-5xl mx-auto flex justify-between items-center text-white">
             <h1 class="text-base md:text-lg font-bold tracking-wider flex items-center gap-2">
-                🏷️ Cartaz Fácil <span class="text-xs bg-blue-800 px-2 py-0.5 rounded">Scanner & Lote</span>
+                🏷️ Cartaz Fácil <span class="text-xs bg-blue-800 px-2 py-0.5 rounded">Fiel ao Original</span>
             </h1>
             <div class="text-xs bg-blue-700 px-3 py-1 rounded-full font-medium">
                 Usuário: rmarket07
@@ -92,47 +99,61 @@
             </button>
         </div>
 
-        <!-- PRÉ-VISUALIZAÇÃO DO CARTAZ EXATAMENTE IDÊNTICO AO ORIGINAL -->
+        <!-- PRÉ-VISUALIZAÇÃO IDÊNTICA AO ORIGINAL -->
         <div class="flex flex-col items-center justify-center bg-slate-950 p-6 rounded-xl border border-slate-800 shadow-inner overflow-auto">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Pré-visualização Padrão Cartaz Fácil</span>
+            <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Pré-visualização Fiel ao Cartaz Fácil</span>
             
-            <!-- CARTAZ ESTILO ORIGINAL EXATO -->
-            <div id="cartaz-preview" class="w-[380px] bg-white text-black font-sans p-4 shadow-2xl relative flex flex-col justify-between border border-gray-300 min-h-[520px]">
+            <!-- CARTAZ IDÊNTICO AO PRINT -->
+            <div id="cartaz-preview" class="w-[420px] bg-white text-black font-sans p-5 shadow-2xl relative flex flex-col justify-between border border-gray-300 min-h-[500px] fonte-cartaz">
                 
                 <div>
                     <!-- Dobre Aqui -->
-                    <div class="text-center text-[10px] text-gray-500 tracking-widest uppercase mb-2 pb-1 border-b border-dashed border-gray-400">
+                    <div class="text-center text-xs font-medium text-black tracking-wider uppercase mb-3">
                         DOBRE AQUI
                     </div>
 
-                    <!-- Faixa Vermelha de Oferta -->
-                    <div class="mx-auto w-11/12 bg-red-600 text-yellow-300 text-center font-black py-2 rounded-t-xl rounded-b-md shadow-md uppercase tracking-wider text-xl italic" id="cartaz-titulo-faixa">
-                        OFERTA!
+                    <!-- Faixa Vermelha Curvada Estilo Original -->
+                    <div class="relative mx-auto w-full bg-red-600 text-yellow-300 text-center py-3 px-4 shadow-md uppercase italic font-black tracking-wider text-3xl"
+                         style="border-radius: 0 0 50% 50% / 0 0 35px 35px;" id="cartaz-titulo-faixa">
+                        <span class="relative z-10 drop-shadow-sm border-b-4 border-yellow-300 pb-0.5">OFERTA!</span>
                     </div>
 
-                    <!-- Nome do Produto (Em cima, conforme o original) -->
-                    <div class="text-center text-zinc-900 font-extrabold text-base md:text-lg uppercase my-4 px-2 leading-tight" id="cartaz-nome">
-                        ESCANEAR UM PRODUTO
+                    <!-- Nome do Produto -->
+                    <div class="text-center text-zinc-900 font-black text-sm uppercase mt-6 tracking-tight" id="cartaz-nome">
+                        REFRI FANTA PET 2L LARANJA
                     </div>
                 </div>
 
-                <div>
-                    <!-- Caixa Amarela do Preço (Embaixo, conforme o original) -->
-                    <div class="bg-yellow-300 border-4 border-red-600 rounded-2xl py-4 px-3 my-2 flex flex-col items-center justify-center shadow-md relative">
-                        <div class="flex items-baseline justify-center text-red-600">
-                            <span class="text-3xl font-bold mr-1">R$</span>
-                            <span class="text-7xl md:text-8xl font-black tracking-tighter leading-none" id="cartaz-preco-inteiro">0</span>
-                            <div class="flex flex-col justify-start ml-1">
-                                <span class="text-3xl font-black leading-none" id="cartaz-preco-centavos">,00</span>
-                            </div>
-                        </div>
+                <!-- Bloco Central com Mancha Amarela do Preço -->
+                <div class="relative my-4 flex items-center justify-center py-6">
+                    <!-- Fundo amarelo estilizado tipo pincelada -->
+                    <div class="absolute inset-x-2 bg-yellow-300 rounded-3xl transform rotate-1 shadow-sm h-32 flex items-center justify-center"
+                         style="clip-path: polygon(2% 10%, 98% 0%, 100% 85%, 3% 100%);">
                     </div>
 
-                    <!-- Rodapé com Código e Marca -->
-                    <div class="flex justify-between items-center text-xs font-bold text-zinc-700 mt-3 pt-2 border-t-2 border-gray-200">
-                        <span id="cartaz-codigo">Cód: ---</span>
-                        <span class="text-blue-700 font-black tracking-wider text-sm">Cartaz Fácil</span>
+                    <!-- R$ UN na esquerda -->
+                    <div class="absolute left-6 z-10 text-[10px] font-black text-black leading-tight">
+                        R$<br>UN
                     </div>
+
+                    <!-- Preço Gigante -->
+                    <div class="relative z-10 flex items-baseline justify-center text-black font-black">
+                        <span class="text-7xl md:text-8xl tracking-tighter leading-none" id="cartaz-preco-inteiro">9</span>
+                        <span class="text-5xl md:text-6xl tracking-tighter" id="cartaz-preco-centavos">,39</span>
+                    </div>
+                </div>
+
+                <!-- Rodapé Técnico Original -->
+                <div class="flex justify-between items-end text-[9px] font-bold text-zinc-700 mt-2 pt-2 border-t border-gray-100">
+                    <span id="cartaz-codigo">CÓD. PRODUTO: 7894900031515</span>
+                    
+                    <!-- Logo Rede Market -->
+                    <div class="flex items-center gap-0.5">
+                        <span class="text-blue-600 font-black text-sm italic">Ⓡrede</span>
+                        <span class="text-red-600 font-black text-sm tracking-tighter">market</span>
+                    </div>
+
+                    <span id="cartaz-validade">OFERTA VÁLIDA DE 19/09/2026 ATÉ 19/09/2026</span>
                 </div>
 
             </div>
@@ -203,7 +224,7 @@
             document.getElementById('cartaz-preco-inteiro').innerText = partesPreco[0] || "0";
             document.getElementById('cartaz-preco-centavos').innerText = "," + (partesPreco[1] || "00");
             
-            document.getElementById('cartaz-codigo').innerText = 'Cód: ' + item.codigo;
+            document.getElementById('cartaz-codigo').innerText = 'CÓD. PRODUTO: ' + item.codigo;
         }
 
         function removerDoLote(index) {
@@ -234,7 +255,7 @@
         }
 
         selectCampanha.addEventListener('change', function() {
-            document.getElementById('cartaz-titulo-faixa').innerText = this.value;
+            document.getElementById('cartaz-titulo-faixa').querySelector('span').innerText = this.value;
         });
     </script>
 </body>
