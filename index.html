@@ -1,124 +1,199 @@
 <!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
-<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-    
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Serviços do Professor Farizeli: Identificação de golpistas, localização de pessoas desaparecidas, endereço para processos e identificação de trotes.">
-    <title>Serviços do Professor Farizeli</title>
-    <link rel="stylesheet" href="./sitebd_files/all.min.css">
+    <title>Gerador de Cartazes - Varejo</title>
+    <!-- Tailwind CSS para um painel de controle super moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #2c3e50;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(45deg, #2c3e50, #4b6584);
-        }
-        .banner {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            color: white;
-            padding: 30px;
-            max-width: 700px;
-            margin: 20px;
-        }
-        .banner h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #f1c40f;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-        }
-        .banner p {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            color: #ecf0f1;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        .banner ul {
-            list-style: none;
-            padding: 0;
-        }
-        .banner li {
-            background: #576574;
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            color: #ecf0f1;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-        .banner li i {
-            margin-right: 15px;
-            color: #f1c40f;
-            font-size: 1.5em;
-        }
-        .cta-button {
-            background: #f1c40f;
-            color: #2c3e50;
-            padding: 15px 25px;
-            text-decoration: none;
-            border-radius: 8px;
-            margin-top: 25px;
-            display: inline-block;
-            font-size: 1.2em;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        .cta-button:hover {
-            background: #d4ac0d;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-        }
-        .contact {
-            margin-top: 20px;
-            color: #ecf0f1;
-            font-size: 1.2em;
-        }
-        .contact p {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        .contact i {
-            margin-right: 10px;
-            color: #f1c40f;
-        }
-        @media (max-width: 768px) {
-            .banner h1 {
-                font-size: 2em;
+        /* --- ESTILOS DE IMPRESSÃƒO (Onde a mÃ¡gica do cartaz acontece) --- */
+        @media print {
+            body * {
+                visibility: hidden;
             }
-            .banner p, .banner li {
-                font-size: 1em;
+            #cartaz-preview, #cartaz-preview * {
+                visibility: visible;
             }
-            .cta-button {
-                font-size: 1em;
-                padding: 10px 20px;
+            #cartaz-preview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                border: none !important;
+                box-shadow: none !important;
             }
+            /* DinÃ¢mico via classe JS */
+            .page-a4-portrait { size: A4 portrait; }
+            .page-a4-landscape { size: A4 landscape; }
+            .page-a6-portrait { size: A6 portrait; }
+            .page-a6-landscape { size: A6 landscape; }
         }
     </style>
 </head>
-<body>
-    <div class="banner">
-        <h1><strong>Olá! Professor Farizeli aqui.</strong></h1>
-        <p><strong>Meus serviços incluem:</strong></p>
-        <ul>
-            <li><i class="fas fa-user-shield" aria-hidden="true"></i><span class="sr-only">Identificação de golpistas</span><strong>Identificamos quem estava por trás de um golpe.</strong></li>
-            <li><i class="fas fa-search-location" aria-hidden="true"></i><span class="sr-only">Localização de pessoas desaparecidas</span><strong>Localizamos pessoas desaparecidas.</strong></li>
-            <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i><span class="sr-only">Endereço para processos</span><strong>Encontramos o endereço de uma pessoa para iniciar um processo.</strong></li>
-            <li><i class="fas fa-phone-alt" aria-hidden="true"></i><span class="sr-only">Identificação de trotes</span><strong>Identificamos pelo número do celular o autor de trotes.</strong></li>
-        </ul>
-        <a href="https://www.lncc.br/~borges/php/testar.html#" class="cta-button" aria-label="Saiba mais sobre os serviços"><strong>Saiba Mais</strong></a>
-        <div class="contact">
-            <p><i class="fas fa-envelope" aria-hidden="true"></i><span class="sr-only">Email:</span> <strong>badalipe@gmail.com</strong></p>
-            <p><i class="fas fa-mobile-alt" aria-hidden="true"></i><span class="sr-only">Celular:</span> <strong>21 99070-6088</strong></p>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- MENU / PAINEL DE CONTROLE (NÃ£o sai na impressÃ£o) -->
+    <header class="bg-slate-800 border-b border-slate-700 p-4 shadow-md no-print">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <h1 class="text-xl font-bold tracking-wider text-amber-400 flex items-center gap-2">
+                ðŸ·ï¸ Emissor de Cartazes FÃ¡cil
+            </h1>
+            <div class="text-sm text-slate-400">
+                GitHub Pages Ready ðŸš€
+            </div>
         </div>
-    </div>
+    </header>
 
+    <main class="max-w-6xl mx-auto p-4 md:p-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- COLUNA ESQUERDA: CONTROLES E BUSCA -->
+        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 shadow-lg flex flex-col gap-4 no-print">
+            <h2 class="text-lg font-semibold text-white border-b border-slate-700 pb-2">1. Ler ou Buscar Produto</h2>
+            
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">CÃ³digo de Barras</label>
+                <input type="text" id="input-codigo" autofocus placeholder="Passe o leitor ou digite..." 
+                    class="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-amber-400 transition">
+            </div>
 
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Tamanho</label>
+                    <select id="select-tamanho" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-amber-400">
+                        <option value="a4">A4 (Grande)</option>
+                        <option value="a6">A6 (Pequeno)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">OrientaÃ§Ã£o</label>
+                    <select id="select-orientacao" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-amber-400">
+                        <option value="portrait">Retrato</option>
+                        <option value="landscape">Paisagem</option>
+                    </select>
+                </div>
+            </div>
 
-		</body></html>
+            <button onclick="dispararImpressao()" class="mt-4 w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 px-4 rounded-lg shadow transition flex items-center justify-center gap-2 cursor-pointer">
+                ðŸ–¨ï¸ Imprimir Cartaz
+            </button>
+
+            <div class="text-xs text-slate-400 mt-2 bg-slate-900/50 p-3 rounded border border-slate-700/50">
+                ðŸ’¡ **Dica:** O foco fica preso no campo de cÃ³digo de barras. Assim que a pistola do leitor disparar o cÃ³digo e der 'Enter', o cartaz atualiza na hora!
+            </div>
+        </div>
+
+        <!-- COLUNA DIREITA: VISUALIZAÃ‡ÃƒO DO CARTAZ (PREVIEW AO VIVO) -->
+        <div class="lg:col-span-2 flex flex-col items-center justify-center bg-slate-950 p-6 rounded-xl border border-slate-800 shadow-inner overflow-auto">
+            <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">PrÃ©-visualizaÃ§Ã£o do Cartaz</span>
+            
+            <!-- O CARTAZ EM SI -->
+            <div id="cartaz-preview" class="bg-amber-300 text-red-700 font-black flex flex-col justify-between p-8 shadow-2xl relative transition-all duration-300" 
+                 style="width: 400px; height: 565px; border: 4px solid #b91c1c;">
+                
+                <!-- Topo do Cartaz -->
+                <div class="text-center bg-red-700 text-amber-300 py-2 rounded uppercase tracking-wider text-xl shadow">
+                    Super Oferta
+                </div>
+
+                <!-- Nome do Produto -->
+                <div id="cartaz-nome" class="text-center text-slate-900 text-3xl font-extrabold uppercase leading-tight my-auto px-2">
+                    ARROZ TIPO 1 5KG
+                </div>
+
+                <!-- PreÃ§o -->
+                <div class="text-center border-t-4 border-dashed border-red-700/40 pt-4">
+                    <div class="text-xs font-bold text-red-800 tracking-widest uppercase">PreÃ§o Especial</div>
+                    <div class="flex items-start justify-center text-red-700 leading-none">
+                        <span class="text-3xl font-bold mt-2">R$</span>
+                        <span id="cartaz-inteiro" class="text-7xl font-black tracking-tighter">24</span>
+                        <div class="flex flex-col text-left ml-1">
+                            <span id="cartaz-centavos" class="text-3xl font-bold">,90</span>
+                            <span id="cartaz-unidade" class="text-xs font-bold text-slate-900 uppercase">UN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RodapÃ© / CÃ³digo de barras -->
+                <div class="flex justify-between items-end text-xs font-bold text-slate-800 border-t border-red-700/20 pt-2">
+                    <span id="cartaz-codigo">CÃ³d: 7891020304050</span>
+                    <span>CARTAZ FÃCIL CLONE</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- SCRIPTS DE CONTROLE -->
+    <script>
+        // Banco de dados simulado (Aqui vocÃª pode puxar de um arquivo produtos.json no seu GitHub)
+        const baseProdutos = {
+            "7891020304050": { nome: "ARROZ TIPO 1 5KG", inteiro: "24", centavos: "90", unidade: "UN" },
+            "7891001122334": { nome: "FEIJÃƒO CARIOCA 1KG", inteiro: "7", centavos: "89", unidade: "KG" },
+            "7896007788991": { nome: "Ã“LEO DE SOJA 900ML", inteiro: "6", centavos: "49", unidade: "UN" }
+        };
+
+        const inputCodigo = document.getElementById('input-codigo');
+        const selectTamanho = document.getElementById('select-tamanho');
+        const selectOrientacao = document.getElementById('select-orientacao');
+        const cartazPreview = document.getElementById('cartaz-preview');
+
+        // Escuta o Enter do leitor de cÃ³digo de barras
+        inputCodigo.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const codigo = inputCodigo.value.trim();
+                buscarProduto(codigo);
+            }
+        });
+
+        function buscarProduto(codigo) {
+            const produto = baseProdutos[codigo];
+            if (produto) {
+                document.getElementById('cartaz-nome').innerText = produto.nome;
+                document.getElementById('cartaz-inteiro').innerText = produto.inteiro;
+                document.getElementById('cartaz-centavos').innerText = ',' + produto.centavos;
+                document.getElementById('cartaz-unidade').innerText = produto.unidade;
+                document.getElementById('cartaz-codigo').innerText = 'CÃ³d: ' + codigo;
+                inputCodigo.value = ''; // Limpa para a prÃ³xima leitura
+            } else {
+                alert("Produto nÃ£o encontrado na base de dados local!");
+            }
+        }
+
+        // Altera o formato visual do preview de acordo com A4/A6/Retrato/Paisagem
+        function atualizarFormatoPreview() {
+            const tamanho = selectTamanho.value;
+            const orientacao = selectOrientacao.value;
+
+            // Remove classes antigas de regra de impressÃ£o do body se houver
+            document.body.className = document.body.className.replace(/page-\S+/g, '');
+            document.body.classList.add(`page-${tamanho}-${orientacao}`);
+
+            // Simula dimensÃµes proporcionais na tela para feedback visual
+            if (tamanho === 'a4' && orientacao === 'portrait') {
+                cartazPreview.style.width = '400px';
+                cartazPreview.style.height = '565px';
+            } else if (tamanho === 'a4' && orientacao === 'landscape') {
+                cartazPreview.style.width = '565px';
+                cartazPreview.style.height = '400px';
+            } else if (tamanho === 'a6' && orientacao === 'portrait') {
+                cartazPreview.style.width = '280px';
+                cartazPreview.style.height = '400px';
+            } else if (tamanho === 'a6' && orientacao === 'landscape') {
+                cartazPreview.style.width = '400px';
+                cartazPreview.style.height = '280px';
+            }
+        }
+
+        selectTamanho.addEventListener('change', atualizarFormatoPreview);
+        selectOrientacao.addEventListener('change', atualizarFormatoPreview);
+
+        function dispararImpressao() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
