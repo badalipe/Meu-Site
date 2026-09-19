@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartaz Fácil - Leitor por Câmera</title>
-    <!-- Tailwind CSS para o design moderno -->
+    <title>Cartaz Fácil - Lote e Câmera</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Biblioteca de Leitura de Código de Barras via Câmera -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
@@ -26,11 +25,11 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
 
-    <!-- TOPO / HEADER IDÊNTICO AO ORIGINAL -->
+    <!-- TOPO / HEADER -->
     <header class="bg-blue-600 border-b border-blue-700 p-4 shadow-md">
         <div class="max-w-5xl mx-auto flex justify-between items-center text-white">
             <h1 class="text-base md:text-lg font-bold tracking-wider flex items-center gap-2">
-                🏷️ Cartaz Fácil <span class="text-xs bg-blue-800 px-2 py-0.5 rounded">Mobile Scanner</span>
+                🏷️ Cartaz Fácil <span class="text-xs bg-blue-800 px-2 py-0.5 rounded">Modo Lote / Scanner</span>
             </h1>
             <div class="text-xs bg-blue-700 px-3 py-1 rounded-full font-medium">
                 Usuário: rmarket07
@@ -40,55 +39,52 @@
 
     <main class="max-w-5xl mx-auto p-4 md:p-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        <!-- PAINEL DE CONTROLE E BUSCA -->
+        <!-- PAINEL DE CONTROLE E CATALOGAÇÃO -->
         <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 shadow-lg flex flex-col gap-4">
             <h2 class="text-sm font-bold text-white border-b border-slate-700 pb-2 uppercase tracking-wide flex items-center gap-2">
-                🛒 Criação e Leitura de Cartazes
+                ✏️ Dados de Balizamento e Captura
             </h2>
             
             <!-- Filial -->
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Selecione a Filial:</label>
-                <select class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none">
+                <select class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm">
                     <option>PARATY 2</option>
                 </select>
             </div>
 
-            <!-- BOTÃO MÁGICO DE ESCANEAR COM A CÂMERA -->
-            <div class="bg-blue-950/60 p-3 rounded-lg border border-blue-800/60 flex flex-col gap-2">
-                <label class="block text-xs font-bold text-blue-300 uppercase">Leitor Rápido (Câmera do Celular)</label>
-                <button onclick="abrirLeitorCamera()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-lg shadow transition flex items-center justify-center gap-2 text-sm cursor-pointer">
-                    📷 Abrir Câmera para Esccanear Código de Barras
+            <!-- BOTÃO DA CÂMERA (AGORA GARANTIDO NA TELA) -->
+            <div class="bg-emerald-950/40 p-3.5 rounded-xl border border-emerald-600/50 flex flex-col gap-2 shadow-md">
+                <label class="block text-xs font-bold text-emerald-300 uppercase">📷 Leitor de Código via Câmera</label>
+                <button onclick="abrirLeitorCamera()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-lg shadow transition flex items-center justify-center gap-2 text-sm cursor-pointer">
+                    ✨ Abrir Câmera para Escanear Produto
                 </button>
-                <!-- Área onde a câmera vai aparecer quando ativada -->
-                <div id="reader" style="width: 100%; display: none;" class="mt-2 rounded overflow-hidden border border-slate-600"></div>
+                <!-- O leitor da câmera abre aqui -->
+                <div id="reader" style="width: 100%; display: none;" class="mt-2 rounded-lg overflow-hidden border border-emerald-500"></div>
             </div>
 
-            <!-- Campo de Busca Manual ou preenchido pelo Scanner -->
+            <!-- Entrada Manual / Código Scaneado -->
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">1 - Insira código do produto ou descrição</label>
+                <label class="block text-xs font-bold text-slate-400 uppercase mb-1">1 - Inserir Código de Barras / Descrição</label>
                 <div class="flex gap-2">
-                    <input type="text" id="input-busca" placeholder="Escaneie ou digite o código..." 
+                    <input type="text" id="input-codigo" placeholder="Escaneie ou digite o código..." 
                         class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:border-blue-500">
-                    <button onclick="realizarBusca()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-lg text-sm transition">
-                        Pesquisar
+                    <button onclick="adicionarProdutoLista()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-lg text-sm transition">
+                        Adicionar
                     </button>
                 </div>
             </div>
 
-            <!-- Lista de Produtos Encontrados -->
-            <div id="resultado-busca" class="hidden flex flex-col gap-1 bg-slate-900 p-2 rounded-lg border border-slate-700 max-h-36 overflow-y-auto">
-                <div onclick="selecionarProduto('REFRI FANTA PET 2L LARANJA', '9,39', '7894900031515')" 
-                     class="bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-600 p-2 rounded cursor-pointer text-sm flex justify-between items-center transition">
-                    <span class="font-bold text-emerald-300">Cód: 7894900031515</span>
-                    <span class="text-white text-right">REFRI FANTA PET 2L LARANJA</span>
+            <!-- LISTA DE PRODUTOS CATALOGADOS (LOTE) -->
+            <div class="flex flex-col gap-1.5">
+                <label class="block text-xs font-bold text-slate-400 uppercase">📦 Produtos Catalogados para Impressão (<span id="contador-lote">0</span>)</label>
+                <div id="lista-lote" class="bg-slate-900 border border-slate-700 rounded-lg p-2 max-h-40 overflow-y-auto flex flex-col gap-2">
+                    <span class="text-xs text-slate-500 text-center py-4">Nenhum produto adicionado ainda. Escaneie ou digite acima.</span>
                 </div>
             </div>
 
-            <!-- Dados de Balizamento (Campanha e Formato) -->
+            <!-- Campanha e Formato -->
             <div class="border-t border-slate-700 pt-3 flex flex-col gap-3">
-                <span class="text-xs font-bold text-slate-400 uppercase">📝 Dados Balizamento</span>
-                
                 <div>
                     <label class="block text-xs font-bold text-slate-400 uppercase mb-1">4 - Selecione a Campanha:</label>
                     <select id="select-campanha" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white text-sm">
@@ -109,129 +105,145 @@
             </div>
 
             <button onclick="window.print()" class="mt-2 w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 px-4 rounded-lg shadow transition flex items-center justify-center gap-2 cursor-pointer">
-                🖨️ Imprimir Cartaz Agora
+                🖨️ Imprimir Cartaz Selecionado
             </button>
         </div>
 
-        <!-- PRÉ-VISUALIZAÇÃO DO CARTAZ (ESTILO CLÁSSICO DE MERCADO) -->
+        <!-- PRÉ-VISUALIZAÇÃO DO CARTAZ -->
         <div class="flex flex-col items-center justify-center bg-slate-950 p-6 rounded-xl border border-slate-800 shadow-inner overflow-auto">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Pré-visualização do Cartaz</span>
+            <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Pré-visualização do Cartaz Ativo</span>
             
             <div id="cartaz-preview" class="formato-a4-retrato bg-yellow-300 text-red-700 font-black flex flex-col justify-between p-6 shadow-2xl relative transition-all duration-300" 
                  style="border: 6px solid #dc2626;">
                 
-                <!-- Faixa Superior -->
                 <div id="cartaz-titulo-faixa" class="text-center bg-red-600 text-yellow-300 py-2 rounded uppercase tracking-wider text-xl shadow-md">
                     OFERTA!
                 </div>
 
-                <!-- Nome do Produto -->
                 <div id="cartaz-nome" class="text-center text-zinc-900 text-2xl md:text-3xl font-black uppercase leading-tight my-auto px-2">
-                    REFRI FANTA PET 2L LARANJA
+                    ESCANEAR UM PRODUTO
                 </div>
 
-                <!-- Preço -->
                 <div class="text-center border-t-4 border-dashed border-red-600/40 pt-3">
                     <div class="flex items-start justify-center text-red-600 leading-none">
                         <span class="text-3xl font-bold mt-1 mr-1">R$</span>
-                        <span id="cartaz-preco" class="text-7xl md:text-8xl font-black tracking-tighter">9,39</span>
+                        <span id="cartaz-preco" class="text-7xl md:text-8xl font-black tracking-tighter">0,00</span>
                     </div>
                 </div>
 
-                <!-- Rodapé -->
                 <div class="flex justify-between items-end text-xs font-bold text-zinc-800 border-t-2 border-red-600/30 pt-2">
-                    <span id="cartaz-codigo">Cód: 7894900031515</span>
-                    <span class="text-blue-700 font-bold">Cartaz Fácil Clone</span>
+                    <span id="cartaz-codigo">Cód: ---</span>
+                    <span class="text-blue-700 font-bold">Cartaz Fácil Lote</span>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- SCRIPTS DE CONTROLE E CÂMERA -->
     <script>
-        // Base de dados simulada para teste (você pode expandir ou ligar a um .json)
+        // Base simulada (expansível para seus produtos reais)
         const baseProdutos = {
             "7894900031515": { nome: "REFRI FANTA PET 2L LARANJA", preco: "9,39" },
             "7891020304050": { nome: "ARROZ TIPO 1 5KG", preco: "24,90" },
             "7891001122334": { nome: "FEIJÃO CARIOCA 1KG", preco: "7,89" }
         };
 
-        const inputBusca = document.getElementById('input-busca');
-        const resultadoBusca = document.getElementById('resultado-busca');
+        let produtosLote = [];
+        const inputCodigo = document.getElementById('input-codigo');
+        const listaLoteDiv = document.getElementById('lista-lote');
+        const contadorLote = document.getElementById('contador-lote');
         const selectCampanha = document.getElementById('select-campanha');
         const selectFormato = document.getElementById('select-formato');
         const cartazPreview = document.getElementById('cartaz-preview');
 
-        // Função de busca manual
-        function realizarBusca() {
-            const termo = inputBusca.value.trim();
-            const produto = baseProdutos[termo];
+        // Adicionar produto digitado ou escaneado à lista
+        function adicionarProdutoLista() {
+            const codigo = inputCodigo.value.trim();
+            if(!codigo) return;
 
-            if (produto || termo !== "") {
-                resultadoBusca.classList.remove('hidden');
-                if(produto) {
-                    resultadoBusca.innerHTML = `
-                        <div onclick="selecionarProduto('${produto.nome}', '${produto.preco}', '${termo}')" 
-                             class="bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-600 p-2 rounded cursor-pointer text-sm flex justify-between items-center transition">
-                            <span class="font-bold text-emerald-300">Cód: ${termo}</span>
-                            <span class="text-white text-right">${produto.nome}</span>
-                        </div>
-                    `;
-                }
-            } else {
-                alert("Digite um código válido.");
-            }
+            // Busca na base (se não achar, cria com um nome padrão para você editar ou ajustar)
+            const dados = baseProdutos[codigo] || { nome: "PRODUTO CÓD: " + codigo, preco: "0,00" };
+
+            produtosLote.push({ codigo: codigo, nome: dados.nome, preco: dados.preco });
+            inputCodigo.value = '';
+            atualizarListaLote();
+
+            // Seleciona automaticamente o último adicionado para exibir no preview
+            selecionarNoPreview(produtosLote.length - 1);
         }
 
-        inputBusca.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') { realizarBusca(); }
+        inputCodigo.addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') { adicionarProdutoLista(); }
         });
 
-        // Selecionar o produto da lista e atualizar o cartaz
-        function selecionarProduto(nome, preco, codigo) {
-            document.getElementById('cartaz-nome').innerText = nome;
-            document.getElementById('cartaz-preco').innerText = preco;
-            document.getElementById('cartaz-codigo').innerText = 'Cód: ' + codigo;
-            resultadoBusca.classList.add('hidden');
-            inputBusca.value = '';
+        // Renderiza a lista de catalogados na tela
+        function atualizarListaLote() {
+            contadorLote.innerText = produtosLote.length;
+            if(produtosLote.length === 0) {
+                listaLoteDiv.innerHTML = `<span class="text-xs text-slate-500 text-center py-4">Nenhum produto adicionado ainda. Escaneie ou digite acima.</span>`;
+                return;
+            }
+
+            let html = '';
+            produtosLote.forEach((item, index) => {
+                html += `
+                    <div class="bg-slate-800 hover:bg-slate-750 border border-slate-700 p-2 rounded flex justify-between items-center text-sm transition">
+                        <div onclick="selecionarNoPreview(${index})" class="cursor-pointer flex-1">
+                            <span class="text-emerald-400 font-bold">#${item.codigo}</span> 
+                            <span class="text-white text-xs ml-1">${item.nome}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-amber-400 font-bold text-xs">R$ ${item.preco}</span>
+                            <button onclick="removerDoLote(${index})" class="text-red-400 hover:text-red-300 text-xs px-1.5 py-0.5 rounded bg-red-950/50">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+            listaLoteDiv.innerHTML = html;
         }
 
-        // ATIVAR A CÂMERA PARA ESCANEAR CÓDIGO DE BARRAS
+        // Mostra o cartaz na tela para conferência
+        function selecionarNoPreview(index) {
+            const item = produtosLote[index];
+            if(!item) return;
+            document.getElementById('cartaz-nome').innerText = item.nome;
+            document.getElementById('cartaz-preco').innerText = item.preco;
+            document.getElementById('cartaz-codigo').innerText = 'Cód: ' + item.codigo;
+        }
+
+        // Remover item da lista
+        function removerDoLote(index) {
+            produtosLote.splice(index, 1);
+            atualizarListaLote();
+        }
+
+        // ATIVAR CÂMERA DE ESCANEAMENTO CONTÍNUO
         function abrirLeitorCamera() {
             const readerDiv = document.getElementById('reader');
             readerDiv.style.display = 'block';
 
             const html5QrCode = new Html5Qrcode("reader");
             html5QrCode.start(
-                { facingMode: "environment" }, // Usa a câmera traseira do celular
-                {
-                    fps: 10,    // Quadros por segundo
-                    qrbox: { width: 250, height: 100 } // Formato de leitura para código de barras
-                },
+                { facingMode: "environment" }, 
+                { fps: 10, qrbox: { width: 250, height: 100 } },
                 (decodedText, decodedResult) => {
-                    // Sucesso na leitura do código de barras!
-                    inputBusca.value = decodedText;
+                    inputCodigo.value = decodedText;
                     html5QrCode.stop().then(() => {
                         readerDiv.style.display = 'none';
-                        realizarBusca(); // Busca automática na base
-                    }).catch(err => { console.error("Erro ao desligar câmera", err); });
+                        adicionarProdutoLista(); // Adiciona direto na lista ao escanear!
+                    }).catch(err => { console.error(err); });
                 },
-                (errorMessage) => {
-                    // Erros de leitura quadro a quadro são ignorados para não poluir a tela
-                }
+                (errorMessage) => {}
             ).catch(err => {
-                alert("Não foi possível acessar a câmera do celular. Verifique as permissões.");
+                alert("Erro ao acessar a câmera. Verifique as permissões do navegador.");
                 readerDiv.style.display = 'none';
             });
         }
 
-        // Alterar texto da campanha
         selectCampanha.addEventListener('change', function() {
             document.getElementById('cartaz-titulo-faixa').innerText = this.value;
         });
 
-        // Mudar formato visual (A4, A5, A6)
         function mudarFormato() {
             cartazPreview.className = cartazPreview.className.replace(/formato-\S+/g, '');
             cartazPreview.classList.add(selectFormato.value);
