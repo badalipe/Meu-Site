@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartaz Fácil - Layout Fiel Original</title>
+    <title>Cartaz Fácil - Layout Fiel Exato</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Biblioteca de Leitura de Código de Barras via Câmera -->
+    <!-- Leitor de Código via Câmera -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,900;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&display=swap');
         
         .fonte-cartaz {
             font-family: 'Montserrat', sans-serif;
@@ -32,7 +32,7 @@
     <header class="bg-blue-600 border-b border-blue-700 p-4 shadow-md">
         <div class="max-w-5xl mx-auto flex justify-between items-center text-white">
             <h1 class="text-base md:text-lg font-bold tracking-wider flex items-center gap-2">
-                🏷️ Cartaz Fácil <span class="text-xs bg-blue-800 px-2 py-0.5 rounded">Fiel ao Original</span>
+                🏷️ Cartaz Fácil <span class="text-xs bg-blue-800 px-2 py-0.5 rounded">Versão Definitiva</span>
             </h1>
             <div class="text-xs bg-blue-700 px-3 py-1 rounded-full font-medium">
                 Usuário: rmarket07
@@ -99,40 +99,40 @@
             </button>
         </div>
 
-        <!-- PRÉ-VISUALIZAÇÃO IDÊNTICA AO ORIGINAL -->
+        <!-- PRÉ-VISUALIZAÇÃO EXATA IDÊNTICA AO CARTAZ FÁCIL -->
         <div class="flex flex-col items-center justify-center bg-slate-950 p-6 rounded-xl border border-slate-800 shadow-inner overflow-auto">
-            <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Pré-visualização Fiel ao Cartaz Fácil</span>
+            <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Pré-visualização Fiel Original</span>
             
-            <!-- CARTAZ IDÊNTICO AO PRINT -->
+            <!-- CARTAZ EXATO -->
             <div id="cartaz-preview" class="w-[420px] bg-white text-black font-sans p-5 shadow-2xl relative flex flex-col justify-between border border-gray-300 min-h-[500px] fonte-cartaz">
                 
                 <div>
                     <!-- Dobre Aqui -->
-                    <div class="text-center text-xs font-medium text-black tracking-wider uppercase mb-3">
+                    <div class="text-center text-[11px] font-bold text-black tracking-widest uppercase mb-2">
                         DOBRE AQUI
                     </div>
 
-                    <!-- Faixa Vermelha Curvada Estilo Original -->
-                    <div class="relative mx-auto w-full bg-red-600 text-yellow-300 text-center py-3 px-4 shadow-md uppercase italic font-black tracking-wider text-3xl"
-                         style="border-radius: 0 0 50% 50% / 0 0 35px 35px;" id="cartaz-titulo-faixa">
-                        <span class="relative z-10 drop-shadow-sm border-b-4 border-yellow-300 pb-0.5">OFERTA!</span>
+                    <!-- Faixa Vermelha Curvada Exata -->
+                    <div class="relative mx-auto w-full bg-red-600 text-yellow-300 text-center py-3.5 px-4 shadow-md uppercase italic font-black tracking-wider text-4xl"
+                         style="border-radius: 0 0 50% 50% / 0 0 40px 40px;" id="cartaz-titulo-faixa">
+                        <span class="relative z-10 drop-shadow inline-block border-b-4 border-yellow-300 pb-0.5 skew-x-[-6deg]">OFERTA!</span>
                     </div>
 
                     <!-- Nome do Produto -->
-                    <div class="text-center text-zinc-900 font-black text-sm uppercase mt-6 tracking-tight" id="cartaz-nome">
+                    <div class="text-center text-zinc-900 font-extrabold text-sm uppercase mt-5 tracking-tight" id="cartaz-nome">
                         REFRI FANTA PET 2L LARANJA
                     </div>
                 </div>
 
-                <!-- Bloco Central com Mancha Amarela do Preço -->
-                <div class="relative my-4 flex items-center justify-center py-6">
-                    <!-- Fundo amarelo estilizado tipo pincelada -->
-                    <div class="absolute inset-x-2 bg-yellow-300 rounded-3xl transform rotate-1 shadow-sm h-32 flex items-center justify-center"
-                         style="clip-path: polygon(2% 10%, 98% 0%, 100% 85%, 3% 100%);">
+                <!-- Bloco Central com Mancha Amarela Estilizada -->
+                <div class="relative my-2 flex items-center justify-center py-7">
+                    <!-- Fundo amarelo imitando pincelada realista -->
+                    <div class="absolute inset-x-1 bg-yellow-300 shadow-sm h-36 flex items-center justify-center"
+                         style="clip-path: polygon(1% 15%, 99% 0%, 100% 85%, 2% 100%); transform: rotate(-1.5deg); border-radius: 12px;">
                     </div>
 
                     <!-- R$ UN na esquerda -->
-                    <div class="absolute left-6 z-10 text-[10px] font-black text-black leading-tight">
+                    <div class="absolute left-6 z-10 text-[10px] font-black text-black leading-tight tracking-tighter">
                         R$<br>UN
                     </div>
 
@@ -143,14 +143,14 @@
                     </div>
                 </div>
 
-                <!-- Rodapé Técnico Original -->
-                <div class="flex justify-between items-end text-[9px] font-bold text-zinc-700 mt-2 pt-2 border-t border-gray-100">
+                <!-- Rodapé Técnico Perfeito -->
+                <div class="flex justify-between items-center text-[8.5px] font-bold text-zinc-800 mt-2 pt-2 border-t border-gray-100">
                     <span id="cartaz-codigo">CÓD. PRODUTO: 7894900031515</span>
                     
-                    <!-- Logo Rede Market -->
+                    <!-- Logo Rede Market Exata -->
                     <div class="flex items-center gap-0.5">
-                        <span class="text-blue-600 font-black text-sm italic">Ⓡrede</span>
-                        <span class="text-red-600 font-black text-sm tracking-tighter">market</span>
+                        <span class="text-blue-600 font-black text-xs italic tracking-tinker">Ⓡrede</span>
+                        <span class="text-red-600 font-black text-xs tracking-tighter uppercase">market</span>
                     </div>
 
                     <span id="cartaz-validade">OFERTA VÁLIDA DE 19/09/2026 ATÉ 19/09/2026</span>
