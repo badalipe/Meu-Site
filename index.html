@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartaz Fácil - Layout Fiel Exato</title>
+    <title>Cartaz Fácil - Fonte e Estilo Idênticos</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Importação de fontes pesadas de grande impacto (Impact / Anton / Montserrat) -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,900;1,900&family=Archivo+Black&display=swap" rel="stylesheet">
     <!-- Leitor de Código via Câmera -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&display=swap');
-        
-        .fonte-cartaz {
+        .fonte-titulo {
+            font-family: 'Anton', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .fonte-preco {
+            font-family: 'Archivo Black', sans-serif;
+        }
+
+        .fonte-produto {
             font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
         }
 
         @media print {
@@ -32,7 +42,7 @@
     <header class="bg-blue-600 border-b border-blue-700 p-4 shadow-md">
         <div class="max-w-5xl mx-auto flex justify-between items-center text-white">
             <h1 class="text-base md:text-lg font-bold tracking-wider flex items-center gap-2">
-                🏷️ Cartaz Fácil <span class="text-xs bg-blue-800 px-2 py-0.5 rounded">Versão Definitiva</span>
+                🏷️ Cartaz Fácil <span class="text-xs bg-blue-800 px-2 py-0.5 rounded">Estilo Tipográfico Ajustado</span>
             </h1>
             <div class="text-xs bg-blue-700 px-3 py-1 rounded-full font-medium">
                 Usuário: rmarket07
@@ -75,7 +85,7 @@
                 </div>
             </div>
 
-            <!-- LISTA DE PRODUTOS CATALOGADOS (LOTE) -->
+            <!-- LISTA DE PRODUTOS CATALOGADOS -->
             <div class="flex flex-col gap-1.5">
                 <label class="block text-xs font-bold text-slate-400 uppercase">📦 Produtos Catalogados (<span id="contador-lote">0</span>)</label>
                 <div id="lista-lote" class="bg-slate-900 border border-slate-700 rounded-lg p-2 max-h-40 overflow-y-auto flex flex-col gap-2">
@@ -99,58 +109,58 @@
             </button>
         </div>
 
-        <!-- PRÉ-VISUALIZAÇÃO EXATA IDÊNTICA AO CARTAZ FÁCIL -->
+        <!-- PRÉ-VISUALIZAÇÃO EXATA IDÊNTICA AO ORIGINAL -->
         <div class="flex flex-col items-center justify-center bg-slate-950 p-6 rounded-xl border border-slate-800 shadow-inner overflow-auto">
             <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Pré-visualização Fiel Original</span>
             
             <!-- CARTAZ EXATO -->
-            <div id="cartaz-preview" class="w-[420px] bg-white text-black font-sans p-5 shadow-2xl relative flex flex-col justify-between border border-gray-300 min-h-[500px] fonte-cartaz">
+            <div id="cartaz-preview" class="w-[420px] h-[580px] bg-white text-black p-5 shadow-2xl relative flex flex-col justify-between border border-gray-300">
                 
                 <div>
                     <!-- Dobre Aqui -->
-                    <div class="text-center text-[11px] font-bold text-black tracking-widest uppercase mb-2">
+                    <div class="text-center text-[10px] font-bold text-black tracking-widest uppercase mb-2">
                         DOBRE AQUI
                     </div>
 
                     <!-- Faixa Vermelha Curvada Exata -->
-                    <div class="relative mx-auto w-full bg-red-600 text-yellow-300 text-center py-3.5 px-4 shadow-md uppercase italic font-black tracking-wider text-4xl"
-                         style="border-radius: 0 0 50% 50% / 0 0 40px 40px;" id="cartaz-titulo-faixa">
-                        <span class="relative z-10 drop-shadow inline-block border-b-4 border-yellow-300 pb-0.5 skew-x-[-6deg]">OFERTA!</span>
+                    <div class="relative mx-auto w-full bg-red-600 text-yellow-300 text-center py-3.5 px-4 shadow-md uppercase italic fonte-titulo text-4xl"
+                         style="border-radius: 0 0 50% 50% / 0 0 45px 45px;" id="cartaz-titulo-faixa">
+                        <span class="relative z-10 inline-block border-b-4 border-yellow-300 pb-0.5 skew-x-[-6deg]" style="text-shadow: 2px 2px 0px rgba(0,0,0,0.2);">OFERTA!</span>
                     </div>
 
                     <!-- Nome do Produto -->
-                    <div class="text-center text-zinc-900 font-extrabold text-sm uppercase mt-5 tracking-tight" id="cartaz-nome">
+                    <div class="text-center text-zinc-900 fonte-produto text-sm uppercase mt-5 tracking-tight px-4" id="cartaz-nome">
                         REFRI FANTA PET 2L LARANJA
                     </div>
                 </div>
 
-                <!-- Bloco Central com Mancha Amarela Estilizada -->
-                <div class="relative my-2 flex items-center justify-center py-7">
-                    <!-- Fundo amarelo imitando pincelada realista -->
-                    <div class="absolute inset-x-1 bg-yellow-300 shadow-sm h-36 flex items-center justify-center"
-                         style="clip-path: polygon(1% 15%, 99% 0%, 100% 85%, 2% 100%); transform: rotate(-1.5deg); border-radius: 12px;">
+                <!-- Bloco Central com Mancha Amarela Estilizada Exata -->
+                <div class="relative my-auto flex items-center justify-center py-4">
+                    <!-- Fundo amarelo pincelado -->
+                    <div class="absolute w-[94%] bg-yellow-300 shadow-sm h-32 flex items-center justify-center"
+                         style="clip-path: polygon(1% 18%, 99% 2%, 100% 82%, 2% 98%); transform: rotate(-0.8deg); border-radius: 12px;">
                     </div>
 
-                    <!-- R$ UN na esquerda -->
-                    <div class="absolute left-6 z-10 text-[10px] font-black text-black leading-tight tracking-tighter">
+                    <!-- R$ UN na esquerda da mancha -->
+                    <div class="absolute left-6 z-10 text-[9px] font-black text-black leading-tight tracking-tighter uppercase font-sans">
                         R$<br>UN
                     </div>
 
-                    <!-- Preço Gigante -->
-                    <div class="relative z-10 flex items-baseline justify-center text-black font-black">
+                    <!-- Preço Gigante com Fonte Arquivo Black e Proporção Exata -->
+                    <div class="relative z-10 flex items-baseline justify-center text-black fonte-preco">
                         <span class="text-7xl md:text-8xl tracking-tighter leading-none" id="cartaz-preco-inteiro">9</span>
                         <span class="text-5xl md:text-6xl tracking-tighter" id="cartaz-preco-centavos">,39</span>
                     </div>
                 </div>
 
                 <!-- Rodapé Técnico Perfeito -->
-                <div class="flex justify-between items-center text-[8.5px] font-bold text-zinc-800 mt-2 pt-2 border-t border-gray-100">
+                <div class="flex justify-between items-center text-[8px] font-bold text-zinc-800 pt-2 border-t border-gray-200 whitespace-nowrap">
                     <span id="cartaz-codigo">CÓD. PRODUTO: 7894900031515</span>
                     
                     <!-- Logo Rede Market Exata -->
                     <div class="flex items-center gap-0.5">
-                        <span class="text-blue-600 font-black text-xs italic tracking-tinker">Ⓡrede</span>
-                        <span class="text-red-600 font-black text-xs tracking-tighter uppercase">market</span>
+                        <span class="text-blue-600 font-black text-xs italic">Ⓡrede</span>
+                        <span class="text-red-600 font-black text-xs uppercase tracking-tighter">market</span>
                     </div>
 
                     <span id="cartaz-validade">OFERTA VÁLIDA DE 19/09/2026 ATÉ 19/09/2026</span>
