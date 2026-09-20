@@ -55,7 +55,7 @@
 
     /* Sidebar Esquerda */
     .sidebar {
-      width: 300px;
+      width: 290px;
       background: white;
       padding: 15px;
       border-radius: 6px;
@@ -83,48 +83,40 @@
       font-size: 13px;
     }
 
-    /* Grelha de Modelos 2xN idêntica ao Layout */
     .template-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 8px;
       margin-top: 8px;
-      max-height: 380px;
-      overflow-y: auto;
-      padding-right: 4px;
-      border: 1px solid #ffca28;
-      padding: 8px;
-      border-radius: 4px;
-      background: #fffdf0;
     }
 
     .template-card {
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      padding: 4px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      padding: 6px;
       text-align: center;
       cursor: pointer;
-      background: #ffffff;
+      background: #fafafa;
       transition: all 0.2s ease;
     }
 
     .template-card.active, .template-card:hover {
-      border: 2px solid #0056b3;
+      border-color: var(--header-blue);
       background: #f0f7ff;
-      box-shadow: 0 0 5px rgba(0,86,179,0.3);
+      box-shadow: 0 0 4px rgba(0,86,179,0.3);
     }
 
     .template-card svg {
       width: 100%;
-      height: 60px;
+      height: 45px;
     }
 
     .template-card span {
       display: block;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: bold;
-      margin-top: 3px;
-      color: #333;
+      margin-top: 4px;
+      color: #444;
     }
 
     /* Área Central */
@@ -161,6 +153,7 @@
       color: white;
     }
 
+    /* Tabela e Seleções */
     .table-container {
       background: white;
       border-radius: 6px;
@@ -172,6 +165,7 @@
       background-color: #c8e6c9 !important;
     }
 
+    /* Menu de Ações Estilizado */
     .dropdown-menu-actions {
       border-radius: 4px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -194,6 +188,7 @@
       color: #0056b3;
     }
 
+    /* Botão Flutuante da Câmera */
     .fab-camera {
       position: fixed;
       bottom: 20px;
@@ -211,6 +206,10 @@
       z-index: 1000;
       border: none;
       cursor: pointer;
+    }
+
+    .fab-camera:active {
+      transform: scale(0.95);
     }
 
     /* Design do Cartaz */
@@ -244,6 +243,7 @@
     .poster-paper.a5-retrato { width: 320px; height: 450px; }
     .poster-paper.a6-paisagem { width: 480px; height: 320px; }
 
+    /* Topo: DOBRE AQUI */
     .fold-header {
       text-align: center;
       font-weight: 800;
@@ -254,6 +254,7 @@
       margin-bottom: 2px;
     }
 
+    /* Banner Vermelho SVG */
     .poster-header-svg {
       width: 100%;
       height: 90px;
@@ -261,6 +262,7 @@
 
     .poster-paper.a6-paisagem .poster-header-svg { height: 75px; }
 
+    /* Nome do Produto */
     .poster-body {
       text-align: center;
       margin: 8px 0;
@@ -276,6 +278,7 @@
 
     .poster-paper.a6-paisagem .poster-product-title { font-size: 17px; }
 
+    /* Preço com Pincelada Amarela */
     .poster-price-container {
       position: relative;
       width: 90%;
@@ -327,6 +330,7 @@
 
     .poster-paper.a6-paisagem .poster-price-main { font-size: 68px; }
 
+    /* Rodapé do Cartaz */
     .poster-footer {
       display: flex;
       justify-content: space-between;
@@ -398,6 +402,7 @@
 
     <!-- Sidebar de Opções -->
     <div class="sidebar">
+      <!-- Título de Balizagem -->
       <div class="sidebar-title">
         <i class="fa-solid fa-pen"></i> Dados Balizagem
       </div>
@@ -420,108 +425,35 @@
         </select>
       </div>
 
-      <small class="text-muted d-block mb-2" style="font-size: 11px;">
+      <small class="text-muted d-block mb-3" style="font-size: 11px;">
         Caso não apareça nenhuma campanha para selecionar verifique suas diagramações. <a href="#">Dúvidas</a>
       </small>
 
       <label>5- Selecione Formato / modelo:</label>
-      
-      <!-- Grelha com TODOS os 9 Modelos de Cartaz da Imagem -->
       <div class="template-grid mb-3">
-
-        <!-- 1. Azul Oferta A4 -->
-        <div class="template-card" onclick="selecionarModelo(this, 'a4-retrato', '210/297 ** A4 RETRATO', 'azul-oferta')">
+        <div class="template-card active" onclick="selecionarModelo(this, 'a4-retrato', '210/297 ** A4 RETRATO')">
           <svg viewBox="0 0 100 130">
-            <rect x="0" y="0" width="100" height="25" fill="#0080FF"/>
-            <text x="50" y="16" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">OFERTA</text>
-            <rect x="5" y="30" width="90" height="95" fill="none" stroke="#ccc"/>
+            <path d="M 0 0 L 100 0 L 100 25 Q 50 40 0 25 Z" fill="#E30613"/>
+            <path d="M 10 55 C 20 45, 80 45, 90 55 C 95 75, 90 95, 85 105 C 65 110, 30 110, 15 105 C 5 90, 5 70, 10 55 Z" fill="#FFE600"/>
           </svg>
           <span>A4 RETRATO</span>
         </div>
 
-        <!-- 2. Azul RMarket A4 -->
-        <div class="template-card" onclick="selecionarModelo(this, 'a4-retrato', '210/297 ** A4 RETRATO', 'azul-rmarket')">
+        <div class="template-card" onclick="selecionarModelo(this, 'a5-retrato', '148/210 ** A5 RETRATO')">
           <svg viewBox="0 0 100 130">
             <rect x="0" y="0" width="100" height="25" fill="#0080FF"/>
-            <text x="50" y="16" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">RMarket</text>
-            <rect x="5" y="30" width="90" height="95" fill="none" stroke="#ccc"/>
-          </svg>
-          <span>A4 RETRATO</span>
-        </div>
-
-        <!-- 3. Azul Oferta A5 -->
-        <div class="template-card" onclick="selecionarModelo(this, 'a5-retrato', '148/210 ** A5 RETRATO', 'azul-oferta')">
-          <svg viewBox="0 0 100 130">
-            <rect x="0" y="0" width="100" height="25" fill="#0080FF"/>
-            <text x="50" y="16" fill="#fff" font-size="10" font-weight="bold" text-anchor="middle">OFERTA</text>
-            <rect x="8" y="32" width="84" height="90" fill="none" stroke="#ccc"/>
+            <circle cx="50" cy="70" r="25" fill="#FFE600"/>
           </svg>
           <span>A5 RETRATO</span>
         </div>
 
-        <!-- 4. Azul RMarket A5 -->
-        <div class="template-card" onclick="selecionarModelo(this, 'a5-retrato', '148/210 ** A5 RETRATO', 'azul-rmarket')">
-          <svg viewBox="0 0 100 130">
-            <rect x="0" y="0" width="100" height="25" fill="#0080FF"/>
-            <text x="50" y="16" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">RMarket</text>
-            <rect x="8" y="32" width="84" height="90" fill="none" stroke="#ccc"/>
-          </svg>
-          <span>A5 RETRATO</span>
-        </div>
-
-        <!-- 5. Azul Oferta A6 Paisagem -->
-        <div class="template-card" onclick="selecionarModelo(this, 'a6-paisagem', '148/105 ** A6 PAISAGEM', 'azul-oferta')">
+        <div class="template-card" onclick="selecionarModelo(this, 'a6-paisagem', '148/105 ** A6 PAISAGEM')">
           <svg viewBox="0 0 130 90">
-            <rect x="0" y="0" width="130" height="22" fill="#0080FF"/>
-            <text x="65" y="15" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle">OFERTA</text>
-            <rect x="5" y="26" width="120" height="58" fill="none" stroke="#ccc"/>
+            <rect x="0" y="0" width="130" height="20" fill="#E30613"/>
+            <rect x="20" y="30" width="90" height="40" fill="#FFE600"/>
           </svg>
           <span>A6 PAISAGEM</span>
         </div>
-
-        <!-- 6. Azul RMarket A6 Paisagem -->
-        <div class="template-card" onclick="selecionarModelo(this, 'a6-paisagem', '148/105 ** A6 PAISAGEM', 'azul-rmarket')">
-          <svg viewBox="0 0 130 90">
-            <rect x="0" y="0" width="130" height="22" fill="#0080FF"/>
-            <text x="65" y="15" fill="#fff" font-size="8" font-weight="bold" text-anchor="middle">RMarket</text>
-            <rect x="5" y="26" width="120" height="58" fill="none" stroke="#ccc"/>
-          </svg>
-          <span>A6 PAISAGEM</span>
-        </div>
-
-        <!-- 7. Vermelho + Amarelo A4 Retrato -->
-        <div class="template-card" onclick="selecionarModelo(this, 'a4-retrato', '210/297 ** A4 RETRATO', 'amarelo-oferta')">
-          <svg viewBox="0 0 100 130">
-            <path d="M 0 0 L 100 0 L 100 25 Q 50 35 0 25 Z" fill="#E30613"/>
-            <text x="50" y="16" fill="#FFE600" font-size="9" font-style="italic" font-weight="bold" text-anchor="middle">OFERTA!</text>
-            <path d="M 10 70 Q 50 55 90 70 Q 50 85 10 70 Z" fill="#FFE600"/>
-            <rect x="35" y="115" width="30" height="8" fill="#E30613"/>
-          </svg>
-          <span>A4 RETRATO</span>
-        </div>
-
-        <!-- 8. Vermelho + Amarelo A5 Retrato -->
-        <div class="template-card" onclick="selecionarModelo(this, 'a5-retrato', '148/210 ** A5 RETRATO', 'amarelo-oferta')">
-          <svg viewBox="0 0 100 130">
-            <path d="M 0 0 L 100 0 L 100 25 Q 50 35 0 25 Z" fill="#E30613"/>
-            <text x="50" y="16" fill="#FFE600" font-size="9" font-style="italic" font-weight="bold" text-anchor="middle">OFERTA!</text>
-            <path d="M 10 70 Q 50 55 90 70 Q 50 85 10 70 Z" fill="#FFE600"/>
-            <rect x="35" y="115" width="30" height="8" fill="#E30613"/>
-          </svg>
-          <span>A5 RETRATO</span>
-        </div>
-
-        <!-- 9. Vermelho + Amarelo A6 Paisagem (Ativo por Padrão) -->
-        <div class="template-card active" onclick="selecionarModelo(this, 'a6-paisagem', '148/105 ** A6 PAISAGEM', 'amarelo-oferta')">
-          <svg viewBox="0 0 130 90">
-            <path d="M 0 0 L 130 0 L 130 22 Q 65 30 0 22 Z" fill="#E30613"/>
-            <text x="65" y="14" fill="#FFE600" font-size="8" font-style="italic" font-weight="bold" text-anchor="middle">OFERTA!</text>
-            <path d="M 15 50 Q 65 38 115 50 Q 65 62 15 50 Z" fill="#FFE600"/>
-            <rect x="50" y="78" width="30" height="6" fill="#E30613"/>
-          </svg>
-          <span>A6 PAISAGEM</span>
-        </div>
-
       </div>
 
       <div class="mb-3">
@@ -562,13 +494,14 @@
       <div class="search-box-wrapper">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <label class="fw-bold small text-secondary">1 - Insira código do produto, marca ou descrição</label>
+          <!-- Botão "Adicionar produto" -->
           <button class="btn btn-primary btn-sm px-3 fw-semibold" onclick="modalNovoProduto.show()">
             Adicionar produto
           </button>
         </div>
 
-        <div class="row g-2 align-items-center mb-2">
-          <div class="col-12 col-md-4 ms-auto text-end">
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-4 ms-auto text-end mb-1">
             <select class="form-select form-select-sm">
               <option selected>Todas Sessões</option>
               <option>Bebidas</option>
@@ -609,6 +542,7 @@
                   <strong class="ms-2">Familia:</strong>
                 </td>
                 <td class="text-center">
+                  <!-- Dropdown de Ações Completo -->
                   <div class="dropdown">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
                       Ações
@@ -665,19 +599,32 @@
           </button>
         </div>
 
-        <div class="poster-paper a6-paisagem" id="posterPaper">
+        <div class="poster-paper a4-retrato" id="posterPaper">
           <div class="fold-header">DOBRE AQUI</div>
 
-          <div id="posterHeaderContainer">
-            <!-- Renderizado dinamicamente via JS -->
-          </div>
+          <svg class="poster-header-svg" viewBox="0 0 500 120" preserveAspectRatio="none">
+            <path d="M 0 0 L 500 0 L 500 70 Q 250 120 0 70 Z" fill="#E30613"/>
+            <path d="M 40 82 Q 250 118 460 82 Q 250 108 40 82 Z" fill="#FFE600"/>
+            <text x="250" y="62" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-style="italic" font-size="52" fill="#FFE600" text-anchor="middle" id="posterCampanhaText">OFERTA!</text>
+          </svg>
 
           <div class="poster-body">
             <div class="poster-product-title" id="posterTitle">REFRI COCA COLA PET 1,5L</div>
           </div>
 
-          <div class="poster-price-container" id="posterPriceContainer">
-            <!-- Renderizado dinamicamente via JS -->
+          <div class="poster-price-container">
+            <svg class="poster-price-bg" viewBox="0 0 500 200" preserveAspectRatio="none">
+              <path d="M 15 25 C 120 5, 380 10, 485 20 C 498 70, 492 140, 475 180 C 390 198, 110 205, 20 175 C 5 130, 2 65, 15 25 Z" fill="#FFE600"/>
+              <path d="M 5 45 C 80 35, 420 30, 495 50 C 490 110, 480 150, 460 188 C 360 190, 80 192, 10 160 Z" fill="#FFE600"/>
+            </svg>
+
+            <div class="poster-price-content">
+              <div class="price-unit-box">
+                <span>R$</span>
+                <span>UN</span>
+              </div>
+              <span class="poster-price-main" id="posterPriceMain">10,49</span>
+            </div>
           </div>
 
           <div class="poster-footer">
@@ -705,7 +652,8 @@
     <i class="fa-solid fa-camera"></i>
   </button>
 
-  <!-- Modais -->
+  <!-- Modais do Sistema -->
+  <!-- 1. Modal Camera -->
   <div class="modal fade" id="cameraModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -721,6 +669,7 @@
     </div>
   </div>
 
+  <!-- 2. Modal Adicionar Produto -->
   <div class="modal fade" id="modalNovoProduto" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -739,7 +688,7 @@
           </div>
           <div class="mb-2">
             <label class="form-label small fw-bold">Preço (R$)</label>
-            <input type="text" class="form-control form-control-sm" id="novoPreco" placeholder="10,49">
+            <input type="text" class="form-control form-control-sm" id="novoPreco" placeholder="7,99">
           </div>
         </div>
         <div class="modal-footer">
@@ -750,6 +699,7 @@
     </div>
   </div>
 
+  <!-- 3. Modal Editar Preço -->
   <div class="modal fade" id="modalEditarPreco" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
@@ -774,7 +724,6 @@
   <script>
     let html5QrcodeScanner = null;
     let modalNovoProduto, modalEditarPreco;
-    let estiloAtual = 'amarelo-oferta';
 
     let listaItensSalvos = [
       { id: '7483', nome: 'REFRI COCA COLA PET 1,5L', preco: '10,49', ean: '7894900027006' }
@@ -783,11 +732,10 @@
     document.addEventListener("DOMContentLoaded", function() {
       modalNovoProduto = new bootstrap.Modal(document.getElementById('modalNovoProduto'));
       modalEditarPreco = new bootstrap.Modal(document.getElementById('modalEditarPreco'));
-      renderizarEstiloCartaz('amarelo-oferta');
       renderizarListaSalva();
     });
 
-    function selecionarModelo(element, modelo, formatoTexto, estilo) {
+    function selecionarModelo(element, modelo, formatoTexto) {
       document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
       element.classList.add('active');
 
@@ -795,79 +743,22 @@
       poster.className = 'poster-paper ' + modelo;
 
       document.getElementById('formatoIndicadorText').innerText = formatoTexto;
-      estiloAtual = estilo;
-      renderizarEstiloCartaz(estilo);
-    }
-
-    function renderizarEstiloCartaz(estilo) {
-      const headerContainer = document.getElementById('posterHeaderContainer');
-      const priceContainer = document.getElementById('posterPriceContainer');
-      const precoAtual = document.getElementById('posterPriceMain') ? document.getElementById('posterPriceMain').innerText : '10,49';
-      const campanhaTexto = document.getElementById('selectCampanha') ? document.getElementById('selectCampanha').value : 'OFERTA!';
-
-      if (estilo === 'azul-oferta') {
-        headerContainer.innerHTML = `
-          <div style="background:#0080FF; color:#fff; text-align:center; padding:12px; font-weight:900; font-size:28px; letter-spacing:2px;" id="posterCampanhaText">
-            ${campanhaTexto}
-          </div>
-        `;
-        priceContainer.innerHTML = `
-          <div class="poster-price-content">
-            <div class="price-unit-box"><span>R$</span><span>UN</span></div>
-            <span class="poster-price-main" id="posterPriceMain">${precoAtual}</span>
-          </div>
-        `;
-      } else if (estilo === 'azul-rmarket') {
-        headerContainer.innerHTML = `
-          <div style="background:#0080FF; color:#fff; text-align:center; padding:10px; display:flex; justify-content:center; align-items:center; gap:6px;">
-            <span style="font-weight:bold; font-size:16px;">rede</span>
-            <span style="font-weight:900; font-size:26px;">RMarket</span>
-          </div>
-        `;
-        priceContainer.innerHTML = `
-          <div class="poster-price-content">
-            <div class="price-unit-box"><span>R$</span><span>UN</span></div>
-            <span class="poster-price-main" id="posterPriceMain">${precoAtual}</span>
-          </div>
-        `;
-      } else {
-        // Estilo Amarelo com Banner Vermelho
-        headerContainer.innerHTML = `
-          <svg class="poster-header-svg" viewBox="0 0 500 120" preserveAspectRatio="none">
-            <path d="M 0 0 L 500 0 L 500 70 Q 250 120 0 70 Z" fill="#E30613"/>
-            <path d="M 40 82 Q 250 118 460 82 Q 250 108 40 82 Z" fill="#FFE600"/>
-            <text x="250" y="62" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-style="italic" font-size="52" fill="#FFE600" text-anchor="middle" id="posterCampanhaText">${campanhaTexto}</text>
-          </svg>
-        `;
-        priceContainer.innerHTML = `
-          <svg class="poster-price-bg" viewBox="0 0 500 200" preserveAspectRatio="none">
-            <path d="M 15 25 C 120 5, 380 10, 485 20 C 498 70, 492 140, 475 180 C 390 198, 110 205, 20 175 C 5 130, 2 65, 15 25 Z" fill="#FFE600"/>
-            <path d="M 5 45 C 80 35, 420 30, 495 50 C 490 110, 480 150, 460 188 C 360 190, 80 192, 10 160 Z" fill="#FFE600"/>
-          </svg>
-          <div class="poster-price-content">
-            <div class="price-unit-box"><span>R$</span><span>UN</span></div>
-            <span class="poster-price-main" id="posterPriceMain">${precoAtual}</span>
-          </div>
-        `;
-      }
     }
 
     function atualizarCampanha() {
       const campanha = document.getElementById('selectCampanha').value;
-      const elem = document.getElementById('posterCampanhaText');
-      if (elem) elem.textContent = campanha;
+      document.getElementById('posterCampanhaText').textContent = campanha;
     }
 
     function gerarCartaz(codigo, titulo, preco, ean) {
       document.getElementById('posterTitle').innerText = titulo;
-      if (document.getElementById('posterPriceMain')) {
-        document.getElementById('posterPriceMain').innerText = preco;
-      }
+      document.getElementById('posterPriceMain').innerText = preco;
       document.getElementById('posterEanText').innerText = 'CÓD. PRODUTO: "' + ean + '"';
       document.getElementById('tdCodigo').innerText = codigo;
       document.getElementById('tdDescricao').innerText = titulo;
     }
 
+    /* Ações do Dropdown */
     function abrirEditarProduto() {
       const nomeAtual = document.getElementById('tdDescricao').innerText;
       const novoNome = prompt("Editar nome do produto:", nomeAtual);
@@ -883,25 +774,25 @@
 
     function salvarPreco() {
       const novoPreco = document.getElementById('inputEditarPreco').value;
-      if (document.getElementById('posterPriceMain')) {
-        document.getElementById('posterPriceMain').innerText = novoPreco;
-      }
+      document.getElementById('posterPriceMain').innerText = novoPreco;
       modalEditarPreco.hide();
     }
 
     function abrirImagem() {
-      alert("Recurso de imagem do produto ativado!");
+      alert("Recurso de inserção de imagem do produto ativado!");
     }
 
     function abrirAditivo() {
-      const aditivo = prompt("Insira o texto do aditivo:");
-      if (aditivo) alert("Aditivo '" + aditivo + "' adicionado!");
+      const aditivo = prompt("Insira o texto do aditivo (Ex: 'LEVE 3 PAGUE 2'):");
+      if (aditivo) {
+        alert("Aditivo '" + aditivo + "' inserido no cartaz!");
+      }
     }
 
     function salvarNovoProduto() {
       const ean = document.getElementById('novoEan').value || '7890000000000';
       const nome = document.getElementById('novoNome').value || 'NOVO PRODUTO';
-      const preco = document.getElementById('novoPreco').value || '10,49';
+      const preco = document.getElementById('novoPreco').value || '0,00';
 
       gerarCartaz("9999", nome, preco, ean);
       modalNovoProduto.hide();
@@ -910,7 +801,7 @@
     function adicionarALista() {
       const codigo = document.getElementById('tdCodigo').innerText;
       const nome = document.getElementById('tdDescricao').innerText;
-      const preco = document.getElementById('posterPriceMain') ? document.getElementById('posterPriceMain').innerText : '10,49';
+      const preco = document.getElementById('posterPriceMain').innerText;
       const ean = document.getElementById('barcodeInput').value;
 
       listaItensSalvos.push({ id: codigo, nome: nome, preco: preco, ean: ean });
@@ -951,6 +842,7 @@
       });
     }
 
+    /* Leitor de Câmera */
     function iniciarCamera() {
       if (!html5QrcodeScanner) {
         html5QrcodeScanner = new Html5Qrcode("reader");
