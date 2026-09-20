@@ -410,8 +410,7 @@
       <div class="mb-3">
         <label>4- Selecione a Campanha:</label>
         <select class="form-select form-select-sm mt-1" id="selectCampanha" onchange="atualizarCampanha()">
-          <option value="OFERTA" selected>OFERTA</option>
-          <option value="OFERTA!">OFERTA!</option>
+          <option value="OFERTA!" selected>OFERTA!</option>
           <option value="PROMOÇÃO">PROMOÇÃO</option>
           <option value="SUPER OFERTA">SUPER OFERTA</option>
         </select>
@@ -482,7 +481,7 @@
     <!-- Conteúdo Central -->
     <div class="content-area">
 
-      <!-- Busca + Câmera + Botão Adicionar Produto -->
+      <!-- Busca + Câmera -->
       <div class="search-box-wrapper">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <label class="fw-bold small text-secondary">1 - Insira código do produto, marca ou descrição</label>
@@ -491,19 +490,8 @@
           </button>
         </div>
 
-        <div class="row g-2 align-items-center mb-2">
-          <div class="col-12 col-md-4 ms-auto text-end">
-            <select class="form-select form-select-sm">
-              <option selected>Todas Sessões</option>
-              <option>Bebidas</option>
-              <option>Mercearia</option>
-              <option>Hortifruti</option>
-            </select>
-          </div>
-        </div>
-
         <div class="d-flex gap-2">
-          <input type="text" id="barcodeInput" class="form-control" placeholder="Digite ou escaneie o código de barras..." value="7894900027006">
+          <input type="text" id="barcodeInput" class="form-control" placeholder="Digite o código EAN ou nome (Ex: COCA, FANTA, 7894900027006)" value="7894900027006">
           <button class="btn btn-primary px-3" onclick="buscarProduto()">Pesquisar</button>
           <button class="btn-scanner" type="button" data-bs-toggle="modal" data-bs-target="#cameraModal" onclick="iniciarCamera()">
             <i class="fa-solid fa-camera"></i> Escanear
@@ -524,7 +512,7 @@
                 <th style="width: 120px;">Ações</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="tabelaProdutosBody">
               <tr class="product-row-selected">
                 <td class="fw-bold text-success text-center" id="tdCodigo">7483</td>
                 <td>
@@ -540,22 +528,12 @@
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-actions">
                       <li>
                         <a class="dropdown-item" href="#" onclick="abrirEditarProduto()">
-                          <i class="fa-solid fa-minus me-1"></i> Editar produto
+                          <i class="fa-solid fa-pen me-1"></i> Editar produto
                         </a>
                       </li>
                       <li>
                         <a class="dropdown-item" href="#" onclick="abrirEditarPreco()">
                           <i class="fa-solid fa-dollar-sign me-1"></i> Editar preço
-                        </a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#" onclick="abrirImagem()">
-                          <i class="fa-regular fa-image me-1"></i> Imagem
-                        </a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#" onclick="abrirAditivo()">
-                          <i class="fa-solid fa-square-plus me-1 text-primary"></i> Aditivo
                         </a>
                       </li>
                     </ul>
@@ -564,18 +542,6 @@
               </tr>
             </tbody>
           </table>
-        </div>
-
-        <div class="d-flex justify-content-center">
-          <nav>
-            <ul class="pagination pagination-sm m-0">
-              <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
-              <li class="page-item disabled"><a class="page-link" href="#">‹</a></li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">›</a></li>
-              <li class="page-item"><a class="page-link" href="#">»</a></li>
-            </ul>
-          </nav>
         </div>
       </div>
 
@@ -639,7 +605,7 @@
     </div>
   </div>
 
-  <!-- Botão Flutuante Câmera Celular -->
+  <!-- Botão Flutuante Câmera -->
   <button class="fab-camera" type="button" data-bs-toggle="modal" data-bs-target="#cameraModal" onclick="iniciarCamera()" title="Escanear Código de Barras">
     <i class="fa-solid fa-camera"></i>
   </button>
@@ -713,81 +679,57 @@
     let html5QrcodeScanner = null;
     let modalNovoProduto, modalEditarPreco;
 
-    let listaItensSalvos = [
-      { id: '7483', nome: 'REFRI COCA COLA PET 1,5L', preco: '10,49', ean: '7894900027006' }
+    // Base de produtos cadastrados por padrão
+    const produtosBaseInicial = [
+      { id: '7483', nome: 'REFRI COCA COLA PET 1,5L - UN', preco: '10.49', ean: '7894900027006' },
+      { id: '7484', nome: 'REFRI FANTA PET 2L LARANJA - UN', preco: '9.39', ean: '7894900031515' },
+      { id: '7485', nome: 'CERVEJA HEINEKEN LN 330ML', preco: '6.99', ean: '7891051001234' },
+      { id: '7486', nome: 'LEITE INTEGRAL PIRACANJUBA 1L', preco: '4.89', ean: '7898215150012' },
+      { id: '7487', nome: 'ARROZ TIO JOAO TIPO 1 5KG', preco: '28.90', ean: '7896006700010' }
     ];
+
+    // Carrega do LocalStorage se existir
+    function obterBancoProdutos() {
+      const salvo = localStorage.getItem('produtos_cartazfacil');
+      if (salvo) {
+        return JSON.parse(salvo);
+      }
+      localStorage.setItem('produtos_cartazfacil', JSON.stringify(produtosBaseInicial));
+      return produtosBaseInicial;
+    }
+
+    let listaItensSalvos = [];
 
     document.addEventListener("DOMContentLoaded", function() {
       modalNovoProduto = new bootstrap.Modal(document.getElementById('modalNovoProduto'));
       modalEditarPreco = new bootstrap.Modal(document.getElementById('modalEditarPreco'));
-      renderizarListaSalva();
     });
 
-    async function buscarProduto() {
-      const ean = document.getElementById('barcodeInput').value.trim();
-      if (!ean) {
-        alert("Por favor, digite ou escaneie um código de barras.");
+    function buscarProduto() {
+      const termo = document.getElementById('barcodeInput').value.trim().toLowerCase();
+      if (!termo) {
+        alert("Por favor, digite um código EAN ou o nome do produto.");
         return;
       }
 
-      const btnPesquisar = document.querySelector("button[onclick='buscarProduto()']");
-      const textoOriginal = btnPesquisar.innerHTML;
-      btnPesquisar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Buscando...';
-      btnPesquisar.disabled = true;
+      const produtos = obterBancoProdutos();
+      
+      // Pesquisa por EAN, código interno ou nome
+      const encontrado = produtos.find(p => 
+        p.ean === termo || 
+        p.id === termo || 
+        p.nome.toLowerCase().includes(termo)
+      );
 
-      const targetUrl = 'https://rmarket.cartazfacil.pro/unitario.php';
-      const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
-
-      try {
-        const formData = new URLSearchParams();
-        formData.append('usuario', 'rmarket07');
-        formData.append('senha', 'sup12345');
-        formData.append('codigo', ean);
-        formData.append('btnPesquisar', 'Pesquisar');
-
-        const response = await fetch(proxyUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: formData.toString()
-        });
-
-        if (!response.ok) {
-          throw new Error(`Erro na conexão: ${response.status}`);
+      if (encontrado) {
+        const [int, dec] = parseFloat(encontrado.preco).toFixed(2).split('.');
+        gerarCartaz(encontrado.id, encontrado.nome, int, dec, encontrado.ean);
+      } else {
+        if (confirm("Produto não encontrado na base local. Deseja cadastrá-lo agora com esse código/nome?")) {
+          document.getElementById('novoEan').value = /^\d+$/.test(termo) ? termo : '789' + Math.floor(Math.random() * 1000000000);
+          document.getElementById('novoNome').value = !/^\d+$/.test(termo) ? termo.toUpperCase() : '';
+          modalNovoProduto.show();
         }
-
-        const htmlText = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
-
-        const linhaProduto = doc.querySelector('table tbody tr');
-        
-        if (linhaProduto) {
-          const colunas = linhaProduto.querySelectorAll('td');
-          let codigoEncontrado = colunas[0]?.textContent?.trim() || ean;
-          let descricaoEncontrada = colunas[1]?.textContent?.trim() || '';
-          let precoEncontrado = colunas[2]?.textContent?.trim() || '10,49';
-
-          descricaoEncontrada = descricaoEncontrada.replace(/Ações.*/gi, '').trim();
-
-          const precoLimpo = precoEncontrado.replace(/[^\d,.]/g, '').replace(',', '.');
-          const valorNum = parseFloat(precoLimpo) || 10.49;
-          const [inteiro, centavos] = valorNum.toFixed(2).split('.');
-
-          gerarCartaz(codigoEncontrado, descricaoEncontrada || 'PRODUTO LOCALIZADO', inteiro, centavos, ean);
-
-        } else {
-          alert("Produto não localizado para o código: " + ean);
-        }
-
-      } catch (error) {
-        console.error("Erro na busca:", error);
-        alert("Falha na comunicação. O produto foi carregado em modo de demonstração.");
-        gerarCartaz("7483", "REFRI COCA COLA PET 1,5L", "10", "49", ean);
-      } finally {
-        btnPesquisar.innerHTML = textoOriginal;
-        btnPesquisar.disabled = false;
       }
     }
 
@@ -836,25 +778,22 @@
       modalEditarPreco.hide();
     }
 
-    function abrirImagem() {
-      alert("Recurso de inserção de imagem ativado!");
-    }
-
-    function abrirAditivo() {
-      const aditivo = prompt("Insira o texto do aditivo:");
-      if (aditivo) {
-        alert("Aditivo '" + aditivo + "' inserido no cartaz!");
-      }
-    }
-
     function salvarNovoProduto() {
-      const ean = document.getElementById('novoEan').value || '7890000000000';
-      const nome = document.getElementById('novoNome').value || 'NOVO PRODUTO';
-      const preco = document.getElementById('novoPreco').value.replace(',', '.') || '0.00';
-      const [int, dec] = parseFloat(preco).toFixed(2).split('.');
+      const ean = document.getElementById('novoEan').value.trim() || '7890000000000';
+      const nome = document.getElementById('novoNome').value.trim().toUpperCase() || 'NOVO PRODUTO';
+      const precoRaw = document.getElementById('novoPreco').value.replace(',', '.') || '0.00';
+      const precoNum = parseFloat(precoRaw).toFixed(2);
+      const novoId = Math.floor(1000 + Math.random() * 9000).toString();
 
-      gerarCartaz("9999", nome, int, dec, ean);
+      const produtos = obterBancoProdutos();
+      produtos.push({ id: novoId, nome: nome + ' - UN', preco: precoNum, ean: ean });
+      localStorage.setItem('produtos_cartazfacil', JSON.stringify(produtos));
+
+      const [int, dec] = precoNum.split('.');
+      gerarCartaz(novoId, nome + ' - UN', int, dec, ean);
+      
       modalNovoProduto.hide();
+      alert("Produto cadastrado e carregado com sucesso!");
     }
 
     function adicionarALista() {
