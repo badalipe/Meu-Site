@@ -2,9 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cartaz Fácil - RMarket</title>
-  
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome Icons -->
@@ -18,7 +17,6 @@
       --header-blue: #0056b3;
       --accent-red: #E30613;
       --accent-yellow: #FFE600;
-      --android-green: #25D366;
     }
 
     body {
@@ -26,22 +24,17 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      color: #333;
-      padding-bottom: 80px; /* Space for Mobile FAB */
     }
 
     /* Topbar Header */
     .top-navbar {
       background-color: var(--header-blue);
       color: white;
-      padding: 10px 15px;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      z-index: 1020;
     }
 
     .brand-logo {
@@ -49,43 +42,29 @@
       font-size: 18px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
-    /* Layout principal */
+    /* Layout Principal */
     .main-container {
       display: flex;
-      flex-direction: column;
-      padding: 10px;
+      padding: 15px;
       gap: 15px;
+      flex-wrap: wrap;
     }
 
-    @media (min-width: 992px) {
-      body { padding-bottom: 0; }
-      .main-container {
-        flex-direction: row;
-        padding: 15px;
-      }
-    }
-
-    /* Sidebar esquerda */
+    /* Sidebar Esquerda */
     .sidebar {
-      width: 100%;
+      width: 290px;
       background: white;
       padding: 15px;
-      border-radius: 8px;
+      border-radius: 6px;
       border: 1px solid #e0e0e0;
       flex-shrink: 0;
     }
 
-    @media (min-width: 992px) {
-      .sidebar {
-        width: 280px;
-      }
-    }
-
     .sidebar label {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: bold;
       color: #333;
     }
@@ -96,20 +75,14 @@
 
     .template-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
       margin-top: 8px;
     }
 
-    @media (min-width: 992px) {
-      .template-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
     .template-card {
       border: 2px solid #ddd;
-      border-radius: 6px;
+      border-radius: 4px;
       padding: 6px;
       text-align: center;
       cursor: pointer;
@@ -120,12 +93,12 @@
     .template-card.active, .template-card:hover {
       border-color: var(--header-blue);
       background: #f0f7ff;
-      box-shadow: 0 0 6px rgba(0,86,179,0.3);
+      box-shadow: 0 0 4px rgba(0,86,179,0.3);
     }
 
     .template-card svg {
       width: 100%;
-      height: 42px;
+      height: 45px;
     }
 
     .template-card span {
@@ -136,242 +109,85 @@
       color: #444;
     }
 
-    /* Seção 6 - Forma de Pagamento e Botões Rápidos */
-    .payment-box {
-      border: 1.5px solid #fca311;
-      border-radius: 4px;
-      padding: 8px;
-      background: #fff;
-      margin-top: 8px;
-    }
-
-    .payment-title {
-      font-size: 11px;
-      color: #666;
-      margin-bottom: 3px;
-    }
-
-    .payment-item {
-      background-color: #e2e2e2;
-      padding: 6px 8px;
-      font-size: 12px;
-      font-weight: bold;
-      color: #333;
-      border-radius: 3px;
-    }
-
-    /* Botões da Sidebar */
-    .btn-side-group {
-      display: flex;
-      gap: 6px;
-      margin-top: 12px;
-    }
-
-    .btn-side-yellow {
-      background-color: #ffc107;
-      color: #000;
-      font-weight: bold;
-      font-size: 13px;
-      border: none;
-      padding: 8px 10px;
-      border-radius: 6px;
-      flex: 1;
-    }
-
-    .btn-side-blue {
-      background-color: #0d6efd;
-      color: white;
-      font-weight: bold;
-      font-size: 13px;
-      border: none;
-      padding: 8px 10px;
-      border-radius: 6px;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .btn-side-green {
-      background-color: #198754;
-      color: white;
-      border: none;
-      padding: 8px 10px;
-      border-radius: 6px;
-    }
-
-    .btn-limpar-lista {
-      border: 1px solid #dc3545;
-      color: #dc3545;
-      background: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      border-radius: 6px;
-      padding: 6px 10px;
-      width: 100%;
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-
-    .btn-limpar-lista:hover {
-      background-color: #fff5f5;
-    }
-
-    /* Lista de Cartazes Criados na Sidebar */
-    .cartaz-list-wrapper {
-      margin-top: 15px;
-      border-top: 1px solid #eee;
-      padding-top: 10px;
-    }
-
-    .cartaz-list-header {
-      font-size: 12px;
-      font-weight: bold;
-      color: #555;
-      margin-bottom: 8px;
-    }
-
-    .cartaz-item-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      padding: 6px 0;
-      border-bottom: 1px dashed #eee;
-    }
-
-    .cartaz-item-name {
-      font-weight: bold;
-      color: #333;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 130px;
-    }
-
-    .cartaz-item-code {
-      color: #666;
-    }
-
-    .cartaz-item-actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .cartaz-item-actions i {
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .action-eye { color: #0d6efd; }
-    .action-delete { color: #dc3545; }
-
-    /* Área central e direita */
+    /* Área Central */
     .content-area {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
       gap: 15px;
+      min-width: 320px;
     }
 
     .search-box-wrapper {
       background: white;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #e0e0e0;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-
-    .btn-scanner-main {
-      background-color: #0080FF;
-      color: white;
-      border: none;
-      padding: 8px 14px;
+      padding: 15px;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-weight: 700;
-      font-size: 14px;
-      white-space: nowrap;
+      border: 1px solid #e0e0e0;
     }
 
-    .btn-scanner-main:hover, .btn-scanner-main:active {
+    .btn-scanner {
       background-color: #0056b3;
       color: white;
-    }
-
-    /* Floating Action Button (FAB) para Android */
-    .mobile-scanner-fab {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #0080FF, #004085);
-      color: white;
+      border: none;
+      padding: 0 16px;
+      border-radius: 4px;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(0, 128, 255, 0.4);
-      border: 2px solid white;
-      z-index: 1050;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 14px;
     }
 
-    .mobile-scanner-fab:active {
-      transform: scale(0.92);
+    .btn-scanner:hover {
+      background-color: #004085;
+      color: white;
     }
 
-    .mobile-scanner-fab i {
-      font-size: 22px;
-    }
-
-    .mobile-scanner-fab span {
-      font-size: 9px;
-      font-weight: bold;
-      text-transform: uppercase;
-      margin-top: 1px;
-    }
-
-    /* Tabela de produtos */
+    /* Tabela e Seleções */
     .table-container {
       background: white;
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 6px;
+      padding: 15px;
       border: 1px solid #e0e0e0;
     }
 
     .product-row-selected {
-      background-color: #e8f5e9 !important;
+      background-color: #c8e6c9 !important;
     }
 
-    /* --- PAINEL DO CARTAZ E FORMATOS DINÂMICOS --- */
+    /* Botão Flutuante da Câmera (Para Android/Celular) */
+    .fab-camera {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #0056b3;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      border: none;
+      cursor: pointer;
+    }
+
+    .fab-camera:active {
+      transform: scale(0.95);
+    }
+
+    /* --- DESIGN IDENTICO AO CARTAZ REAL DO SISTEMA --- */
     .poster-section {
       display: flex;
       flex-direction: column;
       align-items: center;
       background: white;
-      padding: 15px;
-      border-radius: 8px;
+      padding: 20px;
+      border-radius: 6px;
       border: 1px solid #e0e0e0;
-    }
-
-    .poster-paper-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      display: flex;
-      justify-content: center;
-      padding: 10px 0;
     }
 
     .poster-paper {
@@ -384,57 +200,39 @@
       flex-direction: column;
       justify-content: space-between;
       box-sizing: border-box;
+      padding: 10px 15px;
       transition: all 0.3s ease;
-      flex-shrink: 0;
+      background-color: #fff;
     }
 
-    /* MODELO A4 RETRATO */
-    .poster-paper.a4-retrato {
-      width: 320px;
-      height: 450px;
-    }
-    .poster-paper.a4-retrato .poster-header-svg { height: 95px; }
-    .poster-paper.a4-retrato .poster-product-title { font-size: 22px; }
-    .poster-paper.a4-retrato .poster-price-container { width: 250px; height: 130px; }
-    .poster-paper.a4-retrato .poster-price-main { font-size: 80px; }
-    .poster-paper.a4-retrato .poster-price-cents { font-size: 38px; }
-    .poster-paper.a4-retrato .poster-price-currency { font-size: 24px; }
+    /* Formatos */
+    .poster-paper.a4-retrato { width: 380px; height: 530px; }
+    .poster-paper.a5-retrato { width: 320px; height: 450px; }
+    .poster-paper.a6-paisagem { width: 480px; height: 320px; }
 
-    /* MODELO A5 RETRATO */
-    .poster-paper.a5-retrato {
-      width: 280px;
-      height: 390px;
-    }
-    .poster-paper.a5-retrato .poster-header-svg { height: 80px; }
-    .poster-paper.a5-retrato .poster-product-title { font-size: 19px; }
-    .poster-paper.a5-retrato .poster-price-container { width: 220px; height: 115px; }
-    .poster-paper.a5-retrato .poster-price-main { font-size: 68px; }
-    .poster-paper.a5-retrato .poster-price-cents { font-size: 32px; }
-    .poster-paper.a5-retrato .poster-price-currency { font-size: 20px; }
-
-    /* MODELO A6 PAISAGEM */
-    .poster-paper.a6-paisagem {
-      width: 380px;
-      height: 250px;
-    }
-    .poster-paper.a6-paisagem .poster-header-svg { height: 60px; }
-    .poster-paper.a6-paisagem .poster-product-title { font-size: 17px; margin-bottom: 2px; }
-    .poster-paper.a6-paisagem .poster-price-container { width: 220px; height: 90px; }
-    .poster-paper.a6-paisagem .poster-price-main { font-size: 58px; }
-    .poster-paper.a6-paisagem .poster-price-cents { font-size: 28px; }
-    .poster-paper.a6-paisagem .poster-price-currency { font-size: 18px; }
-    .poster-paper.a6-paisagem .poster-footer-logo { height: 20px; }
-
-    .poster-header-svg { width: 100%; }
-
-    .poster-body {
-      padding: 5px 10px;
+    /* Topo: DOBRE AQUI */
+    .fold-header {
       text-align: center;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 1px;
+      color: #000;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    /* Banner Vermelho SVG com Curva Amarela */
+    .poster-header-svg {
+      width: 100%;
+      height: 90px;
+    }
+
+    .poster-paper.a6-paisagem .poster-header-svg { height: 75px; }
+
+    /* Nome do Produto */
+    .poster-body {
+      text-align: center;
+      margin: 8px 0;
     }
 
     .poster-product-title {
@@ -442,14 +240,23 @@
       color: #000;
       text-transform: uppercase;
       line-height: 1.1;
+      font-size: 20px;
     }
 
+    .poster-paper.a6-paisagem .poster-product-title { font-size: 17px; }
+
+    /* Preço com Pincelada Amarela */
     .poster-price-container {
       position: relative;
+      width: 90%;
+      height: 120px;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
+    .poster-paper.a6-paisagem .poster-price-container { height: 95px; }
 
     .poster-price-bg {
       position: absolute;
@@ -466,47 +273,94 @@
       color: #000;
       font-family: 'Arial Black', Impact, sans-serif;
       display: flex;
-      align-items: baseline;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
     }
 
-    .poster-price-currency { margin-right: 2px; font-weight: bold; }
-    .poster-price-main { line-height: 0.9; font-weight: 900; }
-    .poster-price-cents { vertical-align: top; margin-left: 1px; font-weight: 900; }
+    .price-unit-box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1;
+      font-size: 15px;
+      font-weight: 900;
+      margin-right: 8px;
+    }
 
-    .poster-footer { padding: 6px; text-align: center; }
-    .poster-footer-logo { height: 26px; }
+    .poster-price-main {
+      font-size: 85px;
+      line-height: 0.85;
+      font-weight: 900;
+      letter-spacing: -2px;
+    }
+
+    .poster-paper.a6-paisagem .poster-price-main { font-size: 68px; }
+
+    /* Rodapé do Cartaz */
+    .poster-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 5px;
+      border-top: 1px solid #eee;
+      font-size: 9px;
+      font-weight: 800;
+      color: #000;
+    }
+
+    .footer-code {
+      text-transform: uppercase;
+    }
+
+    .footer-logo {
+      height: 22px;
+    }
+
+    .footer-validity {
+      text-transform: uppercase;
+      text-align: right;
+    }
 
     #reader {
       width: 100%;
-      max-width: 100%;
+      max-width: 450px;
       margin: 0 auto;
-      border-radius: 8px;
-      overflow: hidden;
+    }
+
+    /* Estilos da Lista de Salvos */
+    .saved-list-box {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      background: #fafafa;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .saved-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      font-size: 12px;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    .saved-item-row:last-child {
+      border-bottom: none;
     }
 
     /* Impressão */
     @media print {
       body * { visibility: hidden; }
-      body, html {
-        background: white !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
+      body, html { background: white !important; margin: 0 !important; padding: 0 !important; }
       .poster-paper, .poster-paper * { visibility: visible; }
       .poster-paper {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100vw !important;
-        height: 100vh !important;
-        border: none !important;
-        box-shadow: none !important;
+        position: absolute; left: 0; top: 0; width: 100vw !important; height: 100vh !important;
+        border: none !important; box-shadow: none !important;
       }
-
-      body.print-a4-retrato @page, body.print-a5-retrato @page { size: A4 portrait; margin: 0; }
-      body.print-a6-paisagem @page { size: A4 landscape; margin: 0; }
+      @page { size: auto; margin: 0; }
     }
   </style>
 </head>
@@ -515,24 +369,12 @@
   <!-- Topbar Header -->
   <div class="top-navbar">
     <div class="brand-logo">
-      <i class="fa-solid fa-bars cursor-pointer me-1" data-bs-toggle="offcanvas" data-bs-target="#sidebarMobile" aria-controls="sidebarMobile"></i>
+      <i class="fa-solid fa-bars cursor-pointer"></i>
       <span>Cartaz Fácil</span>
     </div>
-
-    <div class="d-flex align-items-center gap-2">
-      <button class="btn btn-warning btn-sm fw-bold d-md-none" onclick="abrirCameraScanner()">
-        <i class="fa-solid fa-barcode"></i> LER
-      </button>
-      <span class="small d-none d-sm-inline">
-        Usuário: <strong>rmarket07</strong>
-      </span>
+    <div class="small">
+      <span>Usuário: <strong>rmarket07</strong></span>
     </div>
-  </div>
-
-  <!-- Botão Flutuante (FAB) para Câmera Android -->
-  <div class="mobile-scanner-fab" onclick="abrirCameraScanner()" title="Escanear Código de Barras">
-    <i class="fa-solid fa-camera"></i>
-    <span>SCANNER</span>
   </div>
 
   <div class="main-container">
@@ -542,7 +384,7 @@
       <div class="mb-3">
         <label>3- Selecione Valor do Produto:</label>
         <select class="form-select form-select-sm mt-1" id="selectValor">
-          <option selected>19/09/2026 - 1 | Valores: 10,49</option>
+          <option selected>19/09/2026 - 1 | Valores: 9,39</option>
         </select>
       </div>
 
@@ -560,7 +402,7 @@
       </small>
 
       <label>5- Selecione Formato / modelo:</label>
-      <div class="template-grid">
+      <div class="template-grid mb-3">
         <div class="template-card active" onclick="selecionarModelo(this, 'a4-retrato', '210/297 ** A4 RETRATO')">
           <svg viewBox="0 0 100 130">
             <path d="M 0 0 L 100 0 L 100 25 Q 50 40 0 25 Z" fill="#E30613"/>
@@ -586,59 +428,43 @@
         </div>
       </div>
 
-      <!-- 6- Selecione Forma de Pagamento -->
-      <div class="mt-3">
+      <!-- Seção 6: Forma de Pagamento e Ações da Lista -->
+      <div class="mb-3">
         <label>6- Selecione forma de pagamento:</label>
-        <div class="payment-box">
-          <div class="payment-title">Diagramação Cartaz</div>
-          <div class="payment-item">1 - A VISTA</div>
+        <div style="border: 2px solid #FFE600; padding: 8px; border-radius: 4px; background: white;" class="mt-1">
+          <small class="text-muted d-block" style="font-size: 11px;">Diagramação Cartaz</small>
+          <select class="form-select form-select-sm border-0 bg-light fw-bold" id="selectPagamento">
+            <option selected>1 - A VISTA</option>
+            <option>2 - A PRAZO</option>
+            <option>3 - CARTÃO DE CRÉDITO</option>
+          </select>
         </div>
       </div>
 
-      <!-- Botões de Ação na Sidebar -->
-      <div class="btn-side-group">
-        <button class="btn-side-yellow" onclick="adicionarALista()">+ lista</button>
-        <button class="btn-side-blue" onclick="window.print()">
-          <i class="fa-solid fa-print"></i> imprimir
+      <!-- Botões Amarelo (+ lista), Azul (imprimir), Verde (Cadeado) -->
+      <div class="d-flex gap-1 mb-2">
+        <button class="btn btn-warning text-white fw-bold btn-sm flex-fill" onclick="adicionarALista()">
+          <i class="fa-solid fa-plus me-1"></i> lista
         </button>
-        <button class="btn-side-green"><i class="fa-solid fa-lock"></i></button>
+        <button class="btn btn-primary btn-sm flex-fill fw-bold" onclick="window.print()">
+          <i class="fa-solid fa-print me-1"></i> imprimir
+        </button>
+        <button class="btn btn-success btn-sm" title="Bloquear / Fixar">
+          <i class="fa-solid fa-lock"></i>
+        </button>
       </div>
 
-      <button class="btn-limpar-lista" onclick="limparLista()">
-        <i class="fa-solid fa-trash-can"></i> Limpar Lista
-      </button>
+      <!-- Botão Limpar Lista -->
+      <div class="text-end mb-3">
+        <button class="btn btn-outline-danger btn-sm px-3" style="font-size: 12px;" onclick="limparLista()">
+          <i class="fa-solid fa-trash me-1"></i> Limpar Lista
+        </button>
+      </div>
 
-      <!-- Lista de Cartazes Criados na Sidebar -->
-      <div class="cartaz-list-wrapper">
-        <div class="cartaz-list-header" id="labelFormatoInfo">148/105 ** A6 PAISAGEM</div>
-        <div id="containerListaItens">
-          <div class="cartaz-item-row" id="item-7294-1">
-            <span class="cartaz-item-name">REFRI FA</span>
-            <span class="cartaz-item-code">7294</span>
-            <div class="cartaz-item-actions">
-              <i class="fa-solid fa-eye action-eye" onclick="verItem('REFRI FANTA 1,5L', '8', '99')"></i>
-              <i class="fa-solid fa-xmark action-delete" onclick="removerItem('item-7294-1')"></i>
-            </div>
-          </div>
-
-          <div class="cartaz-item-row" id="item-7294-2">
-            <span class="cartaz-item-name">REFRI FA</span>
-            <span class="cartaz-item-code">7294</span>
-            <div class="cartaz-item-actions">
-              <i class="fa-solid fa-eye action-eye" onclick="verItem('REFRI FANTA 1,5L', '8', '99')"></i>
-              <i class="fa-solid fa-xmark action-delete" onclick="removerItem('item-7294-2')"></i>
-            </div>
-          </div>
-
-          <div class="cartaz-item-row" id="item-7294-3">
-            <span class="cartaz-item-name">REFRI FA</span>
-            <span class="cartaz-item-code">7294</span>
-            <div class="cartaz-item-actions">
-              <i class="fa-solid fa-eye action-eye" onclick="verItem('REFRI FANTA 1,5L', '8', '99')"></i>
-              <i class="fa-solid fa-xmark action-delete" onclick="removerItem('item-7294-3')"></i>
-            </div>
-          </div>
-        </div>
+      <!-- Lista de Produtos Adicionados com Formato Indicador -->
+      <div class="fw-bold text-secondary mb-1" id="formatoIndicadorText" style="font-size: 12px;">148/105 ** A6 PAISAGEM</div>
+      <div class="saved-list-box" id="savedListBox">
+        <!-- Itens inseridos via JS -->
       </div>
 
     </div>
@@ -648,53 +474,47 @@
 
       <!-- Busca + Câmera -->
       <div class="search-box-wrapper">
-        <div class="row g-2">
-          <div class="col-12 col-sm-6 col-md-7">
-            <input type="text" id="barcodeInput" class="form-control" placeholder="Digite ou escaneie o EAN..." value="7894900027006">
-          </div>
-          <div class="col-6 col-sm-3 col-md-3">
-            <button class="btn-scanner-main w-100" type="button" onclick="abrirCameraScanner()">
-              <i class="fa-solid fa-barcode"></i> Escanear
-            </button>
-          </div>
-          <div class="col-6 col-sm-3 col-md-2">
-            <button class="btn btn-primary w-100 fw-bold" onclick="buscarProduto()">Buscar</button>
-          </div>
+        <div class="d-flex gap-2">
+          <input type="text" id="barcodeInput" class="form-control" placeholder="Digite ou escaneie o código de barras..." value="7894900031515">
+          <button class="btn btn-primary px-3" onclick="buscarProduto()">Pesquisar</button>
+          <button class="btn-scanner" type="button" data-bs-toggle="modal" data-bs-target="#cameraModal" onclick="iniciarCamera()">
+            <i class="fa-solid fa-camera"></i> Escanear
+          </button>
         </div>
       </div>
 
       <!-- Tabela de Produtos -->
       <div class="table-container">
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <label class="fw-bold" style="font-size: 13px;">2- Clique no produto desejado abaixo:</label>
+          <label class="fw-bold">2- Clique no produto desejado abaixo:</label>
           <button class="btn btn-success btn-sm" onclick="window.print()">
-            <i class="fa-solid fa-print me-1"></i> Imprimir
+            <i class="fa-solid fa-print me-1"></i> Imprimir Cartaz
           </button>
         </div>
 
         <div class="table-responsive">
-          <table class="table table-bordered align-middle mb-0" style="font-size: 13px;">
+          <table class="table table-bordered align-middle mb-0">
             <thead>
               <tr class="table-light text-center">
-                <th style="width: 80px;">Cód</th>
+                <th style="width: 90px;">Cód</th>
                 <th>Descrição</th>
-                <th style="width: 100px;">Ações</th>
+                <th style="width: 110px;">Ações</th>
               </tr>
             </thead>
             <tbody>
               <tr class="product-row-selected">
-                <td class="fw-bold text-success text-center" id="tdCodigo">7483</td>
+                <td class="fw-bold text-success text-center" id="tdCodigo">7294</td>
                 <td>
-                  <i class="fa-solid fa-thumbs-up text-secondary me-1"></i>
-                  <span id="tdDescricao">REFRI COCA COLA PET 1,5L - UN</span>
-                  <strong class="ms-1 d-none d-sm-inline">Família:</strong>
+                  <i class="fa-solid fa-thumbs-up text-secondary me-2"></i>
+                  <span id="tdDescricao">REFRI FANTA PET 2L LARANJA</span>
+                  <strong class="ms-2">Família:</strong>
                 </td>
                 <td class="text-center">
                   <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
                     Ações
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#" onclick="gerarCartaz('REFRI COCA COLA PET 1,5L', '10', '49')">Gerar Cartaz</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="gerarCartaz('7294', 'REFRI FANTA PET 2L LARANJA', '9,39', '7894900031515')">Gerar Cartaz</a></li>
                   </ul>
                 </td>
               </tr>
@@ -705,71 +525,90 @@
 
       <!-- Seção do Cartaz Gerado -->
       <div class="poster-section">
-        <div class="d-flex justify-content-between align-items-center w-100 mb-2">
-          <h6 class="m-0 fw-bold text-secondary" style="font-size: 14px;">Pré-visualização do Cartaz</h6>
-          <button class="btn btn-success btn-sm" onclick="window.print()">
-            <i class="fa-solid fa-print me-1"></i> Imprimir
+        <div class="d-flex justify-content-between align-items-center w-100 mb-2" style="max-width: 480px;">
+          <h6 class="m-0 fw-bold text-secondary">Pré-visualização do Cartaz</h6>
+          <button class="btn btn-success btn-sm px-3" onclick="window.print()">
+            <i class="fa-solid fa-print me-1"></i> Imprimir Cartaz
           </button>
         </div>
 
-        <!-- Folha do Cartaz com Container Responsivo -->
-        <div class="poster-paper-wrapper">
-          <div class="poster-paper a4-retrato" id="posterPaper">
-            
-            <!-- Banner Superior Red SVG -->
-            <svg class="poster-header-svg" viewBox="0 0 500 130" preserveAspectRatio="none">
-              <path d="M 0 0 L 500 0 L 500 80 Q 250 130 0 80 Z" fill="#E30613"/>
-              <text x="250" y="68" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-style="italic" font-size="54" fill="#FFE600" text-anchor="middle" id="posterCampanhaText">OFERTA!</text>
+        <!-- Folha do Cartaz com Réplica Gráfica Perfeita -->
+        <div class="poster-paper a4-retrato" id="posterPaper">
+          
+          <!-- Texto Superior: DOBRE AQUI -->
+          <div class="fold-header">DOBRE AQUI</div>
+
+          <!-- Banner Red SVG com Pincelada e Texto Itálico -->
+          <svg class="poster-header-svg" viewBox="0 0 500 120" preserveAspectRatio="none">
+            <!-- Forma Vermelha Curvada -->
+            <path d="M 0 0 L 500 0 L 500 70 Q 250 120 0 70 Z" fill="#E30613"/>
+            <!-- Faixa Amarela Interna -->
+            <path d="M 40 82 Q 250 118 460 82 Q 250 108 40 82 Z" fill="#FFE600"/>
+            <!-- Texto da Campanha -->
+            <text x="250" y="62" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-style="italic" font-size="52" fill="#FFE600" text-anchor="middle" id="posterCampanhaText">OFERTA!</text>
+          </svg>
+
+          <!-- Nome do Produto -->
+          <div class="poster-body">
+            <div class="poster-product-title" id="posterTitle">REFRI FANTA PET 2L LARANJA</div>
+          </div>
+
+          <!-- Preço sobre Pincelada Amarela SVG -->
+          <div class="poster-price-container">
+            <svg class="poster-price-bg" viewBox="0 0 500 200" preserveAspectRatio="none">
+              <!-- Textura de Pincelada de Tinta Amarela -->
+              <path d="M 15 25 C 120 5, 380 10, 485 20 C 498 70, 492 140, 475 180 C 390 198, 110 205, 20 175 C 5 130, 2 65, 15 25 Z" fill="#FFE600"/>
+              <path d="M 5 45 C 80 35, 420 30, 495 50 C 490 110, 480 150, 460 188 C 360 190, 80 192, 10 160 Z" fill="#FFE600"/>
             </svg>
 
-            <!-- Nome Produto -->
-            <div class="poster-body">
-              <div class="poster-product-title" id="posterTitle">REFRI COCA COLA<br>PET 1,5L</div>
-            </div>
-
-            <!-- Preço com Fundo Pincelada Amarela -->
-            <div class="poster-price-container my-auto mx-auto">
-              <svg class="poster-price-bg" viewBox="0 0 500 250" preserveAspectRatio="none">
-                <path d="M 30 25 C 100 10, 400 15, 470 30 C 490 80, 485 170, 465 220 C 380 240, 120 245, 35 215 C 15 160, 10 80, 30 25 Z" fill="#FFE600"/>
-              </svg>
-
-              <div class="poster-price-content">
-                <span class="poster-price-currency">R$</span>
-                <span class="poster-price-main" id="posterPriceMain">10</span>
-                <span class="poster-price-cents" id="posterPriceCents">,49</span>
+            <div class="poster-price-content">
+              <div class="price-unit-box">
+                <span>R$</span>
+                <span>UN</span>
               </div>
+              <span class="poster-price-main" id="posterPriceMain">9,39</span>
             </div>
+          </div>
 
-            <!-- Rodapé RMarket -->
-            <div class="poster-footer">
-              <svg class="poster-footer-logo" viewBox="0 0 200 50">
-                <text x="45" y="38" font-family="Arial, sans-serif" font-weight="900" font-size="32" fill="#0080FF">R</text>
-                <text x="70" y="38" font-family="Arial, sans-serif" font-weight="bold" font-size="28" fill="#E30613">Market</text>
+          <!-- Rodapé do Cartaz -->
+          <div class="poster-footer">
+            <div class="footer-code" id="posterEanText">CÓD. PRODUTO: "7894900031515"</div>
+            <div>
+              <!-- Logo Rede RMarket -->
+              <svg class="footer-logo" viewBox="0 0 160 35">
+                <text x="5" y="24" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#0080FF">rede</text>
+                <path d="M 38 18 C 38 10, 45 10, 48 18 L 52 18" fill="none" stroke="#0080FF" stroke-width="2"/>
+                <circle cx="42" cy="24" r="2" fill="#0080FF"/>
+                <circle cx="50" cy="24" r="2" fill="#0080FF"/>
+                <text x="58" y="26" font-family="'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#0080FF">R</text>
+                <text x="76" y="26" font-family="'Arial Black', sans-serif" font-weight="bold" font-size="20" fill="#E30613">market</text>
               </svg>
             </div>
-
+            <div class="footer-validity" id="posterValidadeText">OFERTA VÁLIDA DE 19/09/2026 ATÉ 19/09/2026</div>
           </div>
-        </div>
 
+        </div>
       </div>
 
     </div>
   </div>
 
-  <!-- Modal do Leitor por Câmera (Otimizado para Celulares) -->
-  <div class="modal fade" id="cameraModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+  <!-- Botão Flutuante para Câmera no Android/Celular -->
+  <button class="fab-camera" type="button" data-bs-toggle="modal" data-bs-target="#cameraModal" onclick="iniciarCamera()" title="Escanear Código de Barras">
+    <i class="fa-solid fa-camera"></i>
+  </button>
+
+  <!-- Modal do Leitor de Câmera -->
+  <div class="modal fade" id="cameraModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h6 class="modal-title fw-bold"><i class="fa-solid fa-barcode me-2"></i>Escanear Código de Barras (Android)</h6>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" onclick="pararCamera()"></button>
+        <div class="modal-header">
+          <h5 class="modal-title fs-6"><i class="fa-solid fa-barcode me-2"></i>Escanear Código de Barras</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="pararCamera()"></button>
         </div>
-        <div class="modal-body text-center p-3">
+        <div class="modal-body text-center">
           <div id="reader"></div>
-          <small class="text-muted d-block mt-2">Aproxime a câmera do telefone do código de barras do produto</small>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm w-100" data-bs-dismiss="modal" onclick="pararCamera()">Cancelar</button>
+          <small class="text-muted d-block mt-2">Aponta a câmera do celular para o código EAN</small>
         </div>
       </div>
     </div>
@@ -780,134 +619,140 @@
 
   <script>
     let html5QrcodeScanner = null;
-    let contadorItens = 100;
-    let cameraModalInstance = null;
+    let listaItensSalvos = [
+      { id: '7294', nome: 'REFRI FANTA PET 2L LARANJA', preco: '9,39', ean: '7894900031515' },
+      { id: '7294', nome: 'REFRI FANTA PET 2L LARANJA', preco: '9,39', ean: '7894900031515' },
+      { id: '7294', nome: 'REFRI FANTA PET 2L LARANJA', preco: '9,39', ean: '7894900031515' }
+    ];
 
     document.addEventListener("DOMContentLoaded", function() {
-      cameraModalInstance = new bootstrap.Modal(document.getElementById('cameraModal'));
+      renderizarListaSalva();
     });
 
-    function abrirCameraScanner() {
-      cameraModalInstance.show();
-      setTimeout(() => {
-        iniciarCamera();
-      }, 400);
-    }
-
-    function iniciarCamera() {
-      if (!html5QrcodeScanner) {
-        html5QrcodeScanner = new Html5Qrcode("reader");
-      }
-
-      const config = { 
-        fps: 15, 
-        qrbox: { width: 250, height: 150 },
-        experimentalFeatures: {
-          useBarCodeDetectorIfSupported: true
-        }
-      };
-
-      // Tenta usar a câmera traseira do Android primeiro
-      html5QrcodeScanner.start(
-        { facingMode: "environment" },
-        config,
-        onScanSuccess,
-        onScanFailure
-      ).catch(err => {
-        console.warn("Falha na câmera traseira, tentando fallback:", err);
-        // Fallback genérico caso facingMode falhe
-        html5QrcodeScanner.start(
-          undefined,
-          config,
-          onScanSuccess,
-          onScanFailure
-        ).catch(error => {
-          alert("Não foi possível acessar a câmera do celular. Verifique as permissões do navegador.");
-        });
-      });
-    }
-
-    function onScanSuccess(decodedText) {
-      document.getElementById('barcodeInput').value = decodedText;
-      cameraModalInstance.hide();
-      pararCamera();
-      buscarProduto();
-    }
-
-    function onScanFailure(error) {
-      // Ignora falhas contínuas de leitura por frame
-    }
-
-    function pararCamera() {
-      if (html5QrcodeScanner && html5QrcodeScanner.isScanning) {
-        html5QrcodeScanner.stop().then(() => {
-          console.log("Câmera encerrada");
-        }).catch(err => console.error(err));
-      }
-    }
-
-    // Função de Troca Dinâmica de Formato do Cartaz
-    function selecionarModelo(element, modelo, dimensaotexto) {
+    // Troca de Modelo de Cartaz
+    function selecionarModelo(element, modelo, formatoTexto) {
       document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
       element.classList.add('active');
 
       const poster = document.getElementById('posterPaper');
       poster.className = 'poster-paper ' + modelo;
 
+      document.getElementById('formatoIndicadorText').innerText = formatoTexto;
       document.body.className = 'print-' + modelo;
-      document.getElementById('labelFormatoInfo').innerText = dimensaotexto;
     }
 
-    // Adiciona o produto selecionado na lista lateral
-    function adicionarALista() {
-      const cod = document.getElementById('tdCodigo').innerText;
-      const desc = document.getElementById('tdDescricao').innerText.split(' ')[0] + " " + (document.getElementById('tdDescricao').innerText.split(' ')[1] || "");
-      contadorItens++;
-      const idUnico = 'item-' + cod + '-' + contadorItens;
-
-      const html = `
-        <div class="cartaz-item-row" id="${idUnico}">
-          <span class="cartaz-item-name">${desc.substring(0, 9)}</span>
-          <span class="cartaz-item-code">${cod}</span>
-          <div class="cartaz-item-actions">
-            <i class="fa-solid fa-eye action-eye" onclick="verItem('REFRI COCA COLA PET 1,5L', '10', '49')"></i>
-            <i class="fa-solid fa-xmark action-delete" onclick="removerItem('${idUnico}')"></i>
-          </div>
-        </div>
-      `;
-      document.getElementById('containerListaItens').insertAdjacentHTML('beforeend', html);
-    }
-
-    function limparLista() {
-      document.getElementById('containerListaItens').innerHTML = '';
-    }
-
-    function removerItem(id) {
-      const el = document.getElementById(id);
-      if (el) el.remove();
-    }
-
-    function verItem(titulo, inteiro, centavos) {
-      gerarCartaz(titulo, inteiro, centavos);
-    }
-
-    function gerarCartaz(titulo, inteiro, centavos) {
-      document.getElementById('posterTitle').innerHTML = titulo.replace(' PET', '<br>PET');
-      document.getElementById('posterPriceMain').innerText = inteiro;
-      document.getElementById('posterPriceCents').innerText = ',' + centavos;
-    }
-
+    // Atualiza Texto da Campanha
     function atualizarCampanha() {
       const campanha = document.getElementById('selectCampanha').value;
       document.getElementById('posterCampanhaText').textContent = campanha;
     }
 
+    // Atualiza Cartaz Ativo
+    function gerarCartaz(codigo, titulo, preco, ean) {
+      document.getElementById('posterTitle').innerText = titulo;
+      document.getElementById('posterPriceMain').innerText = preco;
+      document.getElementById('posterEanText').innerText = 'CÓD. PRODUTO: "' + ean + '"';
+      document.getElementById('tdCodigo').innerText = codigo;
+      document.getElementById('tdDescricao').innerText = titulo;
+    }
+
+    // Gerenciamento da Lista de Itens Salvos
+    function adicionarALista() {
+      const codigo = document.getElementById('tdCodigo').innerText;
+      const nome = document.getElementById('tdDescricao').innerText;
+      const ean = document.getElementById('barcodeInput').value;
+
+      listaItensSalvos.push({
+        id: codigo,
+        nome: nome,
+        preco: '9,39',
+        ean: ean
+      });
+
+      renderizarListaSalva();
+    }
+
+    function removerItemLista(index) {
+      listaItensSalvos.splice(index, 1);
+      renderizarListaSalva();
+    }
+
+    function limparLista() {
+      listaItensSalvos = [];
+      renderizarListaSalva();
+    }
+
+    function renderizarListaSalva() {
+      const container = document.getElementById('savedListBox');
+      container.innerHTML = '';
+
+      if (listaItensSalvos.length === 0) {
+        container.innerHTML = '<small class="text-muted d-block text-center py-2">Nenhum produto salvo</small>';
+        return;
+      }
+
+      listaItensSalvos.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'saved-item-row';
+        row.innerHTML = `
+          <span class="text-uppercase fw-bold" style="max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.nome.split(' ')[0]} FA</span>
+          <span class="text-muted">${item.id}</span>
+          <div>
+            <i class="fa-solid fa-eye text-primary me-2 cursor-pointer" title="Visualizar" onclick="gerarCartaz('${item.id}', '${item.nome}', '${item.preco}', '${item.ean}')"></i>
+            <i class="fa-solid fa-xmark text-danger cursor-pointer" title="Remover" onclick="removerItemLista(${index})"></i>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    // Leitor por Câmera
+    function iniciarCamera() {
+      if (!html5QrcodeScanner) {
+        html5QrcodeScanner = new Html5Qrcode("reader");
+      }
+
+      const config = { 
+        fps: 10, 
+        qrbox: { width: 250, height: 130 },
+        formatsToSupport: [ 
+          Html5QrcodeSupportedFormats.EAN_13,
+          Html5QrcodeSupportedFormats.EAN_8 
+        ]
+      };
+
+      html5QrcodeScanner.start(
+        { facingMode: "environment" },
+        config,
+        onScanSuccess,
+        onScanFailure
+      ).catch(err => {
+        console.error("Erro ao abrir câmera:", err);
+        alert("Acesso à câmera indisponível ou bloqueado.");
+      });
+    }
+
+    function onScanSuccess(decodedText) {
+      document.getElementById('barcodeInput').value = decodedText;
+      const modalElement = document.getElementById('cameraModal');
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) modal.hide();
+      pararCamera();
+      buscarProduto();
+    }
+
+    function onScanFailure(error) {}
+
+    function pararCamera() {
+      if (html5QrcodeScanner && html5QrcodeScanner.isScanning) {
+        html5QrcodeScanner.stop().catch(err => console.error(err));
+      }
+    }
+
     function buscarProduto() {
       const ean = document.getElementById('barcodeInput').value;
       if (ean) {
-        document.getElementById('tdCodigo').innerText = "7483";
-        document.getElementById('tdDescricao').innerText = "REFRI COCA COLA PET 1,5L - UN";
-        gerarCartaz("REFRI COCA COLA PET 1,5L", "10", "49");
+        gerarCartaz("7294", "REFRI FANTA PET 2L LARANJA", "9,39", ean);
       }
     }
   </script>
