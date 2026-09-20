@@ -38,7 +38,7 @@
 
     <label style="font-size: 13px; font-weight: bold; color: #555;">Digitação Manual (se necessário):</label>
     <div class="manual-box">
-      <input type="number" id="codigoManual" class="manual-input" placeholder="Ex: 7891234567890" inputmode="numeric" onkeypress="verificarEnter(event)">
+      <input type="text" id="codigoManual" class="manual-input" placeholder="Ex: 7891234567890" inputmode="numeric" onkeypress="verificarEnter(event)">
       <button class="btn-add" onclick="adicionarManual()">+ Add</button>
     </div>
   </div>
@@ -53,7 +53,7 @@
   </div>
 
   <script>
-    // URL do seu Worker do Cloudflare intermediário (soluciona o erro de CORS/Conexão)
+    // Endpoint do seu Worker no Cloudflare que resolve o erro de CORS/Conexão
     const apiURL = "https://flat-dawn-6511.clientetrabalho2018.workers.dev";
     
     let produtosColetados = [];
@@ -73,7 +73,6 @@
         experimentalFeatures: { useBarCodeDetectorIfSupported: true }
       };
 
-      // Força a abertura da Câmera Traseira
       html5QrCode.start(
         { facingMode: "environment" }, 
         config, 
@@ -86,7 +85,7 @@
     // Ação ao ler o código com sucesso
     function onScanSuccess(decodedText) {
       adicionarProduto(decodedText);
-      navigator.vibrate?.(120); // Vibração de confirmação
+      navigator.vibrate?.(120); // Vibração curta de confirmação
     }
 
     // Adiciona digitado manualmente
@@ -109,12 +108,14 @@
 
     // Regra de inserção do produto na lista
     function adicionarProduto(codigo) {
-      if (produtosColetados.some(p => p.codigo === codigo)) {
-        return; // Evita ler repetidamente o mesmo item em sequência
+      const codigoStr = String(codigo).trim();
+      
+      if (produtosColetados.some(p => p.codigo === codigoStr)) {
+        return; // Evita ler repetidamente o mesmo item
       }
 
       const novoProduto = {
-        codigo: codigo,
+        codigo: codigoStr,
         departamento: "SANEAMENTO",
         sessao: "LIMPEZA"
       };
@@ -150,29 +151,40 @@
       });
     }
 
-    // Envio para o Cartaz Fácil via Cloudflare Worker
+    // Envio para a API do Cartaz Fácil através do Cloudflare Worker
     async function enviarParaCartazFacil() {
       if (produtosColetados.length === 0) {
         alert("Nenhum produto lido na lista!");
         return;
       }
 
+      // Garante a formatação exata em Array de objetos
+      const payload = produtosColetados.map(p => ({
+        codigo: String(p.codigo),
+        departamento: "SANEAMENTO",
+        sessao: "LIMPEZA"
+      }));
+
       try {
         const response = await fetch(apiURL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(produtosColetados)
+          body: JSON.stringify(payload)
         });
 
+        const respostaTexto = await response.text();
+
         if (response.ok) {
-          alert(" Sucesso! Produtos de saneamento enviados para o Cartaz Fácil.");
+          alert("🚀 Sucesso! Produtos de saneamento enviados para o Cartaz Fácil.");
           produtosColetados = [];
           atualizarListaVisual();
         } else {
-          alert(" Erro ao processar o envio na API do Cartaz Fácil.");
+          console.error("Erro retornado pela API:", respostaTexto);
+          alert(`Atenção (Erro ${response.status}):\n${respostaTexto}`);
         }
       } catch (error) {
-        alert(" Erro de conexão com o servidor intermediário.");
+        console.error("Erro de conexão:", error);
+        alert("Erro de conexão ao tentar enviar os dados.");
       }
     }
   </script>
