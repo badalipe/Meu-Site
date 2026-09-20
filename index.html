@@ -3,465 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cartaz Fácil - Sistema de Cartazes</title>
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Leitor de Código de Barras -->
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-
+  <title>Coletor de Saneamento</title>
+  <!-- Biblioteca leve para leitura de Código de Barras -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
   <style>
-    :root {
-      --header-blue: #0080FF;
-      --btn-blue: #007bff;
-      --selected-green: #c8e6c9;
-      --selected-text: #2e7d32;
-    }
-
-    body {
-      background-color: #f8f9fa;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .top-navbar {
-      background-color: var(--header-blue);
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand-logo {
-      font-weight: bold;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .main-layout {
-      display: flex;
-      padding: 15px;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .sidebar {
-      width: 280px;
-      background: white;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-
-    .content-area {
-      flex: 1;
-      min-width: 320px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .filial-box {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
-
-    .search-panel {
-      background: white;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    .table-panel {
-      background: white;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    .product-row {
-      cursor: pointer;
-    }
-
-    .product-row:hover {
-      background-color: #f1f1f1;
-    }
-
-    .product-row.selected {
-      background-color: var(--selected-green) !important;
-    }
-
-    .product-row.selected .cod-cell {
-      color: var(--selected-text);
-      font-weight: bold;
-    }
-
-    .template-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-top: 5px;
-    }
-
-    .template-card {
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      padding: 5px;
-      text-align: center;
-      cursor: pointer;
-      background: #fff;
-    }
-
-    .template-card.active {
-      border-color: var(--header-blue);
-      background: #eef7ff;
-    }
-
-    .template-card svg {
-      width: 100%;
-      height: 40px;
-    }
-
-    .template-card span {
-      display: block;
-      font-size: 9px;
-      font-weight: bold;
-      margin-top: 2px;
-    }
-
-    .poster-preview-box {
-      background: white;
-      border: 1px solid #ddd;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      border-radius: 4px;
-    }
-
-    .poster-paper {
-      width: 420px;
-      height: 290px;
-      border: 1px solid #ccc;
-      position: relative;
-      background: white;
-      padding: 10px;
-      box-sizing: border-border-box;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .btn-camera-scan {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 4px;
-      font-weight: bold;
-    }
-
-    .fab-scan {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background-color: #0080FF;
-      color: white;
-      border: none;
-      font-size: 22px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      z-index: 1000;
-      cursor: pointer;
-    }
-
-    #reader { width: 100%; max-width: 400px; margin: 0 auto; }
-
-    @media print {
-      body * { visibility: hidden; }
-      .poster-paper, .poster-paper * { visibility: visible; }
-      .poster-paper { position: absolute; left: 0; top: 0; width: 100% !important; border: none !important; box-shadow: none !important; }
-    }
+    body { font-family: sans-serif; padding: 20px; text-align: center; background: #f4f4f9; }
+    .btn-saneamento { background: #007bff; color: white; border: none; padding: 15px 25px; font-size: 18px; border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 15px; }
+    .btn-enviar { background: #28a745; color: white; border: none; padding: 15px 25px; font-size: 18px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 15px; }
+    #reader { width: 100%; max-width: 400px; margin: 0 auto; display: none; }
+    ul { text-align: left; background: white; padding: 15px; border-radius: 8px; list-style: none; }
+    li { padding: 8px 0; border-bottom: 1px solid #eee; }
   </style>
 </head>
 <body>
 
-  <!-- Topbar -->
-  <div class="top-navbar">
-    <div class="brand-logo">
-      <i class="fa-solid fa-bars"></i>
-      <span>Cartaz Fácil</span>
-    </div>
-    <div class="small">
-      Usuário: <strong>rmarket07</strong>
-    </div>
-  </div>
+  <h2>Coletor Rápido de Produtos</h2>
 
-  <div class="main-layout">
+  <!-- Botão principal de Saneamento -->
+  <button class="btn-saneamento" onclick="iniciarLeitor()">🧼 Coletar Saneamento (Câmera)</button>
 
-    <!-- Painel Esquerdo: Dados Balizagem -->
-    <div class="sidebar">
-      <h6 class="fw-bold mb-3"><i class="fa-solid fa-pen me-1"></i> Dados Balizagem</h6>
+  <!-- Janela de vídeo da Câmera -->
+  <div id="reader"></div>
 
-      <div class="mb-3">
-        <label class="small fw-bold">3- Selecione Valor do Produto:</label>
-        <select class="form-select form-select-sm mt-1" id="selectValor">
-          <option>20/09/2026 - 1 | Valores: 17,58</option>
-          <option selected>20/09/2026 - 1 | Valores: 8,99</option>
-        </select>
-      </div>
+  <h3>Produtos Lidos:</h3>
+  <ul id="lista-produtos"></ul>
 
-      <div class="mb-3">
-        <label class="small fw-bold">4- Selecione a Campanha:</label>
-        <select class="form-select form-select-sm mt-1" id="selectCampanha" onchange="atualizarCampanha()">
-          <option value="OFERTA!" selected>OFERTA!</option>
-          <option value="PROMOÇÃO">PROMOÇÃO</option>
-          <option value="SUPER OFERTA">SUPER OFERTA</option>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label class="small fw-bold">5- Selecione Formato / modelo:</label>
-        <div class="template-grid">
-          <div class="template-card" onclick="mudarModelo('A4 RETRATO')">
-            <svg viewBox="0 0 100 120"><rect width="100" height="30" fill="#0080FF"/><circle cx="50" cy="70" r="20" fill="#FFE600"/></svg>
-            <span>A4 RETRATO</span>
-          </div>
-          <div class="template-card active" onclick="mudarModelo('A6 PAISAGEM')">
-            <svg viewBox="0 0 120 80"><rect width="120" height="20" fill="#E30613"/><rect x="20" y="30" width="80" height="35" fill="#FFE600"/></svg>
-            <span>A6 PAISAGEM</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label class="small fw-bold">6- Selecione forma de pagamento:</label>
-        <div style="border: 2px solid #FFE600; padding: 6px; border-radius: 4px; background: white;" class="mt-1">
-          <span class="text-muted d-block" style="font-size: 10px;">Diagramação Cartaz</span>
-          <select class="form-select form-select-sm border-0 bg-light fw-bold p-0" style="font-size:12px;">
-            <option>1 - A VISTA</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="d-flex gap-1 mb-2">
-        <button class="btn btn-warning text-white btn-sm flex-fill fw-bold" onclick="adicionarALista()">+ lista</button>
-        <button class="btn btn-primary btn-sm flex-fill fw-bold" onclick="window.print()">imprimir</button>
-        <button class="btn btn-success btn-sm"><i class="fa-solid fa-lock"></i></button>
-      </div>
-
-      <div class="text-end">
-        <button class="btn btn-outline-danger btn-sm py-0 px-2" style="font-size: 11px;" onclick="limparLista()">Limpar Lista</button>
-      </div>
-    </div>
-
-    <!-- Conteúdo Principal -->
-    <div class="content-area">
-
-      <!-- Seletor de Filial -->
-      <div class="filial-box">
-        <span>Selecione a filial:</span>
-        <select class="form-select form-select-sm w-auto" style="min-width: 200px;">
-          <option>7 - 07-PARATY2</option>
-        </select>
-      </div>
-
-      <!-- Barra de Busca -->
-      <div class="search-panel">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <label class="fw-bold small">1 - Insira código do produto, marca ou descrição</label>
-          <button class="btn btn-primary btn-sm">Adicionar produto</button>
-        </div>
-
-        <div class="d-flex gap-2">
-          <input type="text" id="searchInput" class="form-control" value="qualy" placeholder="Digite qualy, coca, etc...">
-          <button class="btn btn-primary px-4 fw-bold" onclick="pesquisarProdutos()">Pesquisar</button>
-          <button class="btn-camera-scan" data-bs-toggle="modal" data-bs-target="#modalCamera" onclick="iniciarLeitor()">
-            <i class="fa-solid fa-camera me-1"></i> Scan
-          </button>
-        </div>
-      </div>
-
-      <!-- Tabela com Lista de Produtos -->
-      <div class="table-panel">
-        <label class="fw-bold small mb-2 d-block">2- Clique no produto desejado abaixo:</label>
-
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover align-middle mb-0" style="font-size: 13px;">
-            <thead class="table-light">
-              <tr>
-                <th style="width: 80px;" class="text-center">Cód</th>
-                <th>Descrição</th>
-                <th style="width: 100px;" class="text-center">Ações</th>
-              </tr>
-            </thead>
-            <tbody id="tabelaProdutosBody">
-              <!-- Resultados inseridos via JavaScript -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Pré-visualização do Cartaz -->
-      <div class="poster-preview-box">
-        <div class="poster-paper" id="posterPaper">
-          <div class="text-center fw-bold small" style="letter-spacing: 1px;">DOBRE AQUI</div>
-
-          <svg viewBox="0 0 500 110" style="width: 100%; height: 70px;">
-            <path d="M 0 0 L 500 0 L 500 65 Q 250 110 0 65 Z" fill="#E30613"/>
-            <path d="M 30 75 Q 250 110 470 75 Z" fill="#FFE600"/>
-            <text x="250" y="55" font-family="'Arial Black', sans-serif" font-weight="900" font-style="italic" font-size="46" fill="#FFE600" text-anchor="middle" id="posterCampanha">OFERTA!</text>
-          </svg>
-
-          <div class="text-center fw-black text-uppercase my-1" id="posterTitulo" style="font-size: 16px; font-weight: 900;">
-            MARGARINA QUALY CREMOSA C/SAL 1kg - UN
-          </div>
-
-          <div style="position: relative; height: 90px; display: flex; justify-content: center; align-items: center;">
-            <svg viewBox="0 0 500 180" style="position: absolute; width: 90%; height: 100%;">
-              <path d="M 15 20 C 120 5, 380 10, 485 20 C 498 60, 492 130, 475 165 C 390 185, 110 190, 20 160 C 5 120, 2 60, 15 20 Z" fill="#FFE600"/>
-            </svg>
-            <div style="position: relative; z-index: 2; display: flex; align-items: flex-start; font-family: 'Arial Black', sans-serif;">
-              <span style="font-size: 14px; margin-right: 5px; font-weight: bold;">R$<br>UN</span>
-              <span style="font-size: 65px; line-height: 0.8; font-weight: 900;" id="posterPrecoInt">17</span>
-              <span style="font-size: 38px; line-height: 0.8; font-weight: 900;" id="posterPrecoDec">,58</span>
-            </div>
-          </div>
-
-          <div class="d-flex justify-content-between align-items-center border-top pt-1 mt-1" style="font-size: 8px; font-weight: bold;">
-            <span id="posterEan">CÓD. PRODUTO: 7891052001234</span>
-            <span class="text-primary fw-black">RMarket</span>
-            <span>OFERTA VÁLIDA DE 20/09/2026 ATÉ 20/09/2026</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Botão Flutuante de Câmera -->
-  <button class="fab-scan" data-bs-toggle="modal" data-bs-target="#modalCamera" onclick="iniciarLeitor()">
-    <i class="fa-solid fa-camera"></i>
-  </button>
-
-  <!-- Modal da Câmera -->
-  <div class="modal fade" id="modalCamera" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title fw-bold"><i class="fa-solid fa-barcode me-2"></i>Escanear Código de Barras</h6>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="pararLeitor()"></button>
-        </div>
-        <div class="modal-body text-center">
-          <div id="reader"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Botão para enviar à API do Cartaz Fácil -->
+  <button class="btn-enviar" onclick="enviarParaCartazFacil()">🚀 Enviar para o Cartaz Fácil</button>
 
   <script>
-    // Banco de Dados Simulado idêntico à sua imagem da tela
-    const produtosBase = [
-      { cod: '7285', desc: 'MARGARINA QUALY CREMOSA C/SAL 1kg - UN', preco: '17.58', ean: '7891052001234' },
-      { cod: '7852', desc: 'MARGARINA QUALY CREMOSA C/SAL 250G - UN', preco: '5.49', ean: '7891052001235' },
-      { cod: '7855', desc: 'MARGARINA QUALY C/SAL 500G - UN', preco: '8.99', ean: '7891052001236' },
-      { cod: '7859', desc: 'MARGARINA QUALY CREMOSA S/SAL 250G - UN', preco: '5.49', ean: '7891052001237' }
-    ];
+    const token = "SEU_TOKEN_AQUI"; // Insira seu token da API aqui
+    const apiURL = `https://apicartazfacil.com/public/api/importacao/daily?validate=1&token=${token}`;
+    
+    let produtosColetados = [];
+    let html5QrcodeScanner;
 
-    let html5QrcodeScanner = null;
+    function iniciarLeitor() {
+      document.getElementById('reader').style.display = 'block';
+      
+      html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: {width: 250, height: 150} });
+      html5QrcodeScanner.render(onScanSuccess);
+    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      pesquisarProdutos(); // Carrega a lista inicial na tela
+    function onScanSuccess(decodedText, decodedResult) {
+      // Evita duplicados sequenciais
+      if (!produtosColetados.some(p => p.codigo === decodedText)) {
+        const novoProduto = {
+          codigo: decodedText,
+          departamento: "SANEAMENTO",
+          sessao: "LIMPEZA"
+        };
+        
+        produtosColetados.push(novoProduto);
+        
+        // Adiciona na lista visual da tela
+        const lista = document.getElementById('lista-produtos');
+        const item = document.createElement('li');
+        item.innerText = `📦 Código: ${decodedText} - (SANEAMENTO)`;
+        lista.appendChild(item);
+        
+        // Toca um bipe de confirmação
+        navigator.vibrate?.(200);
+      }
+    }
 
-      document.getElementById('searchInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') pesquisarProdutos();
-      });
-    });
-
-    function pesquisarProdutos() {
-      const termo = document.getElementById('searchInput').value.toLowerCase().trim();
-      const tbody = document.getElementById('tabelaProdutosBody');
-      tbody.innerHTML = '';
-
-      const filtrados = produtosBase.filter(p => 
-        p.desc.toLowerCase().includes(termo) || p.cod.includes(termo) || p.ean.includes(termo)
-      );
-
-      if (filtrados.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted py-3">Nenhum produto encontrado.</td></tr>';
+    async function enviarParaCartazFacil() {
+      if (produtosColetados.length === 0) {
+        alert("Nenhum produto lido ainda!");
         return;
       }
 
-      filtrados.forEach((prod, index) => {
-        const isSelected = index === 0; // Seleciona o primeiro por padrão
-        if (isSelected) selecionarProduto(prod);
+      try {
+        const response = await fetch(apiURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(produtosColetados)
+        });
 
-        const tr = document.createElement('tr');
-        tr.className = `product-row ${isSelected ? 'selected' : ''}`;
-        tr.onclick = () => {
-          document.querySelectorAll('.product-row').forEach(r => r.classList.remove('selected'));
-          tr.classList.add('selected');
-          selecionarProduto(prod);
-        };
-
-        tr.innerHTML = `
-          <td class="text-center cod-cell fw-bold">${prod.cod}</td>
-          <td><i class="fa-solid fa-thumbs-up text-secondary me-2"></i> ${prod.desc} <strong>Familia:</strong></td>
-          <td class="text-center">
-            <button class="btn btn-secondary btn-sm dropdown-toggle py-0 px-2" style="font-size: 12px;">Ações</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function selecionarProduto(p) {
-      const [int, dec] = parseFloat(p.preco).toFixed(2).split('.');
-      document.getElementById('posterTitulo').innerText = p.desc;
-      document.getElementById('posterPrecoInt').innerText = int;
-      document.getElementById('posterPrecoDec').innerText = ',' + dec;
-      document.getElementById('posterEan').innerText = 'CÓD. PRODUTO: ' + p.ean;
-    }
-
-    function atualizarCampanha() {
-      document.getElementById('posterCampanha').innerText = document.getElementById('selectCampanha').value;
-    }
-
-    function iniciarLeitor() {
-      if (!html5QrcodeScanner) html5QrcodeScanner = new Html5Qrcode("reader");
-
-      html5QrcodeScanner.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: { width: 250, height: 120 } },
-        (text) => {
-          document.getElementById('searchInput').value = text;
-          pesquisarProdutos();
-          const modal = bootstrap.Modal.getInstance(document.getElementById('modalCamera'));
-          if (modal) modal.hide();
-          pararLeitor();
-        },
-        () => {}
-      ).catch(() => alert("Câmera indisponível."));
-    }
-
-    function pararLeitor() {
-      if (html5QrcodeScanner && html5QrcodeScanner.isScanning) {
-        html5QrcodeScanner.stop();
+        if (response.ok) {
+          alert("Produtos enviados com sucesso!");
+          produtosColetados = [];
+          document.getElementById('lista-produtos').innerHTML = "";
+          if (html5QrcodeScanner) html5QrcodeScanner.clear();
+          document.getElementById('reader').style.display = 'none';
+        } else {
+          alert("Erro ao enviar produtos para a API.");
+        }
+      } catch (error) {
+        alert("Erro de conexão com o servidor.");
       }
     }
   </script>
