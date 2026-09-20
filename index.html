@@ -26,7 +26,6 @@
       padding: 0;
     }
 
-    /* Topbar Header */
     .top-navbar {
       background-color: var(--header-blue);
       color: white;
@@ -45,7 +44,6 @@
       gap: 12px;
     }
 
-    /* Layout Principal */
     .main-container {
       display: flex;
       padding: 15px;
@@ -53,7 +51,6 @@
       flex-wrap: wrap;
     }
 
-    /* Sidebar Esquerda */
     .sidebar {
       width: 290px;
       background: white;
@@ -119,7 +116,6 @@
       color: #444;
     }
 
-    /* Área Central */
     .content-area {
       flex-grow: 1;
       display: flex;
@@ -153,7 +149,6 @@
       color: white;
     }
 
-    /* Tabela e Seleções */
     .table-container {
       background: white;
       border-radius: 6px;
@@ -165,7 +160,6 @@
       background-color: #c8e6c9 !important;
     }
 
-    /* Menu de Ações Estilizado */
     .dropdown-menu-actions {
       border-radius: 4px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -188,7 +182,6 @@
       color: #0056b3;
     }
 
-    /* Botão Flutuante da Câmera */
     .fab-camera {
       position: fixed;
       bottom: 20px;
@@ -212,7 +205,6 @@
       transform: scale(0.95);
     }
 
-    /* Design do Cartaz */
     .poster-section {
       display: flex;
       flex-direction: column;
@@ -238,12 +230,10 @@
       background-color: #fff;
     }
 
-    /* Formatos */
     .poster-paper.a4-retrato { width: 380px; height: 530px; }
     .poster-paper.a5-retrato { width: 320px; height: 450px; }
     .poster-paper.a6-paisagem { width: 480px; height: 320px; }
 
-    /* Topo: DOBRE AQUI */
     .fold-header {
       text-align: center;
       font-weight: 800;
@@ -254,7 +244,6 @@
       margin-bottom: 2px;
     }
 
-    /* Banner Vermelho SVG */
     .poster-header-svg {
       width: 100%;
       height: 90px;
@@ -262,7 +251,6 @@
 
     .poster-paper.a6-paisagem .poster-header-svg { height: 75px; }
 
-    /* Nome do Produto */
     .poster-body {
       text-align: center;
       margin: 8px 0;
@@ -278,7 +266,6 @@
 
     .poster-paper.a6-paisagem .poster-product-title { font-size: 17px; }
 
-    /* Preço com Pincelada Amarela */
     .poster-price-container {
       position: relative;
       width: 90%;
@@ -326,11 +313,18 @@
       line-height: 0.85;
       font-weight: 900;
       letter-spacing: -2px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .poster-price-cents {
+      font-size: 45px;
+      line-height: 0.8;
+      vertical-align: top;
     }
 
     .poster-paper.a6-paisagem .poster-price-main { font-size: 68px; }
 
-    /* Rodapé do Cartaz */
     .poster-footer {
       display: flex;
       justify-content: space-between;
@@ -372,7 +366,6 @@
 
     .saved-item-row:last-child { border-bottom: none; }
 
-    /* Impressão */
     @media print {
       body * { visibility: hidden; }
       body, html { background: white !important; margin: 0 !important; padding: 0 !important; }
@@ -402,7 +395,6 @@
 
     <!-- Sidebar de Opções -->
     <div class="sidebar">
-      <!-- Título de Balizagem -->
       <div class="sidebar-title">
         <i class="fa-solid fa-pen"></i> Dados Balizagem
       </div>
@@ -483,7 +475,7 @@
         </button>
       </div>
 
-      <div class="fw-bold text-secondary mb-1" id="formatoIndicadorText" style="font-size: 12px;">148/105 ** A6 PAISAGEM</div>
+      <div class="fw-bold text-secondary mb-1" id="formatoIndicadorText" style="font-size: 12px;">210/297 ** A4 RETRATO</div>
       <div class="saved-list-box" id="savedListBox"></div>
     </div>
 
@@ -494,14 +486,13 @@
       <div class="search-box-wrapper">
         <div class="d-flex justify-content-between align-items-center mb-2">
           <label class="fw-bold small text-secondary">1 - Insira código do produto, marca ou descrição</label>
-          <!-- Botão "Adicionar produto" -->
           <button class="btn btn-primary btn-sm px-3 fw-semibold" onclick="modalNovoProduto.show()">
             Adicionar produto
           </button>
         </div>
 
-        <div class="row g-2 align-items-center">
-          <div class="col-12 col-md-4 ms-auto text-end mb-1">
+        <div class="row g-2 align-items-center mb-2">
+          <div class="col-12 col-md-4 ms-auto text-end">
             <select class="form-select form-select-sm">
               <option selected>Todas Sessões</option>
               <option>Bebidas</option>
@@ -542,7 +533,6 @@
                   <strong class="ms-2">Familia:</strong>
                 </td>
                 <td class="text-center">
-                  <!-- Dropdown de Ações Completo -->
                   <div class="dropdown">
                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
                       Ações
@@ -576,7 +566,6 @@
           </table>
         </div>
 
-        <!-- Paginação -->
         <div class="d-flex justify-content-center">
           <nav>
             <ul class="pagination pagination-sm m-0">
@@ -609,7 +598,7 @@
           </svg>
 
           <div class="poster-body">
-            <div class="poster-product-title" id="posterTitle">REFRI COCA COLA PET 1,5L</div>
+            <div class="poster-product-title" id="posterTitleText">REFRI COCA COLA PET 1,5L</div>
           </div>
 
           <div class="poster-price-container">
@@ -623,7 +612,10 @@
                 <span>R$</span>
                 <span>UN</span>
               </div>
-              <span class="poster-price-main" id="posterPriceMain">10,49</span>
+              <div class="poster-price-main">
+                <span id="posterPriceInt">10</span>
+                <span class="poster-price-cents" id="posterPriceDec">,49</span>
+              </div>
             </div>
           </div>
 
@@ -652,8 +644,7 @@
     <i class="fa-solid fa-camera"></i>
   </button>
 
-  <!-- Modais do Sistema -->
-  <!-- 1. Modal Camera -->
+  <!-- Modais -->
   <div class="modal fade" id="cameraModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -669,7 +660,6 @@
     </div>
   </div>
 
-  <!-- 2. Modal Adicionar Produto -->
   <div class="modal fade" id="modalNovoProduto" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -699,7 +689,6 @@
     </div>
   </div>
 
-  <!-- 3. Modal Editar Preço -->
   <div class="modal fade" id="modalEditarPreco" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
@@ -718,7 +707,6 @@
     </div>
   </div>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
@@ -735,6 +723,83 @@
       renderizarListaSalva();
     });
 
+    async function buscarProduto() {
+      const ean = document.getElementById('barcodeInput').value.trim();
+      if (!ean) {
+        alert("Por favor, digite ou escaneie um código de barras.");
+        return;
+      }
+
+      const btnPesquisar = document.querySelector("button[onclick='buscarProduto()']");
+      const textoOriginal = btnPesquisar.innerHTML;
+      btnPesquisar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Buscando...';
+      btnPesquisar.disabled = true;
+
+      const targetUrl = 'https://rmarket.cartazfacil.pro/unitario.php';
+      const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(targetUrl);
+
+      try {
+        const formData = new URLSearchParams();
+        formData.append('usuario', 'rmarket07');
+        formData.append('senha', 'sup12345');
+        formData.append('codigo', ean);
+        formData.append('btnPesquisar', 'Pesquisar');
+
+        const response = await fetch(proxyUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: formData.toString()
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erro na conexão: ${response.status}`);
+        }
+
+        const htmlText = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+
+        const linhaProduto = doc.querySelector('table tbody tr');
+        
+        if (linhaProduto) {
+          const colunas = linhaProduto.querySelectorAll('td');
+          let codigoEncontrado = colunas[0]?.textContent?.trim() || ean;
+          let descricaoEncontrada = colunas[1]?.textContent?.trim() || '';
+          let precoEncontrado = colunas[2]?.textContent?.trim() || '10,49';
+
+          descricaoEncontrada = descricaoEncontrada.replace(/Ações.*/gi, '').trim();
+
+          const precoLimpo = precoEncontrado.replace(/[^\d,.]/g, '').replace(',', '.');
+          const valorNum = parseFloat(precoLimpo) || 10.49;
+          const [inteiro, centavos] = valorNum.toFixed(2).split('.');
+
+          gerarCartaz(codigoEncontrado, descricaoEncontrada || 'PRODUTO LOCALIZADO', inteiro, centavos, ean);
+
+        } else {
+          alert("Produto não localizado para o código: " + ean);
+        }
+
+      } catch (error) {
+        console.error("Erro na busca:", error);
+        alert("Falha na comunicação. O produto foi carregado em modo de demonstração.");
+        gerarCartaz("7483", "REFRI COCA COLA PET 1,5L", "10", "49", ean);
+      } finally {
+        btnPesquisar.innerHTML = textoOriginal;
+        btnPesquisar.disabled = false;
+      }
+    }
+
+    function gerarCartaz(codigo, titulo, precoInt, precoDec, ean) {
+      document.getElementById('tdCodigo').innerText = codigo;
+      document.getElementById('tdDescricao').innerText = titulo;
+      document.getElementById('posterTitleText').textContent = titulo.toUpperCase();
+      document.getElementById('posterPriceInt').textContent = precoInt;
+      document.getElementById('posterPriceDec').textContent = ',' + precoDec;
+      document.getElementById('posterEanText').innerText = 'CÓD. PRODUTO: "' + ean + '"';
+    }
+
     function selecionarModelo(element, modelo, formatoTexto) {
       document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
       element.classList.add('active');
@@ -750,21 +815,12 @@
       document.getElementById('posterCampanhaText').textContent = campanha;
     }
 
-    function gerarCartaz(codigo, titulo, preco, ean) {
-      document.getElementById('posterTitle').innerText = titulo;
-      document.getElementById('posterPriceMain').innerText = preco;
-      document.getElementById('posterEanText').innerText = 'CÓD. PRODUTO: "' + ean + '"';
-      document.getElementById('tdCodigo').innerText = codigo;
-      document.getElementById('tdDescricao').innerText = titulo;
-    }
-
-    /* Ações do Dropdown */
     function abrirEditarProduto() {
       const nomeAtual = document.getElementById('tdDescricao').innerText;
       const novoNome = prompt("Editar nome do produto:", nomeAtual);
       if (novoNome) {
         document.getElementById('tdDescricao').innerText = novoNome;
-        document.getElementById('posterTitle').innerText = novoNome;
+        document.getElementById('posterTitleText').textContent = novoNome.toUpperCase();
       }
     }
 
@@ -773,17 +829,19 @@
     }
 
     function salvarPreco() {
-      const novoPreco = document.getElementById('inputEditarPreco').value;
-      document.getElementById('posterPriceMain').innerText = novoPreco;
+      const novoPreco = document.getElementById('inputEditarPreco').value.replace(',', '.');
+      const [int, dec] = parseFloat(novoPreco || 0).toFixed(2).split('.');
+      document.getElementById('posterPriceInt').textContent = int;
+      document.getElementById('posterPriceDec').textContent = ',' + dec;
       modalEditarPreco.hide();
     }
 
     function abrirImagem() {
-      alert("Recurso de inserção de imagem do produto ativado!");
+      alert("Recurso de inserção de imagem ativado!");
     }
 
     function abrirAditivo() {
-      const aditivo = prompt("Insira o texto do aditivo (Ex: 'LEVE 3 PAGUE 2'):");
+      const aditivo = prompt("Insira o texto do aditivo:");
       if (aditivo) {
         alert("Aditivo '" + aditivo + "' inserido no cartaz!");
       }
@@ -792,19 +850,21 @@
     function salvarNovoProduto() {
       const ean = document.getElementById('novoEan').value || '7890000000000';
       const nome = document.getElementById('novoNome').value || 'NOVO PRODUTO';
-      const preco = document.getElementById('novoPreco').value || '0,00';
+      const preco = document.getElementById('novoPreco').value.replace(',', '.') || '0.00';
+      const [int, dec] = parseFloat(preco).toFixed(2).split('.');
 
-      gerarCartaz("9999", nome, preco, ean);
+      gerarCartaz("9999", nome, int, dec, ean);
       modalNovoProduto.hide();
     }
 
     function adicionarALista() {
       const codigo = document.getElementById('tdCodigo').innerText;
       const nome = document.getElementById('tdDescricao').innerText;
-      const preco = document.getElementById('posterPriceMain').innerText;
+      const precoInt = document.getElementById('posterPriceInt').textContent;
+      const precoDec = document.getElementById('posterPriceDec').textContent;
       const ean = document.getElementById('barcodeInput').value;
 
-      listaItensSalvos.push({ id: codigo, nome: nome, preco: preco, ean: ean });
+      listaItensSalvos.push({ id: codigo, nome: nome, preco: precoInt + precoDec, ean: ean });
       renderizarListaSalva();
     }
 
@@ -834,7 +894,7 @@
           <span class="text-uppercase fw-bold" style="max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.nome}</span>
           <span class="text-muted">${item.id}</span>
           <div>
-            <i class="fa-solid fa-eye text-primary me-2 cursor-pointer" onclick="gerarCartaz('${item.id}', '${item.nome}', '${item.preco}', '${item.ean}')"></i>
+            <i class="fa-solid fa-eye text-primary me-2 cursor-pointer" onclick="recarregarDoHistorico('${item.id}', '${item.nome}', '${item.preco}', '${item.ean}')"></i>
             <i class="fa-solid fa-xmark text-danger cursor-pointer" onclick="removerItemLista(${index})"></i>
           </div>
         `;
@@ -842,7 +902,11 @@
       });
     }
 
-    /* Leitor de Câmera */
+    function recarregarDoHistorico(id, nome, preco, ean) {
+      const [int, dec] = preco.replace('R$', '').trim().split(',');
+      gerarCartaz(id, nome, int, dec || '00', ean);
+    }
+
     function iniciarCamera() {
       if (!html5QrcodeScanner) {
         html5QrcodeScanner = new Html5Qrcode("reader");
@@ -876,13 +940,6 @@
     function pararCamera() {
       if (html5QrcodeScanner && html5QrcodeScanner.isScanning) {
         html5QrcodeScanner.stop().catch(err => console.error(err));
-      }
-    }
-
-    function buscarProduto() {
-      const ean = document.getElementById('barcodeInput').value;
-      if (ean) {
-        gerarCartaz("7483", "REFRI COCA COLA PET 1,5L - UN", "10,49", ean);
       }
     }
   </script>
