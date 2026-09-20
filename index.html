@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cartaz Fácil - RMarket</title>
-  <!-- Bootstrap 5 CSS -->
+  <title>Cartaz Fácil - Sistema de Cartazes</title>
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome Icons -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- HTML5 QR Code / Barcode Scanner -->
+  <!-- Leitor de Código de Barras -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
   <style>
     :root {
-      --primary-blue: #0080FF;
-      --header-blue: #0056b3;
-      --accent-red: #E30613;
-      --accent-yellow: #FFE600;
+      --header-blue: #0080FF;
+      --btn-blue: #007bff;
+      --selected-green: #c8e6c9;
+      --selected-text: #2e7d32;
     }
 
     body {
-      background-color: #f4f6f9;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
     }
@@ -33,7 +33,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
     }
 
     .brand-logo {
@@ -41,10 +40,10 @@
       font-size: 18px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .main-container {
+    .main-layout {
       display: flex;
       padding: 15px;
       gap: 15px;
@@ -52,354 +51,181 @@
     }
 
     .sidebar {
-      width: 290px;
+      width: 280px;
       background: white;
       padding: 15px;
-      border-radius: 6px;
-      border: 1px solid #e0e0e0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
       flex-shrink: 0;
     }
 
-    .sidebar-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 15px;
+    .content-area {
+      flex: 1;
+      min-width: 320px;
       display: flex;
-      align-items: center;
-      gap: 8px;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    .sidebar label {
+    .filial-box {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
       font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .search-panel {
+      background: white;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .table-panel {
+      background: white;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .product-row {
+      cursor: pointer;
+    }
+
+    .product-row:hover {
+      background-color: #f1f1f1;
+    }
+
+    .product-row.selected {
+      background-color: var(--selected-green) !important;
+    }
+
+    .product-row.selected .cod-cell {
+      color: var(--selected-text);
       font-weight: bold;
-      color: #333;
     }
 
     .template-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 8px;
-      margin-top: 8px;
+      margin-top: 5px;
     }
 
     .template-card {
-      border: 2px solid #ddd;
+      border: 2px solid #ccc;
       border-radius: 4px;
-      padding: 6px;
+      padding: 5px;
       text-align: center;
       cursor: pointer;
-      background: #fafafa;
-      transition: all 0.2s ease;
+      background: #fff;
     }
 
-    .template-card.active, .template-card:hover {
+    .template-card.active {
       border-color: var(--header-blue);
-      background: #f0f7ff;
-      box-shadow: 0 0 4px rgba(0,86,179,0.3);
+      background: #eef7ff;
     }
 
     .template-card svg {
       width: 100%;
-      height: 45px;
+      height: 40px;
     }
 
     .template-card span {
       display: block;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: bold;
-      margin-top: 4px;
-      color: #444;
+      margin-top: 2px;
     }
 
-    .content-area {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      min-width: 320px;
-    }
-
-    .search-box-wrapper {
+    .poster-preview-box {
       background: white;
-      padding: 15px;
-      border-radius: 6px;
-      border: 1px solid #e0e0e0;
-    }
-
-    .btn-scanner {
-      background-color: #0056b3;
-      color: white;
-      border: none;
-      padding: 0 16px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .btn-scanner:hover {
-      background-color: #004085;
-      color: white;
-    }
-
-    .table-container {
-      background: white;
-      border-radius: 6px;
-      padding: 15px;
-      border: 1px solid #e0e0e0;
-    }
-
-    .product-row-selected {
-      background-color: #c8e6c9 !important;
-    }
-
-    .dropdown-menu-actions {
-      border-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       border: 1px solid #ddd;
-      padding: 4px 0;
-      min-width: 150px;
-    }
-
-    .dropdown-menu-actions .dropdown-item {
-      font-size: 13px;
-      padding: 6px 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #333;
-    }
-
-    .dropdown-menu-actions .dropdown-item:hover {
-      background-color: #f0f7ff;
-      color: #0056b3;
-    }
-
-    .fab-camera {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: #0056b3;
-      color: white;
-      border-radius: 50%;
+      padding: 20px;
       display: flex;
       justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      z-index: 1000;
-      border: none;
-      cursor: pointer;
-    }
-
-    .poster-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: white;
-      padding: 20px;
-      border-radius: 6px;
-      border: 1px solid #e0e0e0;
+      border-radius: 4px;
     }
 
     .poster-paper {
-      background: white;
+      width: 420px;
+      height: 290px;
       border: 1px solid #ccc;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
       position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-sizing: border-box;
-      padding: 10px 15px;
-      transition: all 0.3s ease;
-    }
-
-    .poster-paper.a4-retrato { width: 380px; height: 530px; }
-    .poster-paper.a5-retrato { width: 320px; height: 450px; }
-    .poster-paper.a6-paisagem { width: 480px; height: 320px; }
-
-    .fold-header {
-      text-align: center;
-      font-weight: 800;
-      font-size: 16px;
-      letter-spacing: 1px;
-      color: #000;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-
-    .poster-header-svg {
-      width: 100%;
-      height: 90px;
-    }
-
-    .poster-paper.a6-paisagem .poster-header-svg { height: 75px; }
-
-    .poster-body {
-      text-align: center;
-      margin: 8px 0;
-    }
-
-    .poster-product-title {
-      font-weight: 900;
-      color: #000;
-      text-transform: uppercase;
-      line-height: 1.1;
-      font-size: 20px;
-    }
-
-    .poster-paper.a6-paisagem .poster-product-title { font-size: 17px; }
-
-    .poster-price-container {
-      position: relative;
-      width: 90%;
-      height: 120px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .poster-paper.a6-paisagem .poster-price-container { height: 95px; }
-
-    .poster-price-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-
-    .poster-price-content {
-      position: relative;
-      z-index: 2;
-      color: #000;
-      font-family: 'Arial Black', Impact, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .price-unit-box {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      line-height: 1;
-      font-size: 15px;
-      font-weight: 900;
-      margin-right: 8px;
-    }
-
-    .poster-price-main {
-      font-size: 85px;
-      line-height: 0.85;
-      font-weight: 900;
-      letter-spacing: -2px;
-      display: flex;
-      align-items: flex-start;
-    }
-
-    .poster-price-cents {
-      font-size: 45px;
-      line-height: 0.8;
-      vertical-align: top;
-    }
-
-    .poster-paper.a6-paisagem .poster-price-main { font-size: 68px; }
-
-    .poster-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 5px;
-      border-top: 1px solid #eee;
-      font-size: 9px;
-      font-weight: 800;
-      color: #000;
-    }
-
-    .footer-code { text-transform: uppercase; }
-    .footer-logo { height: 22px; }
-    .footer-validity { text-transform: uppercase; text-align: right; }
-
-    #reader {
-      width: 100%;
-      max-width: 450px;
-      margin: 0 auto;
-    }
-
-    .saved-list-box {
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      background: white;
       padding: 10px;
-      background: #fafafa;
-      max-height: 180px;
-      overflow-y: auto;
-    }
-
-    .saved-item-row {
+      box-sizing: border-border-box;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
-      padding: 4px 0;
-      font-size: 12px;
-      border-bottom: 1px dashed #ddd;
     }
 
-    .saved-item-row:last-child { border-bottom: none; }
+    .btn-camera-scan {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .fab-scan {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background-color: #0080FF;
+      color: white;
+      border: none;
+      font-size: 22px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      cursor: pointer;
+    }
+
+    #reader { width: 100%; max-width: 400px; margin: 0 auto; }
 
     @media print {
       body * { visibility: hidden; }
-      body, html { background: white !important; margin: 0 !important; padding: 0 !important; }
       .poster-paper, .poster-paper * { visibility: visible; }
-      .poster-paper {
-        position: absolute; left: 0; top: 0; width: 100vw !important; height: 100vh !important;
-        border: none !important; box-shadow: none !important;
-      }
-      @page { size: auto; margin: 0; }
+      .poster-paper { position: absolute; left: 0; top: 0; width: 100% !important; border: none !important; box-shadow: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Topbar Header -->
+  <!-- Topbar -->
   <div class="top-navbar">
     <div class="brand-logo">
-      <i class="fa-solid fa-bars cursor-pointer"></i>
+      <i class="fa-solid fa-bars"></i>
       <span>Cartaz Fácil</span>
     </div>
     <div class="small">
-      <span>Usuário: <strong>rmarket07</strong></span>
+      Usuário: <strong>rmarket07</strong>
     </div>
   </div>
 
-  <div class="main-container">
+  <div class="main-layout">
 
-    <!-- Sidebar de Opções -->
+    <!-- Painel Esquerdo: Dados Balizagem -->
     <div class="sidebar">
-      <div class="sidebar-title">
-        <i class="fa-solid fa-pen"></i> Dados Balizagem
-      </div>
+      <h6 class="fw-bold mb-3"><i class="fa-solid fa-pen me-1"></i> Dados Balizagem</h6>
 
       <div class="mb-3">
-        <label>3- Selecione Valor do Produto:</label>
+        <label class="small fw-bold">3- Selecione Valor do Produto:</label>
         <select class="form-select form-select-sm mt-1" id="selectValor">
-          <option selected>20/09/2026 - 1 | Valores: 10,49</option>
-          <option>20/09/2026 - 2 | Valores: 9,39</option>
+          <option>20/09/2026 - 1 | Valores: 17,58</option>
+          <option selected>20/09/2026 - 1 | Valores: 8,99</option>
         </select>
       </div>
 
       <div class="mb-3">
-        <label>4- Selecione a Campanha:</label>
+        <label class="small fw-bold">4- Selecione a Campanha:</label>
         <select class="form-select form-select-sm mt-1" id="selectCampanha" onchange="atualizarCampanha()">
           <option value="OFERTA!" selected>OFERTA!</option>
           <option value="PROMOÇÃO">PROMOÇÃO</option>
@@ -407,190 +233,118 @@
         </select>
       </div>
 
-      <small class="text-muted d-block mb-3" style="font-size: 11px;">
-        Caso não apareça nenhuma campanha para selecionar verifique suas diagramações. <a href="#">Dúvidas</a>
-      </small>
-
-      <label>5- Selecione Formato / modelo:</label>
-      <div class="template-grid mb-3">
-        <div class="template-card active" onclick="selecionarModelo(this, 'a4-retrato', '210/297 ** A4 RETRATO')">
-          <svg viewBox="0 0 100 130">
-            <path d="M 0 0 L 100 0 L 100 25 Q 50 40 0 25 Z" fill="#E30613"/>
-            <path d="M 10 55 C 20 45, 80 45, 90 55 C 95 75, 90 95, 85 105 C 65 110, 30 110, 15 105 C 5 90, 5 70, 10 55 Z" fill="#FFE600"/>
-          </svg>
-          <span>A4 RETRATO</span>
-        </div>
-
-        <div class="template-card" onclick="selecionarModelo(this, 'a5-retrato', '148/210 ** A5 RETRATO')">
-          <svg viewBox="0 0 100 130">
-            <rect x="0" y="0" width="100" height="25" fill="#0080FF"/>
-            <circle cx="50" cy="70" r="25" fill="#FFE600"/>
-          </svg>
-          <span>A5 RETRATO</span>
-        </div>
-
-        <div class="template-card" onclick="selecionarModelo(this, 'a6-paisagem', '148/105 ** A6 PAISAGEM')">
-          <svg viewBox="0 0 130 90">
-            <rect x="0" y="0" width="130" height="20" fill="#E30613"/>
-            <rect x="20" y="30" width="90" height="40" fill="#FFE600"/>
-          </svg>
-          <span>A6 PAISAGEM</span>
+      <div class="mb-3">
+        <label class="small fw-bold">5- Selecione Formato / modelo:</label>
+        <div class="template-grid">
+          <div class="template-card" onclick="mudarModelo('A4 RETRATO')">
+            <svg viewBox="0 0 100 120"><rect width="100" height="30" fill="#0080FF"/><circle cx="50" cy="70" r="20" fill="#FFE600"/></svg>
+            <span>A4 RETRATO</span>
+          </div>
+          <div class="template-card active" onclick="mudarModelo('A6 PAISAGEM')">
+            <svg viewBox="0 0 120 80"><rect width="120" height="20" fill="#E30613"/><rect x="20" y="30" width="80" height="35" fill="#FFE600"/></svg>
+            <span>A6 PAISAGEM</span>
+          </div>
         </div>
       </div>
 
       <div class="mb-3">
-        <label>6- Selecione forma de pagamento:</label>
-        <div style="border: 2px solid #FFE600; padding: 8px; border-radius: 4px; background: white;" class="mt-1">
-          <small class="text-muted d-block" style="font-size: 11px;">Diagramação Cartaz</small>
-          <select class="form-select form-select-sm border-0 bg-light fw-bold">
-            <option selected>1 - A VISTA</option>
-            <option>2 - A PRAZO</option>
+        <label class="small fw-bold">6- Selecione forma de pagamento:</label>
+        <div style="border: 2px solid #FFE600; padding: 6px; border-radius: 4px; background: white;" class="mt-1">
+          <span class="text-muted d-block" style="font-size: 10px;">Diagramação Cartaz</span>
+          <select class="form-select form-select-sm border-0 bg-light fw-bold p-0" style="font-size:12px;">
+            <option>1 - A VISTA</option>
           </select>
         </div>
       </div>
 
       <div class="d-flex gap-1 mb-2">
-        <button class="btn btn-warning text-white fw-bold btn-sm flex-fill" onclick="adicionarALista()">
-          <i class="fa-solid fa-plus me-1"></i> lista
-        </button>
-        <button class="btn btn-primary btn-sm flex-fill fw-bold" onclick="window.print()">
-          <i class="fa-solid fa-print me-1"></i> imprimir
-        </button>
+        <button class="btn btn-warning text-white btn-sm flex-fill fw-bold" onclick="adicionarALista()">+ lista</button>
+        <button class="btn btn-primary btn-sm flex-fill fw-bold" onclick="window.print()">imprimir</button>
         <button class="btn btn-success btn-sm"><i class="fa-solid fa-lock"></i></button>
       </div>
 
-      <div class="text-end mb-3">
-        <button class="btn btn-outline-danger btn-sm px-3" style="font-size: 12px;" onclick="limparLista()">
-          <i class="fa-solid fa-trash me-1"></i> Limpar Lista
-        </button>
+      <div class="text-end">
+        <button class="btn btn-outline-danger btn-sm py-0 px-2" style="font-size: 11px;" onclick="limparLista()">Limpar Lista</button>
       </div>
-
-      <div class="fw-bold text-secondary mb-1" id="formatoIndicadorText" style="font-size: 12px;">210/297 ** A4 RETRATO</div>
-      <div class="saved-list-box" id="savedListBox"></div>
     </div>
 
-    <!-- Conteúdo Central -->
+    <!-- Conteúdo Principal -->
     <div class="content-area">
 
-      <!-- Busca + Câmera -->
-      <div class="search-box-wrapper">
+      <!-- Seletor de Filial -->
+      <div class="filial-box">
+        <span>Selecione a filial:</span>
+        <select class="form-select form-select-sm w-auto" style="min-width: 200px;">
+          <option>7 - 07-PARATY2</option>
+        </select>
+      </div>
+
+      <!-- Barra de Busca -->
+      <div class="search-panel">
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <label class="fw-bold small text-secondary">1 - Insira código do produto, marca ou descrição</label>
-          <button class="btn btn-primary btn-sm px-3 fw-semibold" onclick="modalNovoProduto.show()">
-            Adicionar produto
-          </button>
+          <label class="fw-bold small">1 - Insira código do produto, marca ou descrição</label>
+          <button class="btn btn-primary btn-sm">Adicionar produto</button>
         </div>
 
         <div class="d-flex gap-2">
-          <input type="text" id="barcodeInput" class="form-control" placeholder="Digite qualy, coca, cerveja ou código EAN..." value="qualy">
-          <button class="btn btn-primary px-3" id="btnPesquisar" onclick="buscarProduto()">
-            <i class="fa-solid fa-magnifying-glass me-1"></i> Pesquisar
-          </button>
-          <button class="btn-scanner" type="button" data-bs-toggle="modal" data-bs-target="#cameraModal" onclick="iniciarCamera()">
-            <i class="fa-solid fa-camera"></i> Escanear
+          <input type="text" id="searchInput" class="form-control" value="qualy" placeholder="Digite qualy, coca, etc...">
+          <button class="btn btn-primary px-4 fw-bold" onclick="pesquisarProdutos()">Pesquisar</button>
+          <button class="btn-camera-scan" data-bs-toggle="modal" data-bs-target="#modalCamera" onclick="iniciarLeitor()">
+            <i class="fa-solid fa-camera me-1"></i> Scan
           </button>
         </div>
       </div>
 
-      <!-- Tabela de Produtos -->
-      <div class="table-container">
-        <label class="fw-bold mb-2">2- Clique no produto desejado abaixo:</label>
+      <!-- Tabela com Lista de Produtos -->
+      <div class="table-panel">
+        <label class="fw-bold small mb-2 d-block">2- Clique no produto desejado abaixo:</label>
 
         <div class="table-responsive">
-          <table class="table table-bordered align-middle mb-2">
-            <thead>
-              <tr class="table-light text-center">
-                <th style="width: 90px;">Cód</th>
+          <table class="table table-bordered table-hover align-middle mb-0" style="font-size: 13px;">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 80px;" class="text-center">Cód</th>
                 <th>Descrição</th>
-                <th style="width: 120px;">Ações</th>
+                <th style="width: 100px;" class="text-center">Ações</th>
               </tr>
             </thead>
             <tbody id="tabelaProdutosBody">
-              <tr class="product-row-selected">
-                <td class="fw-bold text-success text-center" id="tdCodigo">7483</td>
-                <td>
-                  <i class="fa-solid fa-thumbs-up text-secondary me-2"></i>
-                  <span id="tdDescricao">REFRI COCA COLA PET 1,5L - UN</span>
-                  <strong class="ms-2">Familia:</strong>
-                </td>
-                <td class="text-center">
-                  <div class="dropdown">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                      Ações
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-actions">
-                      <li>
-                        <a class="dropdown-item" href="#" onclick="abrirEditarProduto()">
-                          <i class="fa-solid fa-pen me-1"></i> Editar produto
-                        </a>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="#" onclick="abrirEditarPreco()">
-                          <i class="fa-solid fa-dollar-sign me-1"></i> Editar preço
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
-              </tr>
+              <!-- Resultados inseridos via JavaScript -->
             </tbody>
           </table>
         </div>
       </div>
 
       <!-- Pré-visualização do Cartaz -->
-      <div class="poster-section">
-        <div class="d-flex justify-content-between align-items-center w-100 mb-2" style="max-width: 480px;">
-          <h6 class="m-0 fw-bold text-secondary">Pré-visualização do Cartaz</h6>
-          <button class="btn btn-success btn-sm px-3" onclick="window.print()">
-            <i class="fa-solid fa-print me-1"></i> Imprimir Cartaz
-          </button>
-        </div>
+      <div class="poster-preview-box">
+        <div class="poster-paper" id="posterPaper">
+          <div class="text-center fw-bold small" style="letter-spacing: 1px;">DOBRE AQUI</div>
 
-        <div class="poster-paper a4-retrato" id="posterPaper">
-          <div class="fold-header">DOBRE AQUI</div>
-
-          <svg class="poster-header-svg" viewBox="0 0 500 120" preserveAspectRatio="none">
-            <path d="M 0 0 L 500 0 L 500 70 Q 250 120 0 70 Z" fill="#E30613"/>
-            <path d="M 40 82 Q 250 118 460 82 Q 250 108 40 82 Z" fill="#FFE600"/>
-            <text x="250" y="62" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-style="italic" font-size="52" fill="#FFE600" text-anchor="middle" id="posterCampanhaText">OFERTA!</text>
+          <svg viewBox="0 0 500 110" style="width: 100%; height: 70px;">
+            <path d="M 0 0 L 500 0 L 500 65 Q 250 110 0 65 Z" fill="#E30613"/>
+            <path d="M 30 75 Q 250 110 470 75 Z" fill="#FFE600"/>
+            <text x="250" y="55" font-family="'Arial Black', sans-serif" font-weight="900" font-style="italic" font-size="46" fill="#FFE600" text-anchor="middle" id="posterCampanha">OFERTA!</text>
           </svg>
 
-          <div class="poster-body">
-            <div class="poster-product-title" id="posterTitleText">REFRI COCA COLA PET 1,5L - UN</div>
+          <div class="text-center fw-black text-uppercase my-1" id="posterTitulo" style="font-size: 16px; font-weight: 900;">
+            MARGARINA QUALY CREMOSA C/SAL 1kg - UN
           </div>
 
-          <div class="poster-price-container">
-            <svg class="poster-price-bg" viewBox="0 0 500 200" preserveAspectRatio="none">
-              <path d="M 15 25 C 120 5, 380 10, 485 20 C 498 70, 492 140, 475 180 C 390 198, 110 205, 20 175 C 5 130, 2 65, 15 25 Z" fill="#FFE600"/>
-              <path d="M 5 45 C 80 35, 420 30, 495 50 C 490 110, 480 150, 460 188 C 360 190, 80 192, 10 160 Z" fill="#FFE600"/>
+          <div style="position: relative; height: 90px; display: flex; justify-content: center; align-items: center;">
+            <svg viewBox="0 0 500 180" style="position: absolute; width: 90%; height: 100%;">
+              <path d="M 15 20 C 120 5, 380 10, 485 20 C 498 60, 492 130, 475 165 C 390 185, 110 190, 20 160 C 5 120, 2 60, 15 20 Z" fill="#FFE600"/>
             </svg>
-
-            <div class="poster-price-content">
-              <div class="price-unit-box">
-                <span>R$</span>
-                <span>UN</span>
-              </div>
-              <div class="poster-price-main">
-                <span id="posterPriceInt">10</span>
-                <span class="poster-price-cents" id="posterPriceDec">,49</span>
-              </div>
+            <div style="position: relative; z-index: 2; display: flex; align-items: flex-start; font-family: 'Arial Black', sans-serif;">
+              <span style="font-size: 14px; margin-right: 5px; font-weight: bold;">R$<br>UN</span>
+              <span style="font-size: 65px; line-height: 0.8; font-weight: 900;" id="posterPrecoInt">17</span>
+              <span style="font-size: 38px; line-height: 0.8; font-weight: 900;" id="posterPrecoDec">,58</span>
             </div>
           </div>
 
-          <div class="poster-footer">
-            <div class="footer-code" id="posterEanText">CÓD. PRODUTO: "7894900027006"</div>
-            <div>
-              <svg class="footer-logo" viewBox="0 0 160 35">
-                <text x="5" y="24" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#0080FF">rede</text>
-                <path d="M 38 18 C 38 10, 45 10, 48 18 L 52 18" fill="none" stroke="#0080FF" stroke-width="2"/>
-                <circle cx="42" cy="24" r="2" fill="#0080FF"/>
-                <circle cx="50" cy="24" r="2" fill="#0080FF"/>
-                <text x="58" y="26" font-family="'Arial Black', sans-serif" font-weight="900" font-size="24" fill="#0080FF">R</text>
-                <text x="76" y="26" font-family="'Arial Black', sans-serif" font-weight="bold" font-size="20" fill="#E30613">market</text>
-              </svg>
-            </div>
-            <div class="footer-validity" id="posterValidadeText">OFERTA VÁLIDA DE 20/09/2026 ATÉ 20/09/2026</div>
+          <div class="d-flex justify-content-between align-items-center border-top pt-1 mt-1" style="font-size: 8px; font-weight: bold;">
+            <span id="posterEan">CÓD. PRODUTO: 7891052001234</span>
+            <span class="text-primary fw-black">RMarket</span>
+            <span>OFERTA VÁLIDA DE 20/09/2026 ATÉ 20/09/2026</span>
           </div>
         </div>
       </div>
@@ -598,69 +352,21 @@
     </div>
   </div>
 
-  <!-- Botão Flutuante Câmera -->
-  <button class="fab-camera" type="button" data-bs-toggle="modal" data-bs-target="#cameraModal" onclick="iniciarCamera()" title="Escanear Código de Barras">
+  <!-- Botão Flutuante de Câmera -->
+  <button class="fab-scan" data-bs-toggle="modal" data-bs-target="#modalCamera" onclick="iniciarLeitor()">
     <i class="fa-solid fa-camera"></i>
   </button>
 
-  <!-- Modais -->
-  <div class="modal fade" id="cameraModal" tabindex="-1" aria-hidden="true">
+  <!-- Modal da Câmera -->
+  <div class="modal fade" id="modalCamera" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title fs-6"><i class="fa-solid fa-barcode me-2"></i>Escanear Código de Barras</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="pararCamera()"></button>
+          <h6 class="modal-title fw-bold"><i class="fa-solid fa-barcode me-2"></i>Escanear Código de Barras</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="pararLeitor()"></button>
         </div>
         <div class="modal-body text-center">
           <div id="reader"></div>
-          <small class="text-muted d-block mt-2">Aponte a câmera para o código EAN</small>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="modalNovoProduto" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title fs-6 fw-bold"><i class="fa-solid fa-plus me-2 text-primary"></i>Adicionar Novo Produto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-2">
-            <label class="form-label small fw-bold">Código EAN</label>
-            <input type="text" class="form-control form-control-sm" id="novoEan" placeholder="Ex: 7894900027006">
-          </div>
-          <div class="mb-2">
-            <label class="form-label small fw-bold">Descrição / Nome do Produto</label>
-            <input type="text" class="form-control form-control-sm" id="novoNome" placeholder="Ex: QUALY COM SAL 500G">
-          </div>
-          <div class="mb-2">
-            <label class="form-label small fw-bold">Preço (R$)</label>
-            <input type="text" class="form-control form-control-sm" id="novoPreco" placeholder="8,99">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn type="button" class="btn btn-primary btn-sm" onclick="salvarNovoProduto()">Salvar Produto</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="modalEditarPreco" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title fs-6 fw-bold"><i class="fa-solid fa-dollar-sign me-2 text-success"></i>Editar Preço</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <label class="form-label small fw-bold">Novo Preço (R$)</label>
-          <input type="text" class="form-control" id="inputEditarPreco" value="10,49">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-sm w-100" onclick="salvarPreco()">Atualizar Preço</button>
         </div>
       </div>
     </div>
@@ -669,247 +375,93 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    let html5QrcodeScanner = null;
-    let modalNovoProduto, modalEditarPreco;
-
-    // URL da API oficial fornecida
-    const API_URL = "https://apicartazfacil.com/public/api/importacao/daily?validate=1&token=3hjr6ken8b91xo7ym2wpcsqagifvu45n";
-
-    // Base de backup local
-    const produtosBaseInicial = [
-      { id: '5120', nome: 'MARGARINA QUALY COM SAL 500G - UN', preco: '8.99', ean: '7891052001234' },
-      { id: '5121', nome: 'MARGARINA QUALY SEM SAL 500G - UN', preco: '8.99', ean: '7891052001235' },
-      { id: '7483', nome: 'REFRI COCA COLA PET 1,5L - UN', preco: '10.49', ean: '7894900027006' },
-      { id: '7484', nome: 'REFRI FANTA PET 2L LARANJA - UN', preco: '9.39', ean: '7894900031515' }
+    // Banco de Dados Simulado idêntico à sua imagem da tela
+    const produtosBase = [
+      { cod: '7285', desc: 'MARGARINA QUALY CREMOSA C/SAL 1kg - UN', preco: '17.58', ean: '7891052001234' },
+      { cod: '7852', desc: 'MARGARINA QUALY CREMOSA C/SAL 250G - UN', preco: '5.49', ean: '7891052001235' },
+      { cod: '7855', desc: 'MARGARINA QUALY C/SAL 500G - UN', preco: '8.99', ean: '7891052001236' },
+      { cod: '7859', desc: 'MARGARINA QUALY CREMOSA S/SAL 250G - UN', preco: '5.49', ean: '7891052001237' }
     ];
 
-    function obterBancoProdutos() {
-      const salvo = localStorage.getItem('produtos_cartazfacil_v2');
-      if (salvo) return JSON.parse(salvo);
-      localStorage.setItem('produtos_cartazfacil_v2', JSON.stringify(produtosBaseInicial));
-      return produtosBaseInicial;
-    }
+    let html5QrcodeScanner = null;
 
-    let listaItensSalvos = [];
+    document.addEventListener('DOMContentLoaded', () => {
+      pesquisarProdutos(); // Carrega a lista inicial na tela
 
-    document.addEventListener("DOMContentLoaded", function() {
-      modalNovoProduto = new bootstrap.Modal(document.getElementById('modalNovoProduto'));
-      modalEditarPreco = new bootstrap.Modal(document.getElementById('modalEditarPreco'));
-
-      // Permite pesquisar apertando Enter no campo de busca
-      document.getElementById('barcodeInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') buscarProduto();
+      document.getElementById('searchInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') pesquisarProdutos();
       });
     });
 
-    // Função de Pesquisa idêntica ao Cartaz Fácil (API + Fallback local)
-    async function buscarProduto() {
-      const termo = document.getElementById('barcodeInput').value.trim().toLowerCase();
-      if (!termo) {
-        alert("Por favor, digite um código EAN ou a descrição do produto.");
+    function pesquisarProdutos() {
+      const termo = document.getElementById('searchInput').value.toLowerCase().trim();
+      const tbody = document.getElementById('tabelaProdutosBody');
+      tbody.innerHTML = '';
+
+      const filtrados = produtosBase.filter(p => 
+        p.desc.toLowerCase().includes(termo) || p.cod.includes(termo) || p.ean.includes(termo)
+      );
+
+      if (filtrados.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" class="text-center text-muted py-3">Nenhum produto encontrado.</td></tr>';
         return;
       }
 
-      const btn = document.getElementById('btnPesquisar');
-      const textoOriginal = btn.innerHTML;
-      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Buscando...';
-      btn.disabled = true;
+      filtrados.forEach((prod, index) => {
+        const isSelected = index === 0; // Seleciona o primeiro por padrão
+        if (isSelected) selecionarProduto(prod);
 
-      let encontrado = null;
+        const tr = document.createElement('tr');
+        tr.className = `product-row ${isSelected ? 'selected' : ''}`;
+        tr.onclick = () => {
+          document.querySelectorAll('.product-row').forEach(r => r.classList.remove('selected'));
+          tr.classList.add('selected');
+          selecionarProduto(prod);
+        };
 
-      // 1. Tenta buscar direto na API do Cartaz Fácil
-      try {
-        const response = await fetch(`${API_URL}&search=${encodeURIComponent(termo)}`);
-        if (response.ok) {
-          const data = await response.json();
-          // Mapeia conforme retorno típico de APIs de Cartazeamento
-          const itens = data.data || data.produtos || data;
-          if (Array.isArray(itens) && itens.length > 0) {
-            const prod = itens[0];
-            encontrado = {
-              id: prod.codigo || prod.id || '1001',
-              nome: prod.descricao || prod.nome || prod.title,
-              preco: (prod.preco || prod.valor || '0.00').toString(),
-              ean: prod.ean || prod.barcode || termo
-            };
-          }
-        }
-      } catch (err) {
-        console.warn("API inacessível ou CORS. Alternando para a base de dados local:", err);
-      }
-
-      // 2. Se a API não retornar ou estiver indisponível, busca na base cadastrada localmente
-      if (!encontrado) {
-        const produtos = obterBancoProdutos();
-        encontrado = produtos.find(p => 
-          p.ean === termo || 
-          p.id === termo || 
-          p.nome.toLowerCase().includes(termo)
-        );
-      }
-
-      btn.innerHTML = textoOriginal;
-      btn.disabled = false;
-
-      // 3. Resultado da busca
-      if (encontrado) {
-        const [int, dec] = parseFloat(encontrado.preco).toFixed(2).split('.');
-        gerarCartaz(encontrado.id, encontrado.nome, int, dec, encontrado.ean);
-      } else {
-        if (confirm("Produto não encontrado na base local. Deseja cadastrá-lo agora com esse código/nome?")) {
-          document.getElementById('novoEan').value = /^\d+$/.test(termo) ? termo : '789' + Math.floor(100000000 + Math.random() * 900000000);
-          document.getElementById('novoNome').value = !/^\d+$/.test(termo) ? termo.toUpperCase() : '';
-          modalNovoProduto.show();
-        }
-      }
-    }
-
-    function gerarCartaz(codigo, titulo, precoInt, precoDec, ean) {
-      document.getElementById('tdCodigo').innerText = codigo;
-      document.getElementById('tdDescricao').innerText = titulo;
-      document.getElementById('posterTitleText').textContent = titulo.toUpperCase();
-      document.getElementById('posterPriceInt').textContent = precoInt;
-      document.getElementById('posterPriceDec').textContent = ',' + precoDec;
-      document.getElementById('posterEanText').innerText = 'CÓD. PRODUTO: "' + ean + '"';
-    }
-
-    function selecionarModelo(element, modelo, formatoTexto) {
-      document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
-      element.classList.add('active');
-
-      const poster = document.getElementById('posterPaper');
-      poster.className = 'poster-paper ' + modelo;
-
-      document.getElementById('formatoIndicadorText').innerText = formatoTexto;
-    }
-
-    function atualizarCampanha() {
-      const campanha = document.getElementById('selectCampanha').value;
-      document.getElementById('posterCampanhaText').textContent = campanha;
-    }
-
-    function abrirEditarProduto() {
-      const nomeAtual = document.getElementById('tdDescricao').innerText;
-      const novoNome = prompt("Editar nome do produto:", nomeAtual);
-      if (novoNome) {
-        document.getElementById('tdDescricao').innerText = novoNome;
-        document.getElementById('posterTitleText').textContent = novoNome.toUpperCase();
-      }
-    }
-
-    function abrirEditarPreco() {
-      modalEditarPreco.show();
-    }
-
-    function salvarPreco() {
-      const novoPreco = document.getElementById('inputEditarPreco').value.replace(',', '.');
-      const [int, dec] = parseFloat(novoPreco || 0).toFixed(2).split('.');
-      document.getElementById('posterPriceInt').textContent = int;
-      document.getElementById('posterPriceDec').textContent = ',' + dec;
-      modalEditarPreco.hide();
-    }
-
-    function salvarNovoProduto() {
-      const ean = document.getElementById('novoEan').value.trim() || '7890000000000';
-      const nome = document.getElementById('novoNome').value.trim().toUpperCase() || 'NOVO PRODUTO';
-      const precoRaw = document.getElementById('novoPreco').value.replace(',', '.') || '0.00';
-      const precoNum = parseFloat(precoRaw).toFixed(2);
-      const novoId = Math.floor(1000 + Math.random() * 9000).toString();
-
-      const produtos = obterBancoProdutos();
-      produtos.push({ id: novoId, nome: nome.includes(' - UN') ? nome : nome + ' - UN', preco: precoNum, ean: ean });
-      localStorage.setItem('produtos_cartazfacil_v2', JSON.stringify(produtos));
-
-      const [int, dec] = precoNum.split('.');
-      gerarCartaz(novoId, nome, int, dec, ean);
-      
-      modalNovoProduto.hide();
-      alert("Produto cadastrado com sucesso!");
-    }
-
-    function adicionarALista() {
-      const codigo = document.getElementById('tdCodigo').innerText;
-      const nome = document.getElementById('tdDescricao').innerText;
-      const precoInt = document.getElementById('posterPriceInt').textContent;
-      const precoDec = document.getElementById('posterPriceDec').textContent;
-      const ean = document.getElementById('barcodeInput').value;
-
-      listaItensSalvos.push({ id: codigo, nome: nome, preco: precoInt + precoDec, ean: ean });
-      renderizarListaSalva();
-    }
-
-    function removerItemLista(index) {
-      listaItensSalvos.splice(index, 1);
-      renderizarListaSalva();
-    }
-
-    function limparLista() {
-      listaItensSalvos = [];
-      renderizarListaSalva();
-    }
-
-    function renderizarListaSalva() {
-      const container = document.getElementById('savedListBox');
-      container.innerHTML = '';
-
-      if (listaItensSalvos.length === 0) {
-        container.innerHTML = '<small class="text-muted d-block text-center py-2">Nenhum produto salvo</small>';
-        return;
-      }
-
-      listaItensSalvos.forEach((item, index) => {
-        const row = document.createElement('div');
-        row.className = 'saved-item-row';
-        row.innerHTML = `
-          <span class="text-uppercase fw-bold" style="max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.nome}</span>
-          <span class="text-muted">${item.id}</span>
-          <div>
-            <i class="fa-solid fa-eye text-primary me-2 cursor-pointer" onclick="recarregarDoHistorico('${item.id}', '${item.nome}', '${item.preco}', '${item.ean}')"></i>
-            <i class="fa-solid fa-xmark text-danger cursor-pointer" onclick="removerItemLista(${index})"></i>
-          </div>
+        tr.innerHTML = `
+          <td class="text-center cod-cell fw-bold">${prod.cod}</td>
+          <td><i class="fa-solid fa-thumbs-up text-secondary me-2"></i> ${prod.desc} <strong>Familia:</strong></td>
+          <td class="text-center">
+            <button class="btn btn-secondary btn-sm dropdown-toggle py-0 px-2" style="font-size: 12px;">Ações</button>
+          </td>
         `;
-        container.appendChild(row);
+        tbody.appendChild(tr);
       });
     }
 
-    function recarregarDoHistorico(id, nome, preco, ean) {
-      const [int, dec] = preco.replace('R$', '').trim().split(',');
-      gerarCartaz(id, nome, int, dec || '00', ean);
+    function selecionarProduto(p) {
+      const [int, dec] = parseFloat(p.preco).toFixed(2).split('.');
+      document.getElementById('posterTitulo').innerText = p.desc;
+      document.getElementById('posterPrecoInt').innerText = int;
+      document.getElementById('posterPrecoDec').innerText = ',' + dec;
+      document.getElementById('posterEan').innerText = 'CÓD. PRODUTO: ' + p.ean;
     }
 
-    function iniciarCamera() {
-      if (!html5QrcodeScanner) {
-        html5QrcodeScanner = new Html5Qrcode("reader");
-      }
+    function atualizarCampanha() {
+      document.getElementById('posterCampanha').innerText = document.getElementById('selectCampanha').value;
+    }
 
-      const config = { 
-        fps: 10, 
-        qrbox: { width: 250, height: 130 },
-        formatsToSupport: [ Html5QrcodeSupportedFormats.EAN_13, Html5QrcodeSupportedFormats.EAN_8 ]
-      };
+    function iniciarLeitor() {
+      if (!html5QrcodeScanner) html5QrcodeScanner = new Html5Qrcode("reader");
 
       html5QrcodeScanner.start(
         { facingMode: "environment" },
-        config,
-        onScanSuccess,
-        onScanFailure
-      ).catch(err => alert("Câmera indisponível no navegador."));
+        { fps: 10, qrbox: { width: 250, height: 120 } },
+        (text) => {
+          document.getElementById('searchInput').value = text;
+          pesquisarProdutos();
+          const modal = bootstrap.Modal.getInstance(document.getElementById('modalCamera'));
+          if (modal) modal.hide();
+          pararLeitor();
+        },
+        () => {}
+      ).catch(() => alert("Câmera indisponível."));
     }
 
-    function onScanSuccess(decodedText) {
-      document.getElementById('barcodeInput').value = decodedText;
-      const modalElement = document.getElementById('cameraModal');
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) modal.hide();
-      pararCamera();
-      buscarProduto();
-    }
-
-    function onScanFailure(error) {}
-
-    function pararCamera() {
+    function pararLeitor() {
       if (html5QrcodeScanner && html5QrcodeScanner.isScanning) {
-        html5QrcodeScanner.stop().catch(err => console.error(err));
+        html5QrcodeScanner.stop();
       }
     }
   </script>
