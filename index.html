@@ -63,6 +63,16 @@
       flex-shrink: 0;
     }
 
+    .sidebar-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .sidebar label {
       font-size: 13px;
       font-weight: bold;
@@ -155,7 +165,30 @@
       background-color: #c8e6c9 !important;
     }
 
-    /* Botão Flutuante da Câmera (Para Android/Celular) */
+    /* Menu de Ações Estilizado */
+    .dropdown-menu-actions {
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border: 1px solid #ddd;
+      padding: 4px 0;
+      min-width: 150px;
+    }
+
+    .dropdown-menu-actions .dropdown-item {
+      font-size: 13px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #333;
+    }
+
+    .dropdown-menu-actions .dropdown-item:hover {
+      background-color: #f0f7ff;
+      color: #0056b3;
+    }
+
+    /* Botão Flutuante da Câmera */
     .fab-camera {
       position: fixed;
       bottom: 20px;
@@ -179,7 +212,7 @@
       transform: scale(0.95);
     }
 
-    /* --- DESIGN IDENTICO AO CARTAZ REAL DO SISTEMA --- */
+    /* Design do Cartaz */
     .poster-section {
       display: flex;
       flex-direction: column;
@@ -221,7 +254,7 @@
       margin-bottom: 2px;
     }
 
-    /* Banner Vermelho SVG com Curva Amarela */
+    /* Banner Vermelho SVG */
     .poster-header-svg {
       width: 100%;
       height: 90px;
@@ -309,18 +342,9 @@
       color: #000;
     }
 
-    .footer-code {
-      text-transform: uppercase;
-    }
-
-    .footer-logo {
-      height: 22px;
-    }
-
-    .footer-validity {
-      text-transform: uppercase;
-      text-align: right;
-    }
+    .footer-code { text-transform: uppercase; }
+    .footer-logo { height: 22px; }
+    .footer-validity { text-transform: uppercase; text-align: right; }
 
     #reader {
       width: 100%;
@@ -328,7 +352,6 @@
       margin: 0 auto;
     }
 
-    /* Estilos da Lista de Salvos */
     .saved-list-box {
       border: 1px solid #ddd;
       border-radius: 4px;
@@ -347,9 +370,7 @@
       border-bottom: 1px dashed #ddd;
     }
 
-    .saved-item-row:last-child {
-      border-bottom: none;
-    }
+    .saved-item-row:last-child { border-bottom: none; }
 
     /* Impressão */
     @media print {
@@ -364,7 +385,7 @@
     }
   </style>
 </head>
-<body class="print-a4-retrato">
+<body>
 
   <!-- Topbar Header -->
   <div class="top-navbar">
@@ -381,17 +402,24 @@
 
     <!-- Sidebar de Opções -->
     <div class="sidebar">
+      <!-- Título de Balizagem -->
+      <div class="sidebar-title">
+        <i class="fa-solid fa-pen"></i> Dados Balizagem
+      </div>
+
       <div class="mb-3">
         <label>3- Selecione Valor do Produto:</label>
         <select class="form-select form-select-sm mt-1" id="selectValor">
-          <option selected>19/09/2026 - 1 | Valores: 9,39</option>
+          <option selected>19/09/2026 - 1 | Valores: 10,49</option>
+          <option>19/09/2026 - 2 | Valores: 9,39</option>
         </select>
       </div>
 
       <div class="mb-3">
         <label>4- Selecione a Campanha:</label>
         <select class="form-select form-select-sm mt-1" id="selectCampanha" onchange="atualizarCampanha()">
-          <option value="OFERTA!" selected>OFERTA!</option>
+          <option value="OFERTA" selected>OFERTA</option>
+          <option value="OFERTA!">OFERTA!</option>
           <option value="PROMOÇÃO">PROMOÇÃO</option>
           <option value="SUPER OFERTA">SUPER OFERTA</option>
         </select>
@@ -428,20 +456,17 @@
         </div>
       </div>
 
-      <!-- Seção 6: Forma de Pagamento e Ações da Lista -->
       <div class="mb-3">
         <label>6- Selecione forma de pagamento:</label>
         <div style="border: 2px solid #FFE600; padding: 8px; border-radius: 4px; background: white;" class="mt-1">
           <small class="text-muted d-block" style="font-size: 11px;">Diagramação Cartaz</small>
-          <select class="form-select form-select-sm border-0 bg-light fw-bold" id="selectPagamento">
+          <select class="form-select form-select-sm border-0 bg-light fw-bold">
             <option selected>1 - A VISTA</option>
             <option>2 - A PRAZO</option>
-            <option>3 - CARTÃO DE CRÉDITO</option>
           </select>
         </div>
       </div>
 
-      <!-- Botões Amarelo (+ lista), Azul (imprimir), Verde (Cadeado) -->
       <div class="d-flex gap-1 mb-2">
         <button class="btn btn-warning text-white fw-bold btn-sm flex-fill" onclick="adicionarALista()">
           <i class="fa-solid fa-plus me-1"></i> lista
@@ -449,33 +474,45 @@
         <button class="btn btn-primary btn-sm flex-fill fw-bold" onclick="window.print()">
           <i class="fa-solid fa-print me-1"></i> imprimir
         </button>
-        <button class="btn btn-success btn-sm" title="Bloquear / Fixar">
-          <i class="fa-solid fa-lock"></i>
-        </button>
+        <button class="btn btn-success btn-sm"><i class="fa-solid fa-lock"></i></button>
       </div>
 
-      <!-- Botão Limpar Lista -->
       <div class="text-end mb-3">
         <button class="btn btn-outline-danger btn-sm px-3" style="font-size: 12px;" onclick="limparLista()">
           <i class="fa-solid fa-trash me-1"></i> Limpar Lista
         </button>
       </div>
 
-      <!-- Lista de Produtos Adicionados com Formato Indicador -->
       <div class="fw-bold text-secondary mb-1" id="formatoIndicadorText" style="font-size: 12px;">148/105 ** A6 PAISAGEM</div>
-      <div class="saved-list-box" id="savedListBox">
-        <!-- Itens inseridos via JS -->
-      </div>
-
+      <div class="saved-list-box" id="savedListBox"></div>
     </div>
 
     <!-- Conteúdo Central -->
     <div class="content-area">
 
-      <!-- Busca + Câmera -->
+      <!-- Busca + Câmera + Botão Adicionar Produto -->
       <div class="search-box-wrapper">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <label class="fw-bold small text-secondary">1 - Insira código do produto, marca ou descrição</label>
+          <!-- Botão "Adicionar produto" -->
+          <button class="btn btn-primary btn-sm px-3 fw-semibold" onclick="modalNovoProduto.show()">
+            Adicionar produto
+          </button>
+        </div>
+
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-4 ms-auto text-end mb-1">
+            <select class="form-select form-select-sm">
+              <option selected>Todas Sessões</option>
+              <option>Bebidas</option>
+              <option>Mercearia</option>
+              <option>Hortifruti</option>
+            </select>
+          </div>
+        </div>
+
         <div class="d-flex gap-2">
-          <input type="text" id="barcodeInput" class="form-control" placeholder="Digite ou escaneie o código de barras..." value="7894900031515">
+          <input type="text" id="barcodeInput" class="form-control" placeholder="Digite ou escaneie o código de barras..." value="7894900027006">
           <button class="btn btn-primary px-3" onclick="buscarProduto()">Pesquisar</button>
           <button class="btn-scanner" type="button" data-bs-toggle="modal" data-bs-target="#cameraModal" onclick="iniciarCamera()">
             <i class="fa-solid fa-camera"></i> Escanear
@@ -485,45 +522,75 @@
 
       <!-- Tabela de Produtos -->
       <div class="table-container">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <label class="fw-bold">2- Clique no produto desejado abaixo:</label>
-          <button class="btn btn-success btn-sm" onclick="window.print()">
-            <i class="fa-solid fa-print me-1"></i> Imprimir Cartaz
-          </button>
-        </div>
+        <label class="fw-bold mb-2">2- Clique no produto desejado abaixo:</label>
 
         <div class="table-responsive">
-          <table class="table table-bordered align-middle mb-0">
+          <table class="table table-bordered align-middle mb-2">
             <thead>
               <tr class="table-light text-center">
                 <th style="width: 90px;">Cód</th>
                 <th>Descrição</th>
-                <th style="width: 110px;">Ações</th>
+                <th style="width: 120px;">Ações</th>
               </tr>
             </thead>
             <tbody>
               <tr class="product-row-selected">
-                <td class="fw-bold text-success text-center" id="tdCodigo">7294</td>
+                <td class="fw-bold text-success text-center" id="tdCodigo">7483</td>
                 <td>
                   <i class="fa-solid fa-thumbs-up text-secondary me-2"></i>
-                  <span id="tdDescricao">REFRI FANTA PET 2L LARANJA</span>
-                  <strong class="ms-2">Família:</strong>
+                  <span id="tdDescricao">REFRI COCA COLA PET 1,5L - UN</span>
+                  <strong class="ms-2">Familia:</strong>
                 </td>
                 <td class="text-center">
-                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Ações
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#" onclick="gerarCartaz('7294', 'REFRI FANTA PET 2L LARANJA', '9,39', '7894900031515')">Gerar Cartaz</a></li>
-                  </ul>
+                  <!-- Dropdown de Ações Completo -->
+                  <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                      Ações
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-actions">
+                      <li>
+                        <a class="dropdown-item" href="#" onclick="abrirEditarProduto()">
+                          <i class="fa-solid fa-minus me-1"></i> Editar produto
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#" onclick="abrirEditarPreco()">
+                          <i class="fa-solid fa-dollar-sign me-1"></i> Editar preço
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#" onclick="abrirImagem()">
+                          <i class="fa-regular fa-image me-1"></i> Imagem
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#" onclick="abrirAditivo()">
+                          <i class="fa-solid fa-square-plus me-1 text-primary"></i> Aditivo
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center">
+          <nav>
+            <ul class="pagination pagination-sm m-0">
+              <li class="page-item disabled"><a class="page-link" href="#">«</a></li>
+              <li class="page-item disabled"><a class="page-link" href="#">‹</a></li>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">›</a></li>
+              <li class="page-item"><a class="page-link" href="#">»</a></li>
+            </ul>
+          </nav>
+        </div>
       </div>
 
-      <!-- Seção do Cartaz Gerado -->
+      <!-- Pré-visualização do Cartaz -->
       <div class="poster-section">
         <div class="d-flex justify-content-between align-items-center w-100 mb-2" style="max-width: 480px;">
           <h6 class="m-0 fw-bold text-secondary">Pré-visualização do Cartaz</h6>
@@ -532,31 +599,21 @@
           </button>
         </div>
 
-        <!-- Folha do Cartaz com Réplica Gráfica Perfeita -->
         <div class="poster-paper a4-retrato" id="posterPaper">
-          
-          <!-- Texto Superior: DOBRE AQUI -->
           <div class="fold-header">DOBRE AQUI</div>
 
-          <!-- Banner Red SVG com Pincelada e Texto Itálico -->
           <svg class="poster-header-svg" viewBox="0 0 500 120" preserveAspectRatio="none">
-            <!-- Forma Vermelha Curvada -->
             <path d="M 0 0 L 500 0 L 500 70 Q 250 120 0 70 Z" fill="#E30613"/>
-            <!-- Faixa Amarela Interna -->
             <path d="M 40 82 Q 250 118 460 82 Q 250 108 40 82 Z" fill="#FFE600"/>
-            <!-- Texto da Campanha -->
             <text x="250" y="62" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-style="italic" font-size="52" fill="#FFE600" text-anchor="middle" id="posterCampanhaText">OFERTA!</text>
           </svg>
 
-          <!-- Nome do Produto -->
           <div class="poster-body">
-            <div class="poster-product-title" id="posterTitle">REFRI FANTA PET 2L LARANJA</div>
+            <div class="poster-product-title" id="posterTitle">REFRI COCA COLA PET 1,5L</div>
           </div>
 
-          <!-- Preço sobre Pincelada Amarela SVG -->
           <div class="poster-price-container">
             <svg class="poster-price-bg" viewBox="0 0 500 200" preserveAspectRatio="none">
-              <!-- Textura de Pincelada de Tinta Amarela -->
               <path d="M 15 25 C 120 5, 380 10, 485 20 C 498 70, 492 140, 475 180 C 390 198, 110 205, 20 175 C 5 130, 2 65, 15 25 Z" fill="#FFE600"/>
               <path d="M 5 45 C 80 35, 420 30, 495 50 C 490 110, 480 150, 460 188 C 360 190, 80 192, 10 160 Z" fill="#FFE600"/>
             </svg>
@@ -566,15 +623,13 @@
                 <span>R$</span>
                 <span>UN</span>
               </div>
-              <span class="poster-price-main" id="posterPriceMain">9,39</span>
+              <span class="poster-price-main" id="posterPriceMain">10,49</span>
             </div>
           </div>
 
-          <!-- Rodapé do Cartaz -->
           <div class="poster-footer">
-            <div class="footer-code" id="posterEanText">CÓD. PRODUTO: "7894900031515"</div>
+            <div class="footer-code" id="posterEanText">CÓD. PRODUTO: "7894900027006"</div>
             <div>
-              <!-- Logo Rede RMarket -->
               <svg class="footer-logo" viewBox="0 0 160 35">
                 <text x="5" y="24" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#0080FF">rede</text>
                 <path d="M 38 18 C 38 10, 45 10, 48 18 L 52 18" fill="none" stroke="#0080FF" stroke-width="2"/>
@@ -586,19 +641,19 @@
             </div>
             <div class="footer-validity" id="posterValidadeText">OFERTA VÁLIDA DE 19/09/2026 ATÉ 19/09/2026</div>
           </div>
-
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- Botão Flutuante para Câmera no Android/Celular -->
+  <!-- Botão Flutuante Câmera Celular -->
   <button class="fab-camera" type="button" data-bs-toggle="modal" data-bs-target="#cameraModal" onclick="iniciarCamera()" title="Escanear Código de Barras">
     <i class="fa-solid fa-camera"></i>
   </button>
 
-  <!-- Modal do Leitor de Câmera -->
+  <!-- Modais do Sistema -->
+  <!-- 1. Modal Camera -->
   <div class="modal fade" id="cameraModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -608,7 +663,56 @@
         </div>
         <div class="modal-body text-center">
           <div id="reader"></div>
-          <small class="text-muted d-block mt-2">Aponta a câmera do celular para o código EAN</small>
+          <small class="text-muted d-block mt-2">Aponte a câmera para o código EAN</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Modal Adicionar Produto -->
+  <div class="modal fade" id="modalNovoProduto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fs-6 fw-bold"><i class="fa-solid fa-plus me-2 text-primary"></i>Adicionar Novo Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-2">
+            <label class="form-label small fw-bold">Código EAN</label>
+            <input type="text" class="form-control form-control-sm" id="novoEan" placeholder="Ex: 7894900027006">
+          </div>
+          <div class="mb-2">
+            <label class="form-label small fw-bold">Descrição / Nome do Produto</label>
+            <input type="text" class="form-control form-control-sm" id="novoNome" placeholder="Ex: SUCO DEL VALLE 1L">
+          </div>
+          <div class="mb-2">
+            <label class="form-label small fw-bold">Preço (R$)</label>
+            <input type="text" class="form-control form-control-sm" id="novoPreco" placeholder="7,99">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="salvarNovoProduto()">Salvar Produto</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Modal Editar Preço -->
+  <div class="modal fade" id="modalEditarPreco" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fs-6 fw-bold"><i class="fa-solid fa-dollar-sign me-2 text-success"></i>Editar Preço</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label small fw-bold">Novo Preço (R$)</label>
+          <input type="text" class="form-control" id="inputEditarPreco" value="10,49">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-sm w-100" onclick="salvarPreco()">Atualizar Preço</button>
         </div>
       </div>
     </div>
@@ -619,17 +723,18 @@
 
   <script>
     let html5QrcodeScanner = null;
+    let modalNovoProduto, modalEditarPreco;
+
     let listaItensSalvos = [
-      { id: '7294', nome: 'REFRI FANTA PET 2L LARANJA', preco: '9,39', ean: '7894900031515' },
-      { id: '7294', nome: 'REFRI FANTA PET 2L LARANJA', preco: '9,39', ean: '7894900031515' },
-      { id: '7294', nome: 'REFRI FANTA PET 2L LARANJA', preco: '9,39', ean: '7894900031515' }
+      { id: '7483', nome: 'REFRI COCA COLA PET 1,5L', preco: '10,49', ean: '7894900027006' }
     ];
 
     document.addEventListener("DOMContentLoaded", function() {
+      modalNovoProduto = new bootstrap.Modal(document.getElementById('modalNovoProduto'));
+      modalEditarPreco = new bootstrap.Modal(document.getElementById('modalEditarPreco'));
       renderizarListaSalva();
     });
 
-    // Troca de Modelo de Cartaz
     function selecionarModelo(element, modelo, formatoTexto) {
       document.querySelectorAll('.template-card').forEach(card => card.classList.remove('active'));
       element.classList.add('active');
@@ -638,16 +743,13 @@
       poster.className = 'poster-paper ' + modelo;
 
       document.getElementById('formatoIndicadorText').innerText = formatoTexto;
-      document.body.className = 'print-' + modelo;
     }
 
-    // Atualiza Texto da Campanha
     function atualizarCampanha() {
       const campanha = document.getElementById('selectCampanha').value;
       document.getElementById('posterCampanhaText').textContent = campanha;
     }
 
-    // Atualiza Cartaz Ativo
     function gerarCartaz(codigo, titulo, preco, ean) {
       document.getElementById('posterTitle').innerText = titulo;
       document.getElementById('posterPriceMain').innerText = preco;
@@ -656,19 +758,53 @@
       document.getElementById('tdDescricao').innerText = titulo;
     }
 
-    // Gerenciamento da Lista de Itens Salvos
+    /* Ações do Dropdown */
+    function abrirEditarProduto() {
+      const nomeAtual = document.getElementById('tdDescricao').innerText;
+      const novoNome = prompt("Editar nome do produto:", nomeAtual);
+      if (novoNome) {
+        document.getElementById('tdDescricao').innerText = novoNome;
+        document.getElementById('posterTitle').innerText = novoNome;
+      }
+    }
+
+    function abrirEditarPreco() {
+      modalEditarPreco.show();
+    }
+
+    function salvarPreco() {
+      const novoPreco = document.getElementById('inputEditarPreco').value;
+      document.getElementById('posterPriceMain').innerText = novoPreco;
+      modalEditarPreco.hide();
+    }
+
+    function abrirImagem() {
+      alert("Recurso de inserção de imagem do produto ativado!");
+    }
+
+    function abrirAditivo() {
+      const aditivo = prompt("Insira o texto do aditivo (Ex: 'LEVE 3 PAGUE 2'):");
+      if (aditivo) {
+        alert("Aditivo '" + aditivo + "' inserido no cartaz!");
+      }
+    }
+
+    function salvarNovoProduto() {
+      const ean = document.getElementById('novoEan').value || '7890000000000';
+      const nome = document.getElementById('novoNome').value || 'NOVO PRODUTO';
+      const preco = document.getElementById('novoPreco').value || '0,00';
+
+      gerarCartaz("9999", nome, preco, ean);
+      modalNovoProduto.hide();
+    }
+
     function adicionarALista() {
       const codigo = document.getElementById('tdCodigo').innerText;
       const nome = document.getElementById('tdDescricao').innerText;
+      const preco = document.getElementById('posterPriceMain').innerText;
       const ean = document.getElementById('barcodeInput').value;
 
-      listaItensSalvos.push({
-        id: codigo,
-        nome: nome,
-        preco: '9,39',
-        ean: ean
-      });
-
+      listaItensSalvos.push({ id: codigo, nome: nome, preco: preco, ean: ean });
       renderizarListaSalva();
     }
 
@@ -695,18 +831,18 @@
         const row = document.createElement('div');
         row.className = 'saved-item-row';
         row.innerHTML = `
-          <span class="text-uppercase fw-bold" style="max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.nome.split(' ')[0]} FA</span>
+          <span class="text-uppercase fw-bold" style="max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.nome}</span>
           <span class="text-muted">${item.id}</span>
           <div>
-            <i class="fa-solid fa-eye text-primary me-2 cursor-pointer" title="Visualizar" onclick="gerarCartaz('${item.id}', '${item.nome}', '${item.preco}', '${item.ean}')"></i>
-            <i class="fa-solid fa-xmark text-danger cursor-pointer" title="Remover" onclick="removerItemLista(${index})"></i>
+            <i class="fa-solid fa-eye text-primary me-2 cursor-pointer" onclick="gerarCartaz('${item.id}', '${item.nome}', '${item.preco}', '${item.ean}')"></i>
+            <i class="fa-solid fa-xmark text-danger cursor-pointer" onclick="removerItemLista(${index})"></i>
           </div>
         `;
         container.appendChild(row);
       });
     }
 
-    // Leitor por Câmera
+    /* Leitor de Câmera */
     function iniciarCamera() {
       if (!html5QrcodeScanner) {
         html5QrcodeScanner = new Html5Qrcode("reader");
@@ -715,10 +851,7 @@
       const config = { 
         fps: 10, 
         qrbox: { width: 250, height: 130 },
-        formatsToSupport: [ 
-          Html5QrcodeSupportedFormats.EAN_13,
-          Html5QrcodeSupportedFormats.EAN_8 
-        ]
+        formatsToSupport: [ Html5QrcodeSupportedFormats.EAN_13, Html5QrcodeSupportedFormats.EAN_8 ]
       };
 
       html5QrcodeScanner.start(
@@ -726,10 +859,7 @@
         config,
         onScanSuccess,
         onScanFailure
-      ).catch(err => {
-        console.error("Erro ao abrir câmera:", err);
-        alert("Acesso à câmera indisponível ou bloqueado.");
-      });
+      ).catch(err => alert("Câmera indisponível no navegador."));
     }
 
     function onScanSuccess(decodedText) {
@@ -752,7 +882,7 @@
     function buscarProduto() {
       const ean = document.getElementById('barcodeInput').value;
       if (ean) {
-        gerarCartaz("7294", "REFRI FANTA PET 2L LARANJA", "9,39", ean);
+        gerarCartaz("7483", "REFRI COCA COLA PET 1,5L - UN", "10,49", ean);
       }
     }
   </script>
