@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coletor de Saneamento</title>
-  <!-- Biblioteca para leitura de Código de Barras via Câmera -->
+  <title>Coletor Direto - Saneamento</title>
   <script src="https://unpkg.com/html5-qrcode"></script>
   <style>
     * { box-sizing: border-box; }
@@ -13,19 +12,18 @@
     
     .card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 16px; }
     
-    .btn { width: 100%; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; }
-    .btn-saneamento { background: #0066cc; color: #ffffff; }
-    .btn-manual { background: #6c757d; color: #ffffff; }
+    .btn { width: 100%; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-enviar { background: #28a745; color: #ffffff; font-size: 18px; margin-top: 16px; }
     
-    #reader { width: 100%; max-width: 400px; margin: 0 auto 16px auto; display: none; border-radius: 8px; overflow: hidden; }
+    /* Container fixo para a Câmera */
+    #reader { width: 100%; max-width: 400px; margin: 0 auto 16px auto; border-radius: 8px; overflow: hidden; background: #000; min-height: 250px; }
     
     .manual-box { display: flex; gap: 8px; margin-top: 8px; }
     .manual-input { flex: 1; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; outline: none; }
     .manual-input:focus { border-color: #0066cc; }
     .btn-add { background: #17a2b8; color: white; border: none; padding: 12px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; }
     
-    ul { text-align: left; background: #ffffff; padding: 12px 16px; border-radius: 8px; list-style: none; margin: 0; max-height: 250px; overflow-y: auto; border: 1px solid #e9ecef; }
+    ul { text-align: left; background: #ffffff; padding: 12px 16px; border-radius: 8px; list-style: none; margin: 0; max-height: 200px; overflow-y: auto; border: 1px solid #e9ecef; }
     li { padding: 10px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
     li:last-child { border-bottom: none; }
     .btn-remove { background: #ff4d4f; color: white; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px; }
@@ -33,17 +31,12 @@
 </head>
 <body>
 
-  <h2>Coletor Rápido de Produtos</h2>
+  <h2>🧼 Leitor Direto: Saneamento</h2>
 
   <div class="card">
-    <!-- Botão Câmera -->
-    <button class="btn btn-saneamento" onclick="iniciarLeitor()">🧼 Abrir Câmera (Saneamento)</button>
-    
-    <!-- Janela de vídeo da Câmera -->
     <div id="reader"></div>
 
-    <!-- Campo de Digitação Manual -->
-    <label style="font-size: 13px; font-weight: bold; color: #555;">Digitação Manual (Código de Barras):</label>
+    <label style="font-size: 13px; font-weight: bold; color: #555;">Digitação Manual (se necessário):</label>
     <div class="manual-box">
       <input type="number" id="codigoManual" class="manual-input" placeholder="Ex: 7891234567890" inputmode="numeric" onkeypress="verificarEnter(event)">
       <button class="btn-add" onclick="adicionarManual()">+ Add</button>
@@ -51,65 +44,60 @@
   </div>
 
   <div class="card">
-    <h3 style="margin-top:0; font-size: 16px;">Produtos Coletados (<span id="qtd-total">0</span>):</h3>
+    <h3 style="margin-top:0; font-size: 16px;">Produtos Lidos (<span id="qtd-total">0</span>):</h3>
     <ul id="lista-produtos">
-      <li style="color: #888; text-align: center; justify-content: center;">Nenhum produto lido ainda.</li>
+      <li style="color: #888; text-align: center; justify-content: center;">Aponta a câmera para o código de barras...</li>
     </ul>
 
-    <!-- Botão de Envio para a API -->
     <button class="btn btn-enviar" onclick="enviarParaCartazFacil()">🚀 Enviar para Cartaz Fácil</button>
   </div>
 
   <script>
-    // Configurações da API
-    const token = "SEU_TOKEN_AQUI"; // Insira seu token aqui
+    const token = "SEU_TOKEN_AQUI"; // Insira seu token da API aqui
     const apiURL = `https://apicartazfacil.com/public/api/importacao/daily?validate=1&token=${token}`;
     
     let produtosColetados = [];
-    let html5QrcodeScanner;
+    let html5QrCode;
 
-    // Inicializa a câmera
-    function iniciarLeitor() {
-      const readerDiv = document.getElementById('reader');
-      if (readerDiv.style.display === 'block') {
-        fecharLeitor();
-        return;
-      }
-      
-      readerDiv.style.display = 'block';
-      html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
-        fps: 10, 
-        qrbox: { width: 250, height: 150 },
-        rememberLastUsedCamera: true
+    // Inicia a câmera TRASEIRA automaticamente assim que abre a página
+    window.addEventListener("DOMContentLoaded", () => {
+      iniciarCameraTraseira();
+    });
+
+    function iniciarCameraTraseira() {
+      html5QrCode = new Html5Qrcode("reader");
+
+      const config = { 
+        fps: 15, 
+        qrbox: { width: 280, height: 160 },
+        experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+      };
+
+      // O parâmetro facingMode: "environment" força a abertura da Câmera Traseira (camera 0 / back)
+      html5QrCode.start(
+        { facingMode: "environment" }, 
+        config, 
+        onScanSuccess
+      ).catch(err => {
+        console.error("Erro ao iniciar câmera traseira:", err);
       });
-      html5QrcodeScanner.render(onScanSuccess);
     }
 
-    function fecharLeitor() {
-      if (html5QrcodeScanner) {
-        html5QrcodeScanner.clear();
-      }
-      document.getElementById('reader').style.display = 'none';
-    }
-
-    // Leitura via Câmera
+    // Ação ao ler o código com sucesso
     function onScanSuccess(decodedText) {
       adicionarProduto(decodedText);
-      navigator.vibrate?.(150); // Vibração de confirmação no celular
+      navigator.vibrate?.(120); // Vibração curta de confirmação
     }
 
-    // Digitação Manual
+    // Adiciona digitado manualmente
     function adicionarManual() {
       const input = document.getElementById('codigoManual');
       const codigo = input.value.trim();
 
-      if (!codigo) {
-        alert("Por favor, digite o código de barras!");
-        return;
-      }
+      if (!codigo) return;
 
       adicionarProduto(codigo);
-      input.value = ""; // Limpa o campo de texto
+      input.value = "";
       input.focus();
     }
 
@@ -119,12 +107,10 @@
       }
     }
 
-    // Função centralizada para adicionar produtos
+    // Regra de inserção do produto na lista
     function adicionarProduto(codigo) {
-      // Verifica se o produto já está na lista
       if (produtosColetados.some(p => p.codigo === codigo)) {
-        alert("Este código já foi adicionado na lista!");
-        return;
+        return; // Evita ler repetidamente o mesmo item em sequência
       }
 
       const novoProduto = {
@@ -137,13 +123,11 @@
       atualizarListaVisual();
     }
 
-    // Remover item individual
     function removerProduto(index) {
       produtosColetados.splice(index, 1);
       atualizarListaVisual();
     }
 
-    // Atualiza a lista exibida na tela
     function atualizarListaVisual() {
       const lista = document.getElementById('lista-produtos');
       const contador = document.getElementById('qtd-total');
@@ -152,7 +136,7 @@
       lista.innerHTML = "";
 
       if (produtosColetados.length === 0) {
-        lista.innerHTML = '<li style="color: #888; text-align: center; justify-content: center;">Nenhum produto lido ainda.</li>';
+        lista.innerHTML = '<li style="color: #888; text-align: center; justify-content: center;">Aponta a câmera para o código de barras...</li>';
         return;
       }
 
@@ -166,10 +150,10 @@
       });
     }
 
-    // Envio dos dados para o servidor do Cartaz Fácil
+    // Envio para o Cartaz Fácil
     async function enviarParaCartazFacil() {
       if (produtosColetados.length === 0) {
-        alert("Adicione ao menos um produto antes de enviar!");
+        alert("Nenhum produto lido na lista!");
         return;
       }
 
@@ -181,15 +165,14 @@
         });
 
         if (response.ok) {
-          alert(" Sucesso! Todos os produtos de saneamento foram salvos no Cartaz Fácil.");
+          alert(" Sucesso! Produtos enviados para o Cartaz Fácil.");
           produtosColetados = [];
           atualizarListaVisual();
-          fecharLeitor();
         } else {
-          alert(" Ocorreu um erro ao enviar para a API. Verifique seu token de acesso.");
+          alert(" Erro ao enviar para a API.");
         }
       } catch (error) {
-        alert(" Erro de conexão com o servidor. Verifique sua internet.");
+        alert(" Erro de conexão.");
       }
     }
   </script>
