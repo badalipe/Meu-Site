@@ -53,8 +53,8 @@
   </div>
 
   <script>
-    // Apontado para a URL do seu Worker no Cloudflare
-    const apiURL = "https://flat-dawn-6511.clientetrabalho2018.workers.dev/";
+    // URL do seu Worker do Cloudflare intermediário (soluciona o erro de CORS/Conexão)
+    const apiURL = "https://flat-dawn-6511.clientetrabalho2018.workers.dev";
     
     let produtosColetados = [];
     let html5QrCode;
@@ -73,7 +73,7 @@
         experimentalFeatures: { useBarCodeDetectorIfSupported: true }
       };
 
-      // O parâmetro facingMode: "environment" força a abertura da Câmera Traseira
+      // Força a abertura da Câmera Traseira
       html5QrCode.start(
         { facingMode: "environment" }, 
         config, 
@@ -86,7 +86,7 @@
     // Ação ao ler o código com sucesso
     function onScanSuccess(decodedText) {
       adicionarProduto(decodedText);
-      navigator.vibrate?.(120); // Vibração curta de confirmação
+      navigator.vibrate?.(120); // Vibração de confirmação
     }
 
     // Adiciona digitado manualmente
@@ -150,7 +150,7 @@
       });
     }
 
-    // Envio para o Cloudflare Worker
+    // Envio para o Cartaz Fácil via Cloudflare Worker
     async function enviarParaCartazFacil() {
       if (produtosColetados.length === 0) {
         alert("Nenhum produto lido na lista!");
@@ -165,14 +165,14 @@
         });
 
         if (response.ok) {
-          alert(" Sucesso! Produtos enviados para o Cartaz Fácil.");
+          alert(" Sucesso! Produtos de saneamento enviados para o Cartaz Fácil.");
           produtosColetados = [];
           atualizarListaVisual();
         } else {
-          alert(" Erro ao enviar para a API (Status: " + response.status + ")");
+          alert(" Erro ao processar o envio na API do Cartaz Fácil.");
         }
       } catch (error) {
-        alert(" Erro de conexão com o servidor.");
+        alert(" Erro de conexão com o servidor intermediário.");
       }
     }
   </script>
