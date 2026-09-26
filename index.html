@@ -150,10 +150,10 @@
   }
   .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   
-  /* BOTÃO FLUTUANTE DA CÂMARA (VERDADEIRAMENTE FLUTUANTE E FIXO NA TELA) */
+  /* BOTÃO FLUTUANTE DA CÂMARA (COM FLUTUAÇÃO VISUAL INTensa E FIXA) */
   .fab-camera {
     position: fixed !important;
-    bottom: 24px !important;
+    bottom: 28px !important;
     right: 24px !important;
     width: 64px !important;
     height: 64px !important;
@@ -163,12 +163,12 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: 0 8px 25px rgba(0, 102, 178, 0.55) !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 102, 178, 0.6) !important;
+    border: 2px solid rgba(255, 255, 255, 0.45) !important;
     cursor: pointer !important;
-    z-index: 999999 !important;
+    z-index: 9999999 !important;
     font-size: 28px !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease !important;
   }
   .fab-camera:active {
     transform: scale(0.9) !important;
@@ -311,7 +311,7 @@
   
   <!-- MÓDULO PRÓATIVO -->
   <div id="proativo-modal" class="system-modal hidden">
-    <div id="app-proativo" style="display:flex; flex-direction:column; height:100%;">
+    <div id="app-proativo" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
         <div class="header-content-wrapper">
           <div class="header-main-row">
@@ -402,14 +402,15 @@
           </div>
         </section>
       </main>
+
+      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
+      <button type="button" class="fab-camera" onclick="abrirScanner('proativo')" title="Escanear com Câmera">📷</button>
     </div>
-    <!-- BOTÃO FLUTUANTE DA CÂMARA (FORA DA ÁREA DE ROLAGEM, FIXO NA TELA) -->
-    <button type="button" class="fab-camera" onclick="abrirScanner('proativo')" title="Escanear com Câmera">📷</button>
   </div>
   
   <!-- MÓDULO TROCAS -->
   <div id="trocas-modal" class="system-modal hidden">
-    <div id="app-trocas" style="display:flex; flex-direction:column; height:100%;">
+    <div id="app-trocas" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
         <div class="header-content-wrapper">
           <div class="header-main-row">
@@ -508,9 +509,10 @@
           </div>
         </section>
       </main>
+
+      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
+      <button type="button" class="fab-camera" onclick="abrirScanner('trocas')" title="Escanear com Câmera">📷</button>
     </div>
-    <!-- BOTÃO FLUTUANTE DA CÂMARA (FORA DA ÁREA DE ROLAGEM, FIXO NA TELA) -->
-    <button type="button" class="fab-camera" onclick="abrirScanner('trocas')" title="Escanear com Câmera">📷</button>
   </div>
   
   <!-- SCANNER OVERLAY -->
