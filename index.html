@@ -150,6 +150,30 @@
   }
   .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   
+  /* BOTÃO FLUTUANTE DA CÂMARA (FAB) */
+  .fab-camera {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--primary) 0%, #004d87 100%);
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(0, 102, 178, 0.45);
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    z-index: 9999;
+    font-size: 26px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .fab-camera:active {
+    transform: scale(0.92);
+  }
+
   /* SCANNER OVERLAY */
   #beep-scanner-overlay {
     position: fixed; inset: 0; background: #000; z-index: 9999999;
@@ -287,7 +311,7 @@
   
   <!-- MÓDULO PRÓATIVO -->
   <div id="proativo-modal" class="system-modal hidden">
-    <div id="app-proativo" style="display:flex; flex-direction:column; height:100%;">
+    <div id="app-proativo" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
         <div class="header-content-wrapper">
           <div class="header-main-row">
@@ -378,12 +402,15 @@
           </div>
         </section>
       </main>
+
+      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
+      <button type="button" class="fab-camera" onclick="abrirScanner('proativo')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
   <!-- MÓDULO TROCAS -->
   <div id="trocas-modal" class="system-modal hidden">
-    <div id="app-trocas" style="display:flex; flex-direction:column; height:100%;">
+    <div id="app-trocas" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
         <div class="header-content-wrapper">
           <div class="header-main-row">
@@ -482,6 +509,9 @@
           </div>
         </section>
       </main>
+
+      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
+      <button type="button" class="fab-camera" onclick="abrirScanner('trocas')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
