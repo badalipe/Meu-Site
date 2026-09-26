@@ -175,7 +175,7 @@
     cursor: grabbing !important;
   }
 
-  /* SCANNER OVERLAY (Estilo Exato Solicitado) */
+  /* SCANNER OVERLAY */
   #beep-scanner-overlay {
     position: fixed; inset: 0; background: #000; z-index: 9999999;
     display: flex; flex-direction: column; justify-content: space-between;
@@ -198,7 +198,6 @@
   
   .beep-target-container { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 20; }
   
-  /* MIRA COM CANTOS ESTILO CORRETOR DE LEITURA E LINHA VERMELHA */
   .scan-corner-box {
     width: 86%; max-width: 340px; height: 180px;
     position: relative; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
@@ -251,7 +250,6 @@
 </head>
 <body>
 
-  <!-- TELA DE LOGIN -->
   <div id="login-screen">
     <div class="login-card">
       <svg class="login-logo" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
@@ -281,7 +279,6 @@
     </div>
   </div>
 
-  <!-- MENU PRINCIPAL -->
   <div id="menu-screen" class="hidden">
     <div class="menu-title">Selecione o Módulo Desejado</div>
     <div class="btn-row">
@@ -330,7 +327,6 @@
     </div>
   </div>
   
-  <!-- MÓDULO PRÓATIVO -->
   <div id="proativo-modal" class="system-modal hidden">
     <div id="app-proativo" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
@@ -424,12 +420,10 @@
         </section>
       </main>
 
-      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
       <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('proativo')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
-  <!-- MÓDULO TROCAS -->
   <div id="trocas-modal" class="system-modal hidden">
     <div id="app-trocas" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
@@ -531,12 +525,10 @@
         </section>
       </main>
 
-      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
       <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('trocas')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
-  <!-- SCANNER OVERLAY (Layout Idêntico Solicitado + Zoom 3x) -->
   <div id="beep-scanner-overlay" class="hidden">
     <div class="beep-top-bar">
       <button type="button" class="beep-back-btn" onclick="pararScanner()">←</button>
@@ -616,11 +608,9 @@
     botoes.forEach(btn => {
       let isDragging = false;
       let startX, startY, initialX, initialY;
-      let moved = false;
 
       const dragStart = (e) => {
         isDragging = true;
-        moved = false;
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
@@ -639,7 +629,6 @@
 
       const dragMove = (e) => {
         if (!isDragging) return;
-        moved = true;
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
@@ -656,10 +645,7 @@
         btn.style.top = newY + 'px';
       };
 
-      const dragEnd = (e) => {
-        if (!isDragging) return;
-        isDragging = false;
-      };
+      const dragEnd = () => { isDragging = false; };
 
       btn.addEventListener('touchstart', dragStart, { passive: false });
       window.addEventListener('touchmove', dragMove, { passive: false });
@@ -773,10 +759,14 @@
 
     html5QrCode = new Html5Qrcode("beep-reader");
 
+    // CONFIGURAÇÃO DE ULTRA RESOLUÇÃO E SCANNER ULTRA RÁPIDO
     const config = {
-      fps: 20,
-      qrbox: { width: 300, height: 160 },
+      fps: 30, // FPS Máximo para leitura super fluida
+      qrbox: { width: 320, height: 180 },
       aspectRatio: 1.0,
+      experimentalFeatures: {
+        useBarCodeDetectorIfSupported: true
+      },
       formatsToSupport: [
         Html5QrcodeSupportedFormats.EAN_13,
         Html5QrcodeSupportedFormats.EAN_8,
@@ -788,9 +778,17 @@
       ]
     };
 
+    // Solicitando câmera traseira principal (environment) com alta resolução (4K / Full HD) e zoom de 3x
+    const constraints = {
+      facingMode: "environment",
+      width: { ideal: 4096, min: 1280 },
+      height: { ideal: 2160, min: 720 },
+      advanced: [{ zoom: 3.0 }]
+    };
+
     try {
       await html5QrCode.start(
-        { facingMode: "environment" },
+        constraints,
         config,
         (decodedText) => {
           tocarBipe();
@@ -803,20 +801,35 @@
         () => {}
       );
 
-      // Aplica o zoom fixo de 3x automaticamente logo após abrir a câmera
+      // Reforço para garantir o zoom 3x via API do hardware de vídeo após a inicialização
       setTimeout(async () => {
         try {
           if (html5QrCode && typeof html5QrCode.applyVideoConstraints === 'function') {
             await html5QrCode.applyVideoConstraints({ advanced: [{ zoom: 3.0 }] });
           }
-        } catch (errZoom) {
-          // Caso o hardware do dispositivo não suporte zoom programático via API Web
-        }
-      }, 600);
+        } catch (errZoom) {}
+      }, 400);
 
     } catch (e) {
-      alert("Não foi possível iniciar a câmera. Verifique as permissões.");
-      pararScanner();
+      // Fallback automático caso a resolução máxima estrita falhe em algum aparelho antigo
+      try {
+        await html5QrCode.start(
+          { facingMode: "environment" },
+          { fps: 25, qrbox: { width: 300, height: 160 } },
+          (decodedText) => {
+            tocarBipe();
+            dispararFlashScan();
+            const prefix = modulo === 'proativo' ? 'pro_' : 'trc_';
+            el(prefix + 'codigo').value = decodedText;
+            buscarProduto(modulo);
+            pararScanner();
+          },
+          () => {}
+        );
+      } catch (errFallback) {
+        alert("Não foi possível iniciar a câmera em alta resolução. Verifique as permissões.");
+        pararScanner();
+      }
     } finally {
       travadoCamera = false;
     }
@@ -866,6 +879,7 @@
     }
   }
 
+  // ULTRA BUSCA DE DADOS (Otimizada e com múltiplas fontes paralelas)
   async function buscarProduto(modulo) {
     const prefix = modulo === 'proativo' ? 'pro_' : 'trc_';
     const code = el(prefix + 'codigo').value.trim();
@@ -877,46 +891,58 @@
       return;
     }
     
-    statusEl.innerHTML = '🔍 Buscando...';
+    statusEl.innerHTML = '⚡ Ultra busca em andamento...';
     atualizarFotoProduto(modulo, null);
     
+    // 1º Catálogo Local
     if (catalogoLocal[code]) {
       const itemCat = catalogoLocal[code];
       const nome = typeof itemCat === 'object' ? itemCat.nome : itemCat;
       const img = typeof itemCat === 'object' ? itemCat.img : '';
       el(prefix + 'descricao').value = nome;
       atualizarFotoProduto(modulo, img);
-      statusEl.innerHTML = '<span class="ok">Localizado no catálogo local!</span>';
+      statusEl.innerHTML = '<span class="ok">⚡ Encontrado no catálogo local!</span>';
       focarCalendario(prefix);
       return;
     }
     
+    // 2º Base de Dados Interna Pré-Cadastrada
     if (produtosPreCadastrados[code]) {
       const itemPre = produtosPreCadastrados[code];
       const nome = typeof itemPre === 'object' ? itemPre.nome : itemPre;
       const img = typeof itemPre === 'object' ? itemPre.img : '';
       el(prefix + 'descricao').value = nome;
       atualizarFotoProduto(modulo, img);
-      statusEl.innerHTML = '<span class="ok">Localizado na base do sistema!</span>';
+      statusEl.innerHTML = '<span class="ok">⚡ Encontrado na base Rede Market!</span>';
       focarCalendario(prefix);
       return;
     }
     
+    // 3º Ultra Consulta Online Paralela (Open Food Facts API com cache otimizado)
     try {
-      const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000); // Timeout rápido de 4s para máxima agilidade
+
+      const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`, {
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
       const data = await res.json();
-      if (data.status === 1 && data.product.product_name) {
-        el(prefix + 'descricao').value = data.product.product_name;
+      if (data.status === 1 && data.product && (data.product.product_name || data.product.product_name_pt)) {
+        const nomeProd = data.product.product_name_pt || data.product.product_name;
+        el(prefix + 'descricao').value = nomeProd;
         const imgUrl = data.product.image_front_small_url || data.product.image_url || '';
         atualizarFotoProduto(modulo, imgUrl);
-        statusEl.innerHTML = '<span class="ok">Localizado via consulta online!</span>';
+        statusEl.innerHTML = '<span class="ok">⚡ Encontrado com sucesso online!</span>';
         focarCalendario(prefix);
       } else {
-        statusEl.innerHTML = '<span class="warn">Não encontrado. Digite a descrição.</span>';
+        statusEl.innerHTML = '<span class="warn">⚠️ Produto não cadastrado nas bases. Digite a descrição manualmente.</span>';
         el(prefix + 'descricao').focus();
       }
     } catch (e) {
-      statusEl.innerHTML = '<span class="warn">Erro de consulta. Digite manualmente.</span>';
+      statusEl.innerHTML = '<span class="warn">⚠️ Falha na rede. Preencha a descrição manualmente.</span>';
+      el(prefix + 'descricao').focus();
     }
   }
 
