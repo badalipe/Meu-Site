@@ -231,7 +231,6 @@
 </head>
 <body>
 
-  <!-- TELA DE LOGIN -->
   <div id="login-screen">
     <div class="login-card">
       <svg class="login-logo" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
@@ -261,7 +260,6 @@
     </div>
   </div>
 
-  <!-- MENU PRINCIPAL -->
   <div id="menu-screen" class="hidden">
     <div class="menu-title">Selecione o Módulo Desejado</div>
     <div class="btn-row">
@@ -310,7 +308,6 @@
     </div>
   </div>
   
-  <!-- MÓDULO PRÓATIVO -->
   <div id="proativo-modal" class="system-modal hidden">
     <div id="app-proativo" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
@@ -404,12 +401,10 @@
         </section>
       </main>
 
-      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
       <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('proativo')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
-  <!-- MÓDULO TROCAS -->
   <div id="trocas-modal" class="system-modal hidden">
     <div id="app-trocas" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
@@ -511,48 +506,10 @@
         </section>
       </main>
 
-      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
       <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('trocas')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
-
-  <!-- MÓDULO CARTAZ (EMBEDDED IFRAME COM BOTÃO FLUTUANTE DA CÂMARA POR CIMA) -->
-  <div id="cartaz-modal" class="system-modal hidden">
-    <div id="app-cartaz" style="display:flex; flex-direction:column; height:100%; position:relative;">
-      <header class="top">
-        <div class="header-content-wrapper">
-          <div class="header-main-row">
-            <div class="header-brand-group">
-              <div class="logo-container">
-                <svg class="header-logo" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M 30,120 L 30,55 C 30,35 45,20 65,20 L 115,20 C 145,20 165,40 165,70 C 165,95 145,115 120,120 L 155,160 L 125,160 L 95,120 L 65,120 L 65,160 L 30,160 Z M 65,50 L 65,95 L 110,95 C 125,95 135,85 135,72 C 135,60 125,50 110,50 Z" fill="#0066b2"/>
-                  <circle cx="30" cy="35" r="14" fill="#0066b2"/>
-                  <circle cx="30" cy="145" r="14" fill="#0066b2"/>
-                  <text x="175" y="68" font-family="Arial, sans-serif" font-weight="700" font-size="52" fill="#0066b2" letter-spacing="-1">rede</text>
-                  <text x="170" y="145" font-family="Arial, sans-serif" font-weight="900" font-size="82" fill="#e30613" letter-spacing="-2">market</text>
-                </svg>
-              </div>
-              <div class="header-text">
-                <h1>Gerador de Cartazes</h1>
-                <div class="sub">Sistema Oficial</div>
-              </div>
-            </div>
-            <button type="button" class="btn-menu-pro" onclick="voltarAoMenu()">Menu</button>
-          </div>
-        </div>
-      </header>
-
-      <!-- IFRAME DO SITE DE CARTAZES -->
-      <div style="flex-grow:1; width:100%; height:100%; position:relative; background:#fff;">
-        <iframe id="cartazIframe" src="" style="width:100%; height:100%; border:none;" allow="camera; microphone; clipboard-write"></iframe>
-      </div>
-
-      <!-- BOTÃO FLUTUANTE DA CÂMARA NO CARTAZ -->
-      <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('cartaz')" title="Escanear com Câmera">📷</button>
-    </div>
-  </div>
   
-  <!-- SCANNER OVERLAY -->
   <div id="beep-scanner-overlay" class="hidden">
     <div class="beep-top-bar">
       <button type="button" class="beep-back-btn" onclick="pararScanner()">← Fechar</button>
@@ -675,9 +632,6 @@
       const dragEnd = (e) => {
         if (!isDragging) return;
         isDragging = false;
-        if (moved) {
-          e.preventDefault();
-        }
       };
 
       btn.addEventListener('touchstart', dragStart, { passive: false });
@@ -709,7 +663,6 @@
     sessionStorage.removeItem('sys_logado');
     el('proativo-modal').classList.add('hidden');
     el('trocas-modal').classList.add('hidden');
-    el('cartaz-modal').classList.add('hidden');
     el('menu-screen').classList.add('hidden');
     el('login-screen').classList.remove('hidden');
     el('usuarioInput').value = '';
@@ -722,6 +675,12 @@
       return;
     }
     
+    if (modulo === 'cartaz') {
+      // Abre o link oficial diretamente em uma nova aba para evitar bloqueios de segurança do navegador
+      window.open('https://rmarket.cartazfacil.pro/unitario.php', '_blank');
+      return;
+    }
+    
     moduloAtual = modulo;
     el('menu-screen').classList.add('hidden');
     
@@ -731,12 +690,6 @@
     } else if (modulo === 'trocas') {
       el('trocas-modal').classList.remove('hidden');
       renderizarLista('trocas');
-    } else if (modulo === 'cartaz') {
-      const iframe = el('cartazIframe');
-      if (iframe && !iframe.src) {
-        iframe.src = "https://rmarket.cartazfacil.pro/unitario.php";
-      }
-      el('cartaz-modal').classList.remove('hidden');
     }
   }
   
@@ -744,7 +697,6 @@
     pararScanner();
     el('proativo-modal').classList.add('hidden');
     el('trocas-modal').classList.add('hidden');
-    el('cartaz-modal').classList.add('hidden');
     el('menu-screen').classList.remove('hidden');
   }
   
@@ -817,16 +769,9 @@
         (decodedText) => {
           tocarBipe();
           dispararFlashScan();
-          
-          if (modulo === 'cartaz') {
-            // Se estiver no cartaz, copia o código lido para a área de transferência para facilitar colar lá dentro
-            navigator.clipboard.writeText(decodedText).catch(() => {});
-            alert(`Código lido: ${decodedText}\n(Copiado para a área de transferência!)`);
-          } else {
-            const prefix = modulo === 'proativo' ? 'pro_' : 'trc_';
-            el(prefix + 'codigo').value = decodedText;
-            buscarProduto(modulo);
-          }
+          const prefix = modulo === 'proativo' ? 'pro_' : 'trc_';
+          el(prefix + 'codigo').value = decodedText;
+          buscarProduto(modulo);
           pararScanner();
         },
         () => {}
@@ -871,10 +816,8 @@
   function fecharScannerSemCodigo() {
     const prefix = moduloAtual === 'proativo' ? 'pro_' : 'trc_';
     pararScanner();
-    if (moduloAtual !== 'cartaz') {
-      el(prefix + 'codigo').value = "";
-      el(prefix + 'descricao').focus();
-    }
+    el(prefix + 'codigo').value = "";
+    el(prefix + 'descricao').focus();
   }
 
   function checarEnterBusca(e, modulo) {
