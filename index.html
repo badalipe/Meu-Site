@@ -142,34 +142,35 @@
   }
   .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   
-  /* SCANNER OVERLAY BLINDADO */
+  /* SCANNER OVERLAY CORRIGIDO */
   #beep-scanner-overlay {
-    position: fixed; inset: 0; background: #000; z-index: 999999;
+    position: fixed; inset: 0; background: #000; z-index: 9999999;
     display: flex; flex-direction: column; justify-content: space-between;
   }
-  .beep-top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: rgba(0, 0, 0, 0.8); color: #fff; font-size: 15px; font-weight: 600; z-index: 20; }
+  .beep-top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: rgba(0, 0, 0, 0.85); color: #fff; font-size: 15px; font-weight: 600; z-index: 30; }
   .beep-back-btn, .beep-manual-link { background: none; border: none; color: #fff; font-size: 14px; cursor: pointer; }
-  .beep-viewport { position: absolute; inset: 0; background: #000; z-index: 1; }
+  
+  .beep-viewport { position: absolute; inset: 0; background: #000; z-index: 10; display: flex; align-items: center; justify-content: center; }
   #beep-reader { width: 100% !important; height: 100% !important; border: none !important; }
   #beep-reader video { width: 100% !important; height: 100% !important; object-fit: cover !important; }
   
-  .beep-target-container { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 10; }
+  .beep-target-container { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 20; }
   .scan-laser-box {
     width: 82%; max-width: 320px; height: 130px;
-    border: 2px solid rgba(16, 185, 129, 0.8); border-radius: 12px;
-    position: relative; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+    border: 2px solid rgba(16, 185, 129, 0.9); border-radius: 12px;
+    position: relative; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
   }
   .scan-laser-line {
     position: absolute; top: 50%; left: 4px; right: 4px; height: 2px;
     background: #e30613; box-shadow: 0 0 8px #e30613; animation: laserScan 1.8s infinite ease-in-out;
   }
   @keyframes laserScan { 0%, 100% { top: 15%; opacity: 0.6; } 50% { top: 85%; opacity: 1; } }
-  .scan-flash { position: absolute; inset: 0; background: rgba(16, 185, 129, 0.4); opacity: 0; transition: opacity 0.15s ease; z-index: 15; }
+  .scan-flash { position: absolute; inset: 0; background: rgba(16, 185, 129, 0.4); opacity: 0; transition: opacity 0.15s ease; z-index: 25; pointer-events: none; }
   .scan-flash.active { opacity: 1; }
   
   .camera-controls-floating {
     position: absolute; bottom: 85px; left: 0; right: 0; display: flex;
-    justify-content: center; align-items: center; gap: 10px; z-index: 20; padding: 0 16px;
+    justify-content: center; align-items: center; gap: 10px; z-index: 30; padding: 0 16px;
   }
   .camera-controls-floating button, .camera-controls-floating .zoom-pill {
     background: rgba(0, 0, 0, 0.7); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 12px; border-radius: 20px; font-size: 12px;
@@ -177,7 +178,7 @@
   .beep-bottom-bar {
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 16px 16px calc(20px + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 20; display: flex; justify-content: center;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 30; display: flex; justify-content: center;
   }
   .beep-btn-bottom-action { background: transparent; border: 2px solid rgba(255, 255, 255, 0.9); color: #fff; border-radius: 99px; padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer; }
   
@@ -331,10 +332,10 @@
         
         <section class="card">
           <div class="card-header"><span class="card-icon icon-scan">📷</span><h3>1. Escanear produto</h3></div>
-          <div class="scan-zone"><button class="primary" onclick="abrirScanner('proativo')">📷 Abrir câmera para escanear</button></div>
+          <div class="scan-zone"><button type="button" class="primary" onclick="abrirScanner('proativo')">📷 Abrir câmera para escanear</button></div>
           <label>Código de barras</label>
           <input id="pro_codigo" class="input-codigo" inputmode="numeric" placeholder="Ex.: 789..." onkeydown="checarEnterBusca(event, 'proativo')">
-          <div class="actions"><button class="primary" onclick="buscarProduto('proativo')" style="width:auto">🔍 Buscar produto</button></div>
+          <div class="actions"><button type="button" class="primary" onclick="buscarProduto('proativo')" style="width:auto">🔍 Buscar produto</button></div>
           <div id="pro_status" class="notice" style="margin-top:8px"></div>
         </section>
         
@@ -354,7 +355,7 @@
             <div><label>Data de validade *</label><input id="pro_validade" type="date"></div>
             <div><label>Valor unitário (R$)</label><input id="pro_valor" inputmode="decimal" value="0.00"></div>
           </div>
-          <div class="actions"><button class="primary" onclick="adicionarItem('proativo')" style="width:auto">➕ Adicionar à lista</button></div>
+          <div class="actions"><button type="button" class="primary" onclick="adicionarItem('proativo')" style="width:auto">➕ Adicionar à lista</button></div>
         </section>
         
         <section class="card">
@@ -364,8 +365,8 @@
           </div>
           <div id="pro_lista" class="empty"></div>
           <div class="actions" style="margin-top: 14px;">
-            <button class="primary" onclick="gerarExcel('proativo')" style="width:auto">📊 Gerar Excel Pró Ativo</button>
-            <button class="danger" onclick="limparLista('proativo')" style="width:auto">Limpar</button>
+            <button type="button" class="primary" onclick="gerarExcel('proativo')" style="width:auto">📊 Gerar Excel Pró Ativo</button>
+            <button type="button" class="danger" onclick="limparLista('proativo')" style="width:auto">Limpar</button>
           </div>
         </section>
       </main>
@@ -435,10 +436,10 @@
         
         <section class="card">
           <div class="card-header"><span class="card-icon icon-scan">📷</span><h3>1. Escanear produto</h3></div>
-          <div class="scan-zone"><button class="primary" onclick="abrirScanner('trocas')">📷 Abrir câmera para escanear</button></div>
+          <div class="scan-zone"><button type="button" class="primary" onclick="abrirScanner('trocas')">📷 Abrir câmera para escanear</button></div>
           <label>Código de barras</label>
           <input id="trc_codigo" class="input-codigo" inputmode="numeric" placeholder="Ex.: 789..." onkeydown="checarEnterBusca(event, 'trocas')">
-          <div class="actions"><button class="primary" onclick="buscarProduto('trocas')" style="width:auto">🔍 Buscar produto</button></div>
+          <div class="actions"><button type="button" class="primary" onclick="buscarProduto('trocas')" style="width:auto">🔍 Buscar produto</button></div>
           <div id="trc_status" class="notice" style="margin-top:8px"></div>
         </section>
         
@@ -458,7 +459,7 @@
             <div><label>Data de Validade *</label><input id="trc_validade" type="date"></div>
             <div><label>Custo Unitário (R$)</label><input id="trc_valor" inputmode="decimal" value="0.00"></div>
           </div>
-          <div class="actions"><button class="primary" onclick="adicionarItem('trocas')" style="width:auto">➕ Registrar para Troca</button></div>
+          <div class="actions"><button type="button" class="primary" onclick="adicionarItem('trocas')" style="width:auto">➕ Registrar para Troca</button></div>
         </section>
         
         <section class="card">
@@ -468,15 +469,15 @@
           </div>
           <div id="trc_lista" class="empty"></div>
           <div class="actions" style="margin-top: 14px;">
-            <button class="primary" onclick="gerarExcel('trocas')" style="width:auto">📊 Exportar Planilha de Trocas</button>
-            <button class="danger" onclick="limparLista('trocas')" style="width:auto">Limpar</button>
+            <button type="button" class="primary" onclick="gerarExcel('trocas')" style="width:auto">📊 Exportar Planilha de Trocas</button>
+            <button type="button" class="danger" onclick="limparLista('trocas')" style="width:auto">Limpar</button>
           </div>
         </section>
       </main>
     </div>
   </div>
   
-  <!-- SCANNER BLINDADO -->
+  <!-- SCANNER OVERLAY -->
   <div id="beep-scanner-overlay" class="hidden">
     <div class="beep-top-bar">
       <button type="button" class="beep-back-btn" onclick="pararScanner()">← Fechar</button>
@@ -678,7 +679,7 @@
         () => {}
       );
     } catch (e) {
-      alert("Não foi possível iniciar a câmera. Verifique as permissões do navegador.");
+      alert("Não foi possível iniciar a câmera. Verifique se outro aplicativo está a usá-la.");
       pararScanner();
     } finally {
       travadoCamera = false;
