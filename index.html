@@ -175,45 +175,65 @@
     cursor: grabbing !important;
   }
 
-  /* SCANNER OVERLAY */
+  /* SCANNER OVERLAY (Estilo Exato Solicitado) */
   #beep-scanner-overlay {
     position: fixed; inset: 0; background: #000; z-index: 9999999;
     display: flex; flex-direction: column; justify-content: space-between;
   }
-  .beep-top-bar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: rgba(0, 0, 0, 0.85); color: #fff; font-size: 15px; font-weight: 600; z-index: 30; }
-  .beep-back-btn, .beep-manual-link { background: none; border: none; color: #fff; font-size: 14px; cursor: pointer; }
+  .beep-top-bar { 
+    display: flex; align-items: center; justify-content: space-between; 
+    padding: 16px 20px; background: transparent; color: #fff; font-size: 16px; font-weight: 500; z-index: 30; 
+  }
+  .beep-back-btn { 
+    background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; 
+  }
+  .beep-manual-btn { 
+    background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4); 
+    color: #fff; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; cursor: pointer; letter-spacing: 0.5px;
+  }
   
   .beep-viewport { position: absolute; inset: 0; background: #000; z-index: 10; display: flex; align-items: center; justify-content: center; }
   #beep-reader { width: 100% !important; height: 100% !important; border: none !important; }
   #beep-reader video { width: 100% !important; height: 100% !important; object-fit: cover !important; }
   
   .beep-target-container { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 20; }
-  .scan-laser-box {
-    width: 82%; max-width: 320px; height: 130px;
-    border: 2px solid rgba(16, 185, 129, 0.9); border-radius: 12px;
-    position: relative; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  
+  /* MIRA COM CANTOS ESTILO CORRETOR DE LEITURA E LINHA VERMELHA */
+  .scan-corner-box {
+    width: 86%; max-width: 340px; height: 180px;
+    position: relative; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+    border-radius: 4px;
+  }
+  .scan-corner-box::before, .scan-corner-box::after {
+    content: ''; position: absolute; width: 36px; height: 36px; border-color: #ffffff; border-style: solid; border-width: 4px 0 0 4px; top: 0; left: 0;
+  }
+  .scan-corner-box::after {
+    left: auto; right: 0; border-width: 4px 4px 0 0;
+  }
+  .scan-corner-bottom-left, .scan-corner-bottom-right {
+    position: absolute; width: 36px; height: 36px; border-color: #ffffff; border-style: solid; border-width: 0 0 4px 4px; bottom: 0; left: 0;
+  }
+  .scan-corner-bottom-right {
+    left: auto; right: 0; border-width: 0 4px 4px 0;
   }
   .scan-laser-line {
-    position: absolute; top: 50%; left: 4px; right: 4px; height: 2px;
-    background: #e30613; box-shadow: 0 0 8px #e30613; animation: laserScan 1.8s infinite ease-in-out;
+    position: absolute; top: 50%; left: 10px; right: 10px; height: 2px;
+    background: #e30613; box-shadow: 0 0 10px #e30613; animation: laserScan 1.8s infinite ease-in-out;
   }
   @keyframes laserScan { 0%, 100% { top: 15%; opacity: 0.6; } 50% { top: 85%; opacity: 1; } }
   .scan-flash { position: absolute; inset: 0; background: rgba(16, 185, 129, 0.4); opacity: 0; transition: opacity 0.15s ease; z-index: 25; pointer-events: none; }
   .scan-flash.active { opacity: 1; }
   
-  .camera-controls-floating {
-    position: absolute; bottom: 85px; left: 0; right: 0; display: flex;
-    justify-content: center; align-items: center; gap: 10px; z-index: 30; padding: 0 16px;
-  }
-  .camera-controls-floating button, .camera-controls-floating .zoom-pill {
-    background: rgba(0, 0, 0, 0.7); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 12px; border-radius: 20px; font-size: 12px;
-  }
   .beep-bottom-bar {
     position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 16px 16px calc(20px + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 30; display: flex; justify-content: center;
+    padding: 20px 24px calc(30px + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 40%, transparent); z-index: 30; display: flex; justify-content: center;
   }
-  .beep-btn-bottom-action { background: transparent; border: 2px solid rgba(255, 255, 255, 0.9); color: #fff; border-radius: 99px; padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .beep-btn-bottom-action { 
+    background: rgba(90, 90, 90, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); 
+    color: #fff; border-radius: 99px; padding: 14px 0; font-size: 16px; font-weight: 600; cursor: pointer; 
+    width: 100%; max-width: 320px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
   
   .notice { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
   .ok { color: var(--accent-green); font-weight: 700; }
@@ -231,6 +251,7 @@
 </head>
 <body>
 
+  <!-- TELA DE LOGIN -->
   <div id="login-screen">
     <div class="login-card">
       <svg class="login-logo" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
@@ -260,6 +281,7 @@
     </div>
   </div>
 
+  <!-- MENU PRINCIPAL -->
   <div id="menu-screen" class="hidden">
     <div class="menu-title">Selecione o Módulo Desejado</div>
     <div class="btn-row">
@@ -308,6 +330,7 @@
     </div>
   </div>
   
+  <!-- MÓDULO PRÓATIVO -->
   <div id="proativo-modal" class="system-modal hidden">
     <div id="app-proativo" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
@@ -401,10 +424,12 @@
         </section>
       </main>
 
+      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
       <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('proativo')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
+  <!-- MÓDULO TROCAS -->
   <div id="trocas-modal" class="system-modal hidden">
     <div id="app-trocas" style="display:flex; flex-direction:column; height:100%; position:relative;">
       <header class="top">
@@ -506,27 +531,30 @@
         </section>
       </main>
 
+      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
       <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('trocas')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
+  <!-- SCANNER OVERLAY (Layout Idêntico Solicitado + Zoom 3x) -->
   <div id="beep-scanner-overlay" class="hidden">
     <div class="beep-top-bar">
-      <button type="button" class="beep-back-btn" onclick="pararScanner()">← Fechar</button>
-      <span>Escanear Código</span>
-      <button type="button" class="beep-manual-link" onclick="fecharScannerSemCodigo()">Manual</button>
+      <button type="button" class="beep-back-btn" onclick="pararScanner()">←</button>
+      <span>Escanear código...</span>
+      <button type="button" class="beep-manual-btn" onclick="fecharScannerSemCodigo()">MANUAL</button>
     </div>
     <div class="beep-viewport"><div id="beep-reader"></div></div>
     <div class="beep-target-container">
-      <div class="scan-laser-box"><div class="scan-laser-line"></div></div>
+      <div class="scan-corner-box">
+        <div class="scan-corner-bottom-left"></div>
+        <div class="scan-corner-bottom-right"></div>
+        <div class="scan-laser-line"></div>
+      </div>
       <div class="scan-flash" id="scanFlash"></div>
     </div>
-    <div class="camera-controls-floating">
-      <button type="button" onclick="alternarLanterna()">🔦 Lanterna</button>
-      <div class="zoom-pill">Zoom: <span id="beepZoomVal">1.0</span>x</div>
-      <input type="range" id="beepZoomRange" min="1" max="5" step="0.1" value="1" style="width: 70px; accent-color: #fff;">
+    <div class="beep-bottom-bar">
+      <button type="button" class="beep-btn-bottom-action" onclick="pararScanner()">Fechar Câmera</button>
     </div>
-    <div class="beep-bottom-bar"><button type="button" class="beep-btn-bottom-action" onclick="fecharScannerSemCodigo()">Inserir sem código</button></div>
   </div>
   
   <script>
@@ -563,7 +591,6 @@
 
   let moduloAtual = null;
   let html5QrCode = null;
-  let lanternaAtiva = false;
   let travadoCamera = false;
   
   const el = id => document.getElementById(id);
@@ -676,7 +703,6 @@
     }
     
     if (modulo === 'cartaz') {
-      // Abre o link oficial diretamente em uma nova aba para evitar bloqueios de segurança do navegador
       window.open('https://rmarket.cartazfacil.pro/unitario.php', '_blank');
       return;
     }
@@ -749,7 +775,7 @@
 
     const config = {
       fps: 20,
-      qrbox: { width: 280, height: 120 },
+      qrbox: { width: 300, height: 160 },
       aspectRatio: 1.0,
       formatsToSupport: [
         Html5QrcodeSupportedFormats.EAN_13,
@@ -776,8 +802,20 @@
         },
         () => {}
       );
+
+      // Aplica o zoom fixo de 3x automaticamente logo após abrir a câmera
+      setTimeout(async () => {
+        try {
+          if (html5QrCode && typeof html5QrCode.applyVideoConstraints === 'function') {
+            await html5QrCode.applyVideoConstraints({ advanced: [{ zoom: 3.0 }] });
+          }
+        } catch (errZoom) {
+          // Caso o hardware do dispositivo não suporte zoom programático via API Web
+        }
+      }, 600);
+
     } catch (e) {
-      alert("Não foi possível iniciar a câmera. Verifique se outro aplicativo está a usá-la.");
+      alert("Não foi possível iniciar a câmera. Verifique as permissões.");
       pararScanner();
     } finally {
       travadoCamera = false;
@@ -800,17 +838,6 @@
 
     el('beep-scanner-overlay').classList.add('hidden');
     travadoCamera = false;
-  }
-  
-  async function alternarLanterna() {
-    try {
-      lanternaAtiva = !lanternaAtiva;
-      if (html5QrCode && typeof html5QrCode.applyVideoConstraints === 'function') {
-        await html5QrCode.applyVideoConstraints({ advanced: [{ torch: lanternaAtiva }] });
-      }
-    } catch (e) {
-      alert("Lanterna não suportada.");
-    }
   }
   
   function fecharScannerSemCodigo() {
