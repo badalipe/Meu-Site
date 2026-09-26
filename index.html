@@ -150,10 +150,10 @@
   }
   .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   
-  /* BOTÃO FLUTUANTE DA CÂMARA (COM FLUTUAÇÃO VISUAL INTensa E FIXA) */
+  /* BOTÃO FLUTUANTE ARRASTÁVEL DA CÂMARA */
   .fab-camera {
     position: fixed !important;
-    bottom: 28px !important;
+    bottom: 24px !important;
     right: 24px !important;
     width: 64px !important;
     height: 64px !important;
@@ -163,15 +163,16 @@
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 102, 178, 0.6) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 102, 178, 0.6) !important;
     border: 2px solid rgba(255, 255, 255, 0.45) !important;
-    cursor: pointer !important;
+    cursor: grab !important;
     z-index: 9999999 !important;
     font-size: 28px !important;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease !important;
+    touch-action: none !important;
+    user-select: none !important;
   }
   .fab-camera:active {
-    transform: scale(0.9) !important;
+    cursor: grabbing !important;
   }
 
   /* SCANNER OVERLAY */
@@ -403,8 +404,8 @@
         </section>
       </main>
 
-      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
-      <button type="button" class="fab-camera" onclick="abrirScanner('proativo')" title="Escanear com Câmera">📷</button>
+      <!-- BOTÃO FLUTUANTE ARRASTÁVEL DA CÂMARA -->
+      <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('proativo')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
@@ -510,8 +511,8 @@
         </section>
       </main>
 
-      <!-- BOTÃO FLUTUANTE DA CÂMARA -->
-      <button type="button" class="fab-camera" onclick="abrirScanner('trocas')" title="Escanear com Câmera">📷</button>
+      <!-- BOTÃO FLUTUANTE ARRASTÁVEL DA CÂMARA -->
+      <button type="button" class="fab-camera drag-fab" onclick="abrirScanner('trocas')" title="Escanear com Câmera">📷</button>
     </div>
   </div>
   
@@ -586,7 +587,75 @@
     const hoje = new Date().toISOString().split('T')[0];
     if (el('pro_data')) el('pro_data').value = hoje;
     if (el('trc_data')) el('trc_data').value = hoje;
+
+    inicializarBotoesArrastaveis();
   });
+
+  // Lógica para tornar os botões flutuantes arrastáveis com o dedo / rato
+  function inicializarBotoesArrastaveis() {
+    const botoes = document.querySelectorAll('.drag-fab');
+    botoes.forEach(btn => {
+      let isDragging = false;
+      let startX, startY, initialX, initialY;
+      let moved = false;
+
+      const dragStart = (e) => {
+        isDragging = true;
+        moved = false;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        const rect = btn.getBoundingClientRect();
+        initialX = rect.left;
+        initialY = rect.top;
+
+        startX = clientX - initialX;
+        startY = clientY - initialY;
+
+        btn.style.bottom = 'auto';
+        btn.style.right = 'auto';
+        btn.style.left = initialX + 'px';
+        btn.style.top = initialY + 'px';
+      };
+
+      const dragMove = (e) => {
+        if (!isDragging) return;
+        moved = true;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        let newX = clientX - startX;
+        let newY = clientY - startY;
+
+        // Limita para não sair totalmente da tela
+        const maxX = window.innerWidth - btn.offsetWidth;
+        const maxY = window.innerHeight - btn.offsetHeight;
+
+        newX = Math.max(10, Math.min(newX, maxX - 10));
+        newY = Math.max(10, Math.min(newY, maxY - 10));
+
+        btn.style.left = newX + 'px';
+        btn.style.top = newY + 'px';
+      };
+
+      const dragEnd = (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        if (moved) {
+          // Impede o clique de abrir a câmara se o objetivo foi apenas arrastar
+          e.preventDefault();
+        }
+      };
+
+      btn.addEventListener('touchstart', dragStart, { passive: false });
+      window.addEventListener('touchmove', dragMove, { passive: false });
+      window.addEventListener('touchend', dragEnd);
+
+      btn.addEventListener('mousedown', dragStart);
+      window.addEventListener('mousemove', dragMove);
+      window.addEventListener('mouseup', dragEnd);
+    });
+  }
   
   function realizarLogin(e) {
     e.preventDefault();
