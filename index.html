@@ -21,312 +21,116 @@
     --border-color: #cbd5e1;
     --accent-green: #10b981;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
   }
   
   * { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    -webkit-tap-highlight-color: transparent;
+    margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent;
   }
   
   html, body {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     background-color: #0f172a !important;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     color: var(--text-main);
   }
 
-  .hidden { 
-    display: none !important; 
-  }
+  .hidden { display: none !important; }
 
   #login-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0f172a;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    z-index: 999999;
-    padding: 16px;
-  }
-
-  #login-screen.hidden {
-    display: none !important;
+    position: fixed; inset: 0; background: #0f172a;
+    display: flex; align-items: center; justify-content: center; z-index: 999999; padding: 16px;
   }
 
   .login-card {
-    background: #ffffff;
-    width: 100%;
-    max-width: 380px;
-    padding: 28px 20px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    text-align: center;
+    background: #ffffff; width: 100%; max-width: 380px;
+    padding: 28px 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;
   }
-
   .login-logo { height: 48px; margin-bottom: 16px; }
   .login-card h2 { margin: 0 0 6px; font-size: 20px; font-weight: 700; color: var(--text-main); }
   .login-card p { color: var(--text-muted); font-size: 12px; margin-bottom: 20px; }
-  .login-error {
-    background: #fef2f2; color: var(--accent-red); padding: 8px;
-    border-radius: 6px; font-size: 12px; margin-bottom: 14px; font-weight: 600;
-  }
+  .login-error { background: #fef2f2; color: var(--accent-red); padding: 8px; border-radius: 6px; font-size: 12px; margin-bottom: 14px; font-weight: 600; }
 
   #menu-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 100vh;
-    max-width: 400px;
-    text-align: center;
-    padding: 10px;
-    margin: auto;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; min-height: 100vh; max-width: 400px; text-align: center; padding: 10px; margin: auto;
   }
-
-  .menu-title {
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 800;
-    margin-bottom: 24px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-  }
-
-  .btn-row {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-  }
+  .menu-title { color: #ffffff; font-size: 20px; font-weight: 800; margin-bottom: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+  .btn-row { display: flex; flex-direction: column; gap: 16px; width: 100%; }
   
   .glass-btn {
-    width: 100%;
-    position: relative;
-    padding: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    border-radius: 16px;
-    color: #ffffff;
-    cursor: pointer;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-    min-height: 80px;
-    text-decoration: none;
+    width: 100%; position: relative; padding: 20px; border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 16px; color: #ffffff; cursor: pointer; overflow: hidden;
+    display: flex; align-items: center; justify-content: flex-start; gap: 20px; min-height: 80px; text-decoration: none;
   }
-  
   .glass-shine {
-    position: absolute;
-    top: -35%; left: -35%;
-    width: 70%; height: 70%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 65%);
-    pointer-events: none; z-index: 1;
+    position: absolute; top: -35%; left: -35%; width: 70%; height: 70%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 65%); pointer-events: none; z-index: 1;
   }
+  .glass-content { position: relative; z-index: 2; display: flex; align-items: center; gap: 16px; width: 100%; }
+  .btn-svg { width: 32px; height: 32px; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)); flex-shrink: 0; }
+  .btn-text { font-size: 18px; font-weight: 800; letter-spacing: 1.5px; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); text-align: left; }
   
-  .glass-content {
-    position: relative; z-index: 2;
-    display: flex; align-items: center;
-    gap: 16px; width: 100%;
-  }
+  .glass-1 { background: linear-gradient(145deg, rgba(6,182,212,0.9) 0%, rgba(29,78,216,0.9) 100%); box-shadow: 0 8px 24px rgba(6,182,212,0.4); }
+  .glass-2 { background: linear-gradient(145deg, rgba(37,99,235,0.9) 0%, rgba(79,70,229,0.9) 100%); box-shadow: 0 8px 24px rgba(99,102,241,0.4); }
+  .glass-3 { background: linear-gradient(145deg, rgba(124,58,237,0.9) 0%, rgba(147,51,234,0.9) 100%); box-shadow: 0 8px 24px rgba(139,92,246,0.4); }
+  .glass-4 { background: linear-gradient(145deg, rgba(217,119,6,0.9) 0%, rgba(180,83,9,0.9) 100%); box-shadow: 0 8px 24px rgba(217,119,6,0.4); }
   
-  .btn-svg {
-    width: 32px; height: 32px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-    flex-shrink: 0;
-  }
+  .system-modal { position: fixed; inset: 0; z-index: 9999; background: var(--bg-main); overflow-y: auto; -webkit-overflow-scrolling: touch; }
   
-  .btn-text {
-    font-size: 18px; font-weight: 800;
-    letter-spacing: 1.5px; color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-    text-align: left;
-  }
-  
-  .glass-1 {
-    background: linear-gradient(145deg, rgba(6,182,212,0.9) 0%, rgba(29,78,216,0.9) 100%);
-    box-shadow: 0 8px 24px rgba(6,182,212,0.4);
-  }
-  .glass-2 {
-    background: linear-gradient(145deg, rgba(37,99,235,0.9) 0%, rgba(79,70,229,0.9) 100%);
-    box-shadow: 0 8px 24px rgba(99,102,241,0.4);
-  }
-  .glass-3 {
-    background: linear-gradient(145deg, rgba(124,58,237,0.9) 0%, rgba(147,51,234,0.9) 100%);
-    box-shadow: 0 8px 24px rgba(139,92,246,0.4);
-  }
-  .glass-4 {
-    background: linear-gradient(145deg, rgba(217,119,6,0.9) 0%, rgba(180,83,9,0.9) 100%);
-    box-shadow: 0 8px 24px rgba(217,119,6,0.4);
-  }
-  
-  .system-modal {
-    position: fixed; inset: 0; z-index: 9999;
-    background: var(--bg-main); overflow-y: auto; -webkit-overflow-scrolling: touch;
-  }
-  
-  /* TOPO REDESENHADO COM DESIGN PROFISSIONAL E HARMONIOSO */
   .top {
     background: linear-gradient(135deg, #090d16 0%, #1e293b 100%);
-    color: #fff; 
-    padding: 12px 14px; 
-    position: sticky; 
-    top: 0; 
-    z-index: 100;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #fff; padding: 12px 14px; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
-  .header-content-wrapper {
-    width: 100%; 
-    max-width: 600px; 
-    margin: 0 auto;
-    display: flex; 
-    flex-direction: column; 
-    gap: 8px;
-  }
-  .header-main-row {
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    width: 100%;
-    gap: 12px;
-  }
-  .header-brand-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-  }
-  .logo-container {
-    background: rgba(255, 255, 255, 0.95); 
-    padding: 4px 8px; 
-    border-radius: 8px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  }
+  .header-content-wrapper { width: 100%; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+  .header-main-row { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 12px; }
+  .header-brand-group { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .logo-container { background: rgba(255, 255, 255, 0.95); padding: 4px 8px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .header-logo { height: 24px; width: auto; object-fit: contain; }
   .header-text h1 { font-size: 15px; font-weight: 700; margin: 0; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .header-text .sub { color: #38bdf8; font-size: 11px; font-weight: 500; margin-top: 1px; text-transform: uppercase; }
   
-  .btn-menu-pro {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .btn-menu-pro:active {
-    background: rgba(255, 255, 255, 0.25);
-  }
-
-  .header-sub-row {
-    width: 100%;
-    display: flex;
-    align-items: center;
-  }
+  .btn-menu-pro { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; flex-shrink: 0; }
+  
+  .header-sub-row { width: 100%; display: flex; align-items: center; }
   .select-loja-pro {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 100%;
-    background-color: rgba(15, 23, 42, 0.7) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    color: #e2e8f0 !important;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 8px 32px 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
+    appearance: none; -webkit-appearance: none; width: 100%;
+    background-color: rgba(15, 23, 42, 0.7) !important; border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #e2e8f0 !important; font-size: 12px; font-weight: 600; padding: 8px 32px 8px 12px; border-radius: 8px; cursor: pointer;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 14px;
+    background-repeat: no-repeat; background-position: right 12px center; background-size: 14px;
   }
-  .select-loja-pro option {
-    background: #0f172a !important;
-    color: #ffffff !important;
-  }
+  .select-loja-pro option { background: #0f172a !important; color: #ffffff !important; }
   
   .wrap { width: 100%; max-width: 600px; margin: auto; padding: 12px 10px 80px; }
   
-  .card {
-    background: var(--card-bg); border-radius: 14px; padding: 16px 14px;
-    margin-bottom: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
-  }
+  .card { background: var(--card-bg); border-radius: 14px; padding: 16px 14px; margin-bottom: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
   .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
   .card-header h3 { margin: 0; font-size: 15px; font-weight: 700; color: var(--text-main); }
-  .card-icon {
-    width: 28px; height: 28px; border-radius: 8px; display: inline-flex;
-    align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
-  }
+  .card-icon { width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
   .icon-scan { background: #e0f0ff; }
   .icon-conf { background: #ede9fe; }
   .icon-list { background: #d1fae5; }
   
   label { display: block; font-size: 12px; font-weight: 700; margin: 10px 0 4px; color: var(--text-muted); }
-  input, select {
-    font: inherit; width: 100%; padding: 11px 12px; border: 1px solid var(--border-color);
-    border-radius: 10px; background: #f8fafc; color: var(--text-main); font-size: 15px;
-  }
-  input:focus, select:focus {
-    outline: none; border-color: var(--primary); background: #fff;
-    box-shadow: 0 0 0 3px rgba(0, 102, 178, 0.15);
-  }
+  input, select { font: inherit; width: 100%; padding: 11px 12px; border: 1px solid var(--border-color); border-radius: 10px; background: #f8fafc; color: var(--text-main); font-size: 15px; }
+  input:focus, select:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(0, 102, 178, 0.15); }
   .input-codigo { font-family: 'Courier New', monospace; font-size: 18px !important; letter-spacing: 1px; font-weight: 700; }
   
   .product-img-container {
-    width: 120px;
-    height: 120px;
-    border: 2px solid var(--border-color);
-    border-radius: 14px;
-    background: #f8fafc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin: 12px auto;
-    flex-shrink: 0;
-    box-shadow: var(--shadow-sm);
+    width: 120px; height: 120px; border: 2px solid var(--border-color); border-radius: 14px;
+    background: #f8fafc; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 12px auto; flex-shrink: 0; box-shadow: var(--shadow-sm);
   }
-  .product-img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .product-img-placeholder {
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: center;
-    padding: 4px;
-  }
+  .product-img-container img { width: 100%; height: 100%; object-fit: cover; }
+  .product-img-placeholder { font-size: 11px; color: var(--text-muted); text-align: center; padding: 4px; }
 
   .campo label { margin: 0 0 3px; }
-  .campo .caixa {
-    display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 10px;
-    border: 1px solid var(--border-color); border-radius: 10px; background: #f8fafc;
-  }
+  .campo .caixa { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 10px; border: 1px solid var(--border-color); border-radius: 10px; background: #f8fafc; }
   .campo .caixa input, .campo .caixa select { border: 0; background: transparent; padding: 0; height: 100%; font-size: 14px; }
   
   .scan-zone { border: 1.5px dashed var(--border-color); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
   
-  button {
-    font: inherit; border: 0; border-radius: 10px; padding: 12px 14px; font-weight: 600;
-    font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  }
+  button { font: inherit; border: 0; border-radius: 10px; padding: 12px 14px; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
   .primary { background: var(--primary); color: #fff; width: 100%; }
   .secondary { background: #f0f7ff; color: var(--primary); }
   .danger { background: #fef2f2; color: var(--accent-red); }
@@ -338,6 +142,7 @@
   }
   .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   
+  /* SCANNER OVERLAY BLINDADO */
   #beep-scanner-overlay {
     position: fixed; inset: 0; background: #000; z-index: 999999;
     display: flex; flex-direction: column; justify-content: space-between;
@@ -356,13 +161,9 @@
   }
   .scan-laser-line {
     position: absolute; top: 50%; left: 4px; right: 4px; height: 2px;
-    background: #e30613; box-shadow: 0 0 8px #e30613;
-    animation: laserScan 1.8s infinite ease-in-out;
+    background: #e30613; box-shadow: 0 0 8px #e30613; animation: laserScan 1.8s infinite ease-in-out;
   }
-  @keyframes laserScan {
-    0%, 100% { top: 15%; opacity: 0.6; }
-    50% { top: 85%; opacity: 1; }
-  }
+  @keyframes laserScan { 0%, 100% { top: 15%; opacity: 0.6; } 50% { top: 85%; opacity: 1; } }
   .scan-flash { position: absolute; inset: 0; background: rgba(16, 185, 129, 0.4); opacity: 0; transition: opacity 0.15s ease; z-index: 15; }
   .scan-flash.active { opacity: 1; }
   
@@ -371,28 +172,20 @@
     justify-content: center; align-items: center; gap: 10px; z-index: 20; padding: 0 16px;
   }
   .camera-controls-floating button, .camera-controls-floating .zoom-pill {
-    background: rgba(0, 0, 0, 0.7); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 8px 12px; border-radius: 20px; font-size: 12px;
+    background: rgba(0, 0, 0, 0.7); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 12px; border-radius: 20px; font-size: 12px;
   }
   .beep-bottom-bar {
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 16px 16px calc(20px + env(safe-area-inset-bottom, 0px));
     background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 20; display: flex; justify-content: center;
   }
-  .beep-btn-bottom-action {
-    background: transparent; border: 2px solid rgba(255, 255, 255, 0.9);
-    color: #fff; border-radius: 99px; padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer;
-  }
+  .beep-btn-bottom-action { background: transparent; border: 2px solid rgba(255, 255, 255, 0.9); color: #fff; border-radius: 99px; padding: 10px 24px; font-size: 14px; font-weight: 600; cursor: pointer; }
   
   .notice { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
   .ok { color: var(--accent-green); font-weight: 700; }
   .warn { color: #d97706; }
   
-  .item {
-    border: 1px solid var(--border-color); border-left: 4px solid #cbd5e1;
-    border-radius: 10px; padding: 10px 12px; margin-top: 8px; display: flex; justify-content: space-between;
-    align-items: center; gap: 8px; background: #fff;
-  }
+  .item { border: 1px solid var(--border-color); border-left: 4px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; background: #fff; }
   .item-info { min-width: 0; }
   .item strong { display: block; font-size: 13px; }
   .item small { color: var(--text-muted); font-size: 11px; display: block; margin-top: 2px; }
@@ -683,7 +476,7 @@
     </div>
   </div>
   
-  <!-- SCANNER DE CÓDIGO DE BARRAS -->
+  <!-- SCANNER BLINDADO -->
   <div id="beep-scanner-overlay" class="hidden">
     <div class="beep-top-bar">
       <button type="button" class="beep-back-btn" onclick="pararScanner()">← Fechar</button>
@@ -701,33 +494,6 @@
       <input type="range" id="beepZoomRange" min="1" max="5" step="0.1" value="1" style="width: 70px; accent-color: #fff;">
     </div>
     <div class="beep-bottom-bar"><button type="button" class="beep-btn-bottom-action" onclick="fecharScannerSemCodigo()">Inserir sem código</button></div>
-  </div>
-
-  <!-- BOTÃO FLUTUANTE GLOBAL NA TELA -->
-  <div id="btnFlutuanteScanner" onclick="abrirScannerFlutuante()" style="
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #0066b2 0%, #004d87 100%);
-    color: #ffffff;
-    border-radius: 50%;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 6px 20px rgba(0, 102, 178, 0.4);
-    z-index: 99998;
-    cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-  ">
-    <svg style="width: 28px; height: 28px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
-      <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
-      <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
-      <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
-      <line x1="7" y1="12" x2="17" y2="12"></line>
-    </svg>
   </div>
   
   <script>
@@ -764,12 +530,12 @@
   let moduloAtual = null;
   let html5QrCode = null;
   let lanternaAtiva = false;
+  let travadoCamera = false;
   
   const el = id => document.getElementById(id);
   
   window.addEventListener('DOMContentLoaded', () => {
     const estaLogado = sessionStorage.getItem('sys_logado') === 'true';
-    
     if (estaLogado) {
       el('login-screen').classList.add('hidden');
       el('menu-screen').classList.remove('hidden');
@@ -777,7 +543,6 @@
       el('login-screen').classList.remove('hidden');
       el('menu-screen').classList.add('hidden');
     }
-    
     const hoje = new Date().toISOString().split('T')[0];
     if (el('pro_data')) el('pro_data').value = hoje;
     if (el('trc_data')) el('trc_data').value = hoje;
@@ -787,7 +552,6 @@
     e.preventDefault();
     const user = el('usuarioInput').value.trim().toLowerCase();
     const pass = el('senhaInput').value;
-    
     if (usuariosPermitidos[user] && usuariosPermitidos[user] === pass) {
       sessionStorage.setItem('sys_logado', 'true');
       sessionStorage.setItem('sys_user', user);
@@ -814,15 +578,12 @@
       alert("⚠️ Área em desenvolvimento! Em breve esta funcionalidade estará disponível.");
       return;
     }
-    
     if (modulo === 'cartaz') {
       window.location.href = "https://rmarket.cartazfacil.pro/";
       return;
     }
-    
     moduloAtual = modulo;
     el('menu-screen').classList.add('hidden');
-    
     if (modulo === 'proativo') {
       el('proativo-modal').classList.remove('hidden');
       renderizarLista('proativo');
@@ -862,19 +623,33 @@
     setTimeout(() => flash.classList.remove('active'), 350);
   }
   
+  // FUNÇÃO DE ABERTURA BLINDADA CONTRA O ERRO DE TRANSIÇÃO
   async function abrirScanner(modulo) {
+    if (travadoCamera) return;
+    travadoCamera = true;
     moduloAtual = modulo;
+
     el('beep-scanner-overlay').classList.remove('hidden');
-    
+
+    // Garante limpeza completa de qualquer instância anterior pendente
     if (html5QrCode) {
       try {
-        if (html5QrCode.isScanning) { await html5QrCode.stop(); }
-        html5QrCode.clear();
+        if (html5QrCode.isScanning) {
+          await html5QrCode.stop();
+        }
+        await html5QrCode.clear();
       } catch (err) {}
+      html5QrCode = null;
+    }
+
+    // Recria o elemento do leitor do zero para evitar conflito de DOM
+    const viewport = document.querySelector('.beep-viewport');
+    if (viewport) {
+      viewport.innerHTML = '<div id="beep-reader"></div>';
     }
 
     html5QrCode = new Html5Qrcode("beep-reader");
-    
+
     const config = {
       fps: 20,
       qrbox: { width: 280, height: 120 },
@@ -889,17 +664,10 @@
         Html5QrcodeSupportedFormats.ITF
       ]
     };
-    
-    const constraints = {
-      facingMode: "environment",
-      width: { ideal: 1920, min: 1280 },
-      height: { ideal: 1080, min: 720 },
-      advanced: [{ focusMode: "continuous" }]
-    };
-    
+
     try {
       await html5QrCode.start(
-        constraints,
+        { facingMode: "environment" },
         config,
         (decodedText) => {
           tocarBipe();
@@ -911,63 +679,30 @@
         },
         () => {}
       );
-      
-      setTimeout(() => {
-        try {
-          if (html5QrCode && typeof html5QrCode.getRunningTrackCapabilities === 'function') {
-            const capabilities = html5QrCode.getRunningTrackCapabilities();
-            if (capabilities && capabilities.zoom) {
-              const zoomInput = el('beepZoomRange');
-              zoomInput.min = capabilities.zoom.min || 1;
-              zoomInput.max = capabilities.zoom.max || 5;
-              zoomInput.step = capabilities.zoom.step || 0.1;
-              zoomInput.oninput = (e) => {
-                el('beepZoomVal').innerText = e.target.value;
-                html5QrCode.applyVideoConstraints({ advanced: [{ zoom: parseFloat(e.target.value) }] });
-              };
-            }
-          }
-        } catch(err) {}
-      }, 800);
-      
     } catch (e) {
-      try {
-        await html5QrCode.start(
-          { facingMode: "environment" },
-          config,
-          (decodedText) => {
-            tocarBipe();
-            dispararFlashScan();
-            const prefix = modulo === 'proativo' ? 'pro_' : 'trc_';
-            el(prefix + 'codigo').value = decodedText;
-            pararScanner();
-            buscarProduto(modulo);
-          },
-          () => {}
-        );
-      } catch (err2) {
-        alert("Não foi possível iniciar a câmera: " + (err2.message || err2));
-        pararScanner();
-      }
+      alert("Não foi possível iniciar a câmera. Verifique as permissões do navegador.");
+      pararScanner();
+    } finally {
+      travadoCamera = false;
     }
   }
   
-  function pararScanner() {
+  async function pararScanner() {
+    if (travadoCamera) return;
+    travadoCamera = true;
+
     if (html5QrCode) {
-      if (html5QrCode.isScanning) {
-        html5QrCode.stop().then(() => {
-          try { html5QrCode.clear(); } catch(e){}
-          el('beep-scanner-overlay').classList.add('hidden');
-        }).catch(() => {
-          el('beep-scanner-overlay').classList.add('hidden');
-        });
-      } else {
-        try { html5QrCode.clear(); } catch(e){}
-        el('beep-scanner-overlay').classList.add('hidden');
-      }
-    } else {
-      el('beep-scanner-overlay').classList.add('hidden');
+      try {
+        if (html5QrCode.isScanning) {
+          await html5QrCode.stop();
+        }
+        await html5QrCode.clear();
+      } catch (e) {}
+      html5QrCode = null;
     }
+
+    el('beep-scanner-overlay').classList.add('hidden');
+    travadoCamera = false;
   }
   
   async function alternarLanterna() {
@@ -987,37 +722,6 @@
     el(prefix + 'codigo').value = "";
     el(prefix + 'descricao').focus();
   }
-  
-  function abrirScannerFlutuante() {
-    const proAtivoAberto = !el('proativo-modal').classList.contains('hidden');
-    const trocasAberto = !el('trocas-modal').classList.contains('hidden');
-
-    if (proAtivoAberto) {
-      abrirScanner('proativo');
-    } else if (trocasAberto) {
-      abrirScanner('trocas');
-    } else {
-      alert("Abra o módulo Pró-Ativo ou Trocas primeiro para usar o scanner flutuante!");
-    }
-  }
-
-  // Gestão da visibilidade do botão flutuante e do scanner
-  setInterval(() => {
-    const scannerOverlay = el('beep-scanner-overlay');
-    const botaoFlutuant = el('btnFlutuanteScanner');
-    const proAtivoAberto = !el('proativo-modal').classList.contains('hidden');
-    const trocasAberto = !el('trocas-modal').classList.contains('hidden');
-
-    if (scannerOverlay && botaoFlutuant) {
-      if (!scannerOverlay.classList.contains('hidden')) {
-        botaoFlutuant.style.display = 'none';
-      } else if (proAtivoAberto || trocasAberto) {
-        botaoFlutuant.style.display = 'flex';
-      } else {
-        botaoFlutuant.style.display = 'none';
-      }
-    }
-  }, 300);
 
   function checarEnterBusca(e, modulo) {
     if (e.key === 'Enter') {
