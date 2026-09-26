@@ -506,7 +506,8 @@
   const produtosPreCadastrados = {
     "7896045112098": { nome: "Refresco em Pó Frisco Abacaxi 18g", img: "" },
     "7896183210120": { nome: "Leite Glória", img: "" },
-    "7908077452537": { nome: "Caderno Universitário 80 Fls Foroni", img: "" }
+    "7908077452537": { nome: "Caderno Universitário 80 Fls Foroni", img: "" },
+    "7896089011357": { nome: "Café Pilão Tradicional A Vácuo 500g", img: "" }
   };
   
   let catalogoLocal = JSON.parse(localStorage.getItem('sys_catalogo') || '{}');
@@ -623,7 +624,6 @@
     setTimeout(() => flash.classList.remove('active'), 350);
   }
   
-  // FUNÇÃO DE ABERTURA BLINDADA CONTRA O ERRO DE TRANSIÇÃO
   async function abrirScanner(modulo) {
     if (travadoCamera) return;
     travadoCamera = true;
@@ -631,7 +631,6 @@
 
     el('beep-scanner-overlay').classList.remove('hidden');
 
-    // Garante limpeza completa de qualquer instância anterior pendente
     if (html5QrCode) {
       try {
         if (html5QrCode.isScanning) {
@@ -642,7 +641,6 @@
       html5QrCode = null;
     }
 
-    // Recria o elemento do leitor do zero para evitar conflito de DOM
     const viewport = document.querySelector('.beep-viewport');
     if (viewport) {
       viewport.innerHTML = '<div id="beep-reader"></div>';
