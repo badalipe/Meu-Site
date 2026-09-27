@@ -39,7 +39,7 @@
 
   #login-screen {
     position: fixed; inset: 0; background: #0f172a;
-    display: flex; align-items: center; justify-content: center; z-index: 999999; padding: 16px;
+    display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 16px;
   }
 
   .login-card {
@@ -77,7 +77,7 @@
   .glass-4 { background: linear-gradient(145deg, rgba(217,119,6,0.9) 0%, rgba(180,83,9,0.9) 100%); box-shadow: 0 8px 24px rgba(217,119,6,0.4); }
   
   .system-modal { 
-    position: fixed; inset: 0; z-index: 9999; background: var(--bg-main); 
+    position: fixed; inset: 0; z-index: 999; background: var(--bg-main); 
     display: flex; flex-direction: column; overflow: hidden; 
   }
   
@@ -132,10 +132,6 @@
   .product-img-container img { width: 100%; height: 100%; object-fit: cover; }
   .product-img-placeholder { font-size: 11px; color: var(--text-muted); text-align: center; padding: 4px; }
 
-  .campo label { margin: 0 0 3px; }
-  .campo .caixa { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 10px; border: 1px solid var(--border-color); border-radius: 10px; background: #f8fafc; }
-  .campo .caixa input, .campo .caixa select { border: 0; background: transparent; padding: 0; height: 100%; font-size: 14px; }
-  
   .scan-zone { border: 1.5px dashed var(--border-color); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
   
   button { font: inherit; border: 0; border-radius: 10px; padding: 12px 14px; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
@@ -150,83 +146,83 @@
   }
   .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   
-  /* BOTÃO FLUTUANTE ARRASTÁVEL DA CÂMARA */
+  /* BOTÃO FLUTUANTE DA CÂMARA */
   .fab-camera {
-    position: fixed !important;
-    bottom: 24px !important;
-    right: 24px !important;
-    width: 64px !important;
-    height: 64px !important;
+    position: fixed !important; bottom: 24px !important; right: 24px !important;
+    width: 64px !important; height: 64px !important;
     background: linear-gradient(135deg, var(--primary) 0%, #004d87 100%) !important;
-    color: #ffffff !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    color: #ffffff !important; border-radius: 50% !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
     box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 102, 178, 0.6) !important;
-    border: 2px solid rgba(255, 255, 255, 0.45) !important;
-    cursor: grab !important;
-    z-index: 9999999 !important;
-    font-size: 28px !important;
-    touch-action: none !important;
-    user-select: none !important;
+    border: 2px solid rgba(255, 255, 255, 0.45) !important; cursor: grab !important;
+    z-index: 9999 !important; font-size: 28px !important; touch-action: none !important; user-select: none !important;
   }
-  .fab-camera:active {
-    cursor: grabbing !important;
-  }
+  .fab-camera:active { cursor: grabbing !important; }
 
-  /* SCANNER OVERLAY */
+  /* CÂMARA EM TELA INTEIRA ESTILO BEEP ( COM CANTOS LIMPOS ) */
   #beep-scanner-overlay {
-    position: fixed; inset: 0; background: #000; z-index: 9999999;
+    position: fixed; inset: 0; background: #000; z-index: 99999;
     display: flex; flex-direction: column; justify-content: space-between;
   }
   .beep-top-bar { 
     display: flex; align-items: center; justify-content: space-between; 
-    padding: 16px 20px; background: transparent; color: #fff; font-size: 16px; font-weight: 500; z-index: 30; 
+    padding: 16px 20px; background: rgba(0,0,0,0.6); color: #fff; font-size: 16px; font-weight: 500; z-index: 30; 
   }
-  .beep-back-btn { 
-    background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; 
-  }
+  .beep-back-btn { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; }
   .beep-manual-btn { 
     background: rgba(255, 255, 255, 0.25); border: 1px solid rgba(255, 255, 255, 0.4); 
     color: #fff; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; cursor: pointer; letter-spacing: 0.5px;
   }
   
-  .beep-viewport { position: absolute; inset: 0; background: #000; z-index: 10; display: flex; align-items: center; justify-content: center; }
-  #beep-reader { width: 100% !important; height: 100% !important; border: none !important; }
-  #beep-reader video { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+  .beep-viewport { position: absolute; inset: 0; background: #000; z-index: 10; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #beep-reader { width: 100% !important; height: 100% !important; border: none !important; background: transparent !important; position: relative; }
+  #beep-reader video { width: 100% !important; height: 100% !important; object-fit: cover !important; position: absolute !important; inset: 0 !important; display: block !important; }
+  
+  #html5-qrcode-anchor-scan-box-whats-this, #beep-reader__dashboard, #beep-reader__dashboard_section_csr, #beep-reader div[style*="background"], #beep-reader img, div[id^="html5-qrcode-button-camera-permission"] { display: none !important; }
+  #beep-reader__scan_region { background: transparent !important; width: 100% !important; height: 100% !important; }
   
   .beep-target-container { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 20; }
   
-  .scan-corner-box {
-    width: 86%; max-width: 340px; height: 180px;
-    position: relative; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
-    border-radius: 4px;
+  /* MOLDURA DE CANTOS ESTILO APLICATIVO BEEP */
+  .beep-scanner-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 78%;
+    height: 38%;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 20;
   }
-  .scan-corner-box::before, .scan-corner-box::after {
-    content: ''; position: absolute; width: 36px; height: 36px; border-color: #ffffff; border-style: solid; border-width: 4px 0 0 4px; top: 0; left: 0;
+  .beep-scanner-frame::before, .beep-scanner-frame::after {
+    content: '';
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-color: #ffffff;
+    border-style: solid;
   }
-  .scan-corner-box::after {
-    left: auto; right: 0; border-width: 4px 4px 0 0;
+  .beep-scanner-frame::before { top: 0; left: 0; border-width: 4px 0 0 4px; }
+  .beep-scanner-frame::after { top: 0; right: 0; border-width: 4px 4px 0 0; }
+  .beep-scanner-frame-bottom-left, .beep-scanner-frame-bottom-right {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-color: #ffffff;
+    border-style: solid;
   }
-  .scan-corner-bottom-left, .scan-corner-bottom-right {
-    position: absolute; width: 36px; height: 36px; border-color: #ffffff; border-style: solid; border-width: 0 0 4px 4px; bottom: 0; left: 0;
-  }
-  .scan-corner-bottom-right {
-    left: auto; right: 0; border-width: 0 4px 4px 0;
-  }
-  .scan-laser-line {
-    position: absolute; top: 50%; left: 10px; right: 10px; height: 2px;
-    background: #e30613; box-shadow: 0 0 10px #e30613; animation: laserScan 1.8s infinite ease-in-out;
-  }
-  @keyframes laserScan { 0%, 100% { top: 15%; opacity: 0.6; } 50% { top: 85%; opacity: 1; } }
+  .beep-scanner-frame-bottom-left { bottom: 0; left: 0; border-width: 0 0 4px 4px; }
+  .beep-scanner-frame-bottom-right { bottom: 0; right: 0; border-width: 0 4px 4px 0; }
+
   .scan-flash { position: absolute; inset: 0; background: rgba(16, 185, 129, 0.4); opacity: 0; transition: opacity 0.15s ease; z-index: 25; pointer-events: none; }
   .scan-flash.active { opacity: 1; }
   
   .beep-bottom-bar {
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 20px 24px calc(30px + env(safe-area-inset-bottom, 0px));
-    background: linear-gradient(to top, rgba(0,0,0,0.95) 40%, transparent); z-index: 30; display: flex; justify-content: center;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 40%, transparent); z-index: 30; display: flex; justify-content: center;
   }
   .beep-btn-bottom-action { 
     background: rgba(90, 90, 90, 0.85); border: 1px solid rgba(255, 255, 255, 0.2); 
@@ -238,8 +234,10 @@
   .ok { color: var(--accent-green); font-weight: 700; }
   .warn { color: #d97706; }
   
-  .item { border: 1px solid var(--border-color); border-left: 4px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; background: #fff; }
-  .item-info { min-width: 0; }
+  .item { border: 1px solid var(--border-color); border-left: 4px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #fff; }
+  .item-thumb { width: 44px; height: 44px; border-radius: 6px; border: 1px solid var(--border-color); object-fit: cover; flex-shrink: 0; background: #f8fafc; display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--text-muted); text-align: center; }
+  .item-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+  .item-info { min-width: 0; flex-grow: 1; }
   .item strong { display: block; font-size: 13px; }
   .item small { color: var(--text-muted); font-size: 11px; display: block; margin-top: 2px; }
   .item-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -375,10 +373,10 @@
       <main class="wrap">
         <section class="card">
           <div class="row row-ident">
-            <div class="campo"><label>Quem digitou?</label><div class="caixa"><input id="pro_digitou" placeholder="Seu nome"></div></div>
-            <div class="campo"><label>Gerente / avaliação</label><div class="caixa"><input id="pro_gerente"></div></div>
-            <div class="campo"><label>Comprador</label><div class="caixa"><input id="pro_comprador"></div></div>
-            <div class="campo"><label>Data do levantamento</label><div class="caixa"><input id="pro_data" type="date"></div></div>
+            <div><label>Quem digitou?</label><input id="pro_digitou" placeholder="Seu nome"></div>
+            <div><label>Gerente / avaliação</label><input id="pro_gerente"></div>
+            <div><label>Comprador</label><input id="pro_comprador"></div>
+            <div><label>Data do levantamento</label><input id="pro_data" type="date"></div>
           </div>
         </section>
         
@@ -473,18 +471,16 @@
       <main class="wrap">
         <section class="card">
           <div class="row row-ident">
-            <div class="campo"><label>Conferente / Responsável</label><div class="caixa"><input id="trc_digitou" placeholder="Seu nome"></div></div>
-            <div class="campo"><label>Fornecedor</label><div class="caixa"><input id="trc_fornecedor" placeholder="Ex: Ambev, Nestlé"></div></div>
-            <div class="campo">
+            <div><label>Conferente / Responsável</label><input id="trc_digitou" placeholder="Seu nome"></div>
+            <div><label>Fornecedor</label><input id="trc_fornecedor" placeholder="Ex: Ambev, Nestlé"></div>
+            <div>
               <label>Motivo da Troca *</label>
-              <div class="caixa">
-                <select id="trc_motivo">
-                  <option value="1">1 - Avaria</option>
-                  <option value="2">2 - Descarte</option>
-                </select>
-              </div>
+              <select id="trc_motivo">
+                <option value="1">1 - Avaria</option>
+                <option value="2">2 - Descarte</option>
+              </select>
             </div>
-            <div class="campo"><label>Data da Troca</label><div class="caixa"><input id="trc_data" type="date"></div></div>
+            <div><label>Data da Troca</label><input id="trc_data" type="date"></div>
           </div>
         </section>
         
@@ -533,7 +529,7 @@
     </div>
   </div>
   
-  <!-- SCANNER OVERLAY -->
+  <!-- SCANNER COM MOLDURA ESTILO BEEP E ZOOM DE 2.8x -->
   <div id="beep-scanner-overlay" class="hidden">
     <div class="beep-top-bar">
       <button type="button" class="beep-back-btn" onclick="pararScanner()">←</button>
@@ -541,14 +537,16 @@
       <button type="button" class="beep-manual-btn" onclick="fecharScannerSemCodigo()">MANUAL</button>
     </div>
     <div class="beep-viewport"><div id="beep-reader"></div></div>
+    
+    <!-- MOLDURA DE CANTOS ESTILO BEEP -->
     <div class="beep-target-container">
-      <div class="scan-corner-box">
-        <div class="scan-corner-bottom-left"></div>
-        <div class="scan-corner-bottom-right"></div>
-        <div class="scan-laser-line"></div>
+      <div class="beep-scanner-frame">
+        <div class="beep-scanner-frame-bottom-left"></div>
+        <div class="beep-scanner-frame-bottom-right"></div>
       </div>
       <div class="scan-flash" id="scanFlash"></div>
     </div>
+
     <div class="beep-bottom-bar">
       <button type="button" class="beep-btn-bottom-action" onclick="pararScanner()">Fechar Câmera</button>
     </div>
@@ -562,10 +560,26 @@
   };
   
   const produtosPreCadastrados = {
-    "7896045112098": { nome: "Refresco em Pó Frisco Abacaxi 18g", img: "" },
-    "7896183210120": { nome: "Leite Glória", img: "" },
-    "7908077452537": { nome: "Caderno Universitário 80 Fls Foroni", img: "" },
-    "7896089011357": { nome: "Café Pilão Tradicional A Vácuo 500g", img: "" }
+    "7896419730705": { nome: "Produto Cadastrado Rede Market", img: "" },
+    "7898996002190": { nome: "Açúcar Cristal Carioca 1kg", img: "" },
+    "7896030902341": { nome: "Açúcar Refinado União 1kg", img: "" },
+    "7896081800034": { nome: "Café Pimpinela Tradicional 500g", img: "" },
+    "7896089011357": { nome: "Café Pilão Tradicional A Vácuo 500g", img: "" },
+    "7896005801017": { nome: "Arroz Tio João Tipo 1 5kg", img: "" },
+    "7896018400038": { nome: "Óleo de Soja Liza 900ml", img: "" },
+    "7891025101016": { nome: "Feijão Carioca Camil 1kg", img: "" },
+    "7896004701233": { nome: "Farinha de Trigo Dona Benta 1kg", img: "" },
+    "7896003704013": { nome: "Macarrão Espaguete Petybon 500g", img: "" },
+    "7896098900122": { nome: "Leite Longa Vida Italac Integral 1L", img: "" },
+    "7896051101112": { nome: "Manteiga Qualy com Sal 500g", img: "" },
+    "7891000100103": { nome: "Leite Condensado Nestlé Moça 395g", img: "" },
+    "7891000245209": { nome: "Creme de Leite Nestlé 200g", img: "" },
+    "7891910000197": { nome: "Refrigerante Coca-Cola 2L", img: "" },
+    "7894900010015": { nome: "Refrigerante Coca-Cola Lata 350ml", img: "" },
+    "7896036081125": { nome: "Detergente Líquido Ypê Neutro 500ml", img: "" },
+    "7896011400212": { nome: "Biscoito Recheado Negresco 90g", img: "" },
+    "7896009501145": { nome: "Achocolatado em Pó Nescau 400g", img: "" },
+    "7896045112098": { nome: "Refresco em Pó Frisco Abacaxi 18g", img: "" }
   };
   
   let catalogoLocal = JSON.parse(localStorage.getItem('sys_catalogo') || '{}');
@@ -764,11 +778,17 @@
 
     html5QrCode = new Html5Qrcode("beep-reader");
 
+    // CONFIGURAÇÃO COM ZOOM DE 2.8x E FOCO AUTOMÁTICO CONTÍNUO
     const config = {
-      fps: 25,
-      qrbox: { width: 300, height: 160 },
-      experimentalFeatures: {
-        useBarCodeDetectorIfSupported: true
+      fps: 20,
+      qrbox: { width: 300, height: 180 },
+      aspectRatio: 1.0,
+      videoConstraints: {
+        facingMode: "environment",
+        advanced: [
+          { zoom: 2.8 },              // Zoom de 2.8x para facilitar a leitura rápida
+          { focusMode: "continuous" }   // Foco automático ativo e contínuo
+        ]
       },
       formatsToSupport: [
         Html5QrcodeSupportedFormats.EAN_13,
@@ -781,13 +801,9 @@
       ]
     };
 
-    const constraints = {
-      facingMode: "environment"
-    };
-
     try {
       await html5QrCode.start(
-        constraints,
+        { facingMode: "environment" },
         config,
         (decodedText) => {
           tocarBipe();
@@ -799,9 +815,30 @@
         },
         () => {}
       );
-    } catch (e) {
-      alert("Não foi possível acessar a câmera. Verifique se o site tem permissão nas configurações do navegador.");
-      pararScanner();
+    } catch (e1) {
+      try {
+        // Fallback sem advanced constraints caso o navegador restrinja
+        await html5QrCode.start(
+          true,
+          {
+            fps: 20,
+            qrbox: { width: 300, height: 180 },
+            aspectRatio: 1.0
+          },
+          (decodedText) => {
+            tocarBipe();
+            dispararFlashScan();
+            const prefix = modulo === 'proativo' ? 'pro_' : 'trc_';
+            el(prefix + 'codigo').value = decodedText;
+            buscarProduto(modulo);
+            pararScanner();
+          },
+          () => {}
+        );
+      } catch (err) {
+        alert("Não foi possível renderizar a câmera.");
+        pararScanner();
+      }
     } finally {
       travadoCamera = false;
     }
@@ -846,8 +883,10 @@
 
     if (imageUrl && imageUrl.startsWith('http')) {
       box.innerHTML = `<img src="${imageUrl}" alt="Produto" onerror="this.onerror=null; this.parentNode.innerHTML='<span class=\'product-img-placeholder\'>Sem foto</span>';">`;
+      box.setAttribute('data-img', imageUrl);
     } else {
       box.innerHTML = `<span class="product-img-placeholder">Sem foto</span>`;
+      box.removeAttribute('data-img');
     }
   }
 
@@ -862,7 +901,7 @@
       return;
     }
     
-    statusEl.innerHTML = '⚡ Ultra busca em andamento...';
+    statusEl.innerHTML = '⚡ Buscando produto...';
     atualizarFotoProduto(modulo, null);
     
     if (catalogoLocal[code]) {
@@ -871,7 +910,7 @@
       const img = typeof itemCat === 'object' ? itemCat.img : '';
       el(prefix + 'descricao').value = nome;
       atualizarFotoProduto(modulo, img);
-      statusEl.innerHTML = '<span class="ok">⚡ Encontrado no catálogo local!</span>';
+      statusEl.innerHTML = '<span class="ok">⚡ Encontrado na sua memória local!</span>';
       focarCalendario(prefix);
       return;
     }
@@ -882,36 +921,33 @@
       const img = typeof itemPre === 'object' ? itemPre.img : '';
       el(prefix + 'descricao').value = nome;
       atualizarFotoProduto(modulo, img);
-      statusEl.innerHTML = '<span class="ok">⚡ Encontrado na base Rede Market!</span>';
+      statusEl.innerHTML = '<span class="ok">⚡ Encontrado na base de mercado!</span>';
       focarCalendario(prefix);
       return;
     }
     
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
-
-      const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`, {
-        signal: controller.signal
-      });
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
+      const res = await fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`, { signal: controller.signal });
       clearTimeout(timeoutId);
-
       const data = await res.json();
       if (data.status === 1 && data.product && (data.product.product_name || data.product.product_name_pt)) {
         const nomeProd = data.product.product_name_pt || data.product.product_name;
         el(prefix + 'descricao').value = nomeProd;
         const imgUrl = data.product.image_front_small_url || data.product.image_url || '';
         atualizarFotoProduto(modulo, imgUrl);
-        statusEl.innerHTML = '<span class="ok">⚡ Encontrado com sucesso online!</span>';
+        statusEl.innerHTML = '<span class="ok">⚡ Encontrado online!</span>';
+        
+        catalogoLocal[code] = { nome: nomeProd, img: imgUrl };
+        localStorage.setItem('sys_catalogo', JSON.stringify(catalogoLocal));
         focarCalendario(prefix);
-      } else {
-        statusEl.innerHTML = '<span class="warn">⚠️ Produto não cadastrado nas bases. Digite a descrição manualmente.</span>';
-        el(prefix + 'descricao').focus();
+        return;
       }
-    } catch (e) {
-      statusEl.innerHTML = '<span class="warn">⚠️ Falha na rede. Preencha a descrição manualmente.</span>';
-      el(prefix + 'descricao').focus();
-    }
+    } catch (e) {}
+
+    statusEl.innerHTML = '<span class="ok">💡 Digite o nome do produto uma vez. Ele ficará salvo para sempre no sistema!</span>';
+    el(prefix + 'descricao').focus();
   }
 
   function focarCalendario(prefix) {
@@ -930,10 +966,14 @@
   
   function adicionarItem(modulo) {
     const prefix = modulo === 'proativo' ? 'pro_' : 'trc_';
+    const code = el(prefix + 'codigo').value.trim() || 'S/C';
     const desc = el(prefix + 'descricao').value.trim();
     const qtd = parseFloat(el(prefix + 'quantidade').value.replace(',', '.'));
     const val = parseFloat(el(prefix + 'valor').value.replace(',', '.')) || 0;
     const validade = el(prefix + 'validade').value;
+    const boxId = modulo === 'proativo' ? 'pro_foto_box' : 'trc_foto_box';
+    const fotoBox = el(boxId);
+    const imgUrl = fotoBox ? (fotoBox.getAttribute('data-img') || '') : '';
     
     if (!desc || isNaN(qtd) || !validade) {
       alert("Preencha descrição, quantidade e validade.");
@@ -942,14 +982,20 @@
     
     const item = {
       id: Date.now(),
-      codigo: el(prefix + 'codigo').value.trim() || 'S/C',
+      codigo: code,
       descricao: desc,
       quantidade: qtd,
       unidade: el(prefix + 'unidade').value || 'und',
       validade: validade,
       valor: val,
-      total: qtd * val
+      total: qtd * val,
+      imagem: imgUrl
     };
+
+    if (code !== 'S/C') {
+      catalogoLocal[code] = { nome: desc, img: imgUrl };
+      localStorage.setItem('sys_catalogo', JSON.stringify(catalogoLocal));
+    }
     
     if (modulo === 'trocas') {
       item.motivo = parseInt(el('trc_motivo').value);
@@ -993,7 +1039,12 @@
       const dataFmt = item.validade.split('-').reverse().join('/');
       const infoExtra = item.motivo ? ` | Motivo: ${item.motivo === 1 ? '1-Avaria' : '2-Descarte'}` : '';
       
+      const thumbHtml = item.imagem && item.imagem.startsWith('http') 
+        ? `<div class="item-thumb"><img src="${item.imagem}" alt="Prod"></div>` 
+        : `<div class="item-thumb"><span>Sem foto</span></div>`;
+      
       itemEl.innerHTML = `
+        ${thumbHtml}
         <div class="item-info">
           <strong>${item.descricao}</strong>
           <small>Cód: ${item.codigo} | Qtd: ${item.quantidade} ${item.unidade} | Val: ${dataFmt}${infoExtra}</small>
@@ -1051,7 +1102,6 @@
         const arrayBuffer = await response.arrayBuffer();
         workbook = await XlsxPopulate.fromDataAsync(arrayBuffer);
       } catch (e) {
-        alert("Aviso: Modelo oficial não encontrado. Gerando padrão.");
         workbook = await XlsxPopulate.fromBlankAsync();
       }
       
