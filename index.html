@@ -159,7 +159,7 @@
   }
   .fab-camera:active { cursor: grabbing !important; }
 
-  /* CÂMARA EM TELA INTEIRA ESTILO BEEP ( COM CANTOS LIMPOS ) */
+  /* CÂMARA EM TELA INTEIRA ESTILO BEEP */
   #beep-scanner-overlay {
     position: fixed; inset: 0; background: #000; z-index: 99999;
     display: flex; flex-direction: column; justify-content: space-between;
@@ -817,7 +817,6 @@
       );
     } catch (e1) {
       try {
-        // Fallback sem advanced constraints caso o navegador restrinja
         await html5QrCode.start(
           true,
           {
@@ -1086,6 +1085,7 @@
     return modulo === 'trocas' ? './PERDAS E TROCA.xlsx' : './planilha_padrao_original.xlsx';
   }
   
+  // GERAÇÃO DE EXCEL COM PAGINAÇÃO AUTOMÁTICA EM BLOCOS E ABAS
   async function gerarExcel(modulo) {
     const listaData = modulo === 'proativo' ? itensProAtivo : itensTrocas;
     if (listaData.length === 0) {
@@ -1105,57 +1105,79 @@
         workbook = await XlsxPopulate.fromBlankAsync();
       }
       
-      const sheet = workbook.sheet(0);
       const nomeModulo = modulo === 'proativo' ? "Pró Ativo Frios" : "Relatório de Trocas";
       const nomeLoja = listaLojas[lojaAtualIndex];
+      let sheetOriginal = workbook.sheet(0);
       
       if (modulo === 'proativo') {
         const digitou = el('pro_digitou').value;
         const gerente = el('pro_gerente').value;
         const dataLev = el('pro_data').value ? el('pro_data').value.split('-').reverse().join('/') : new Date().toLocaleDateString('pt-BR');
         
-        sheet.cell("H1").value(nomeLoja);
-        sheet.cell("H2").value(gerente);
-        sheet.cell("H3").value(dataLev);
-        sheet.cell("H4").value(digitou);
+        const itensPorPagina = 32; // Linhas 7 a 38
+        const totalPaginas = Math.ceil(listaData.length / itensPorPagina);
         
-        listaData.forEach((item, index) => {
-          const row = 7 + index;
-          const dataFmt = item.validade ? item.validade.split('-').reverse().join('/') : '';
+        for (let pagina = 0; pagina < totalPaginas; pagina++) {
+          let sheet = pagina === 0 ? sheetOriginal : workbook.addSheet(`Pagina_${pagina + 1}`, sheetOriginal);
           
-          sheet.cell(`A${row}`).value(index + 1);
-          sheet.cell(`B${row}`).value("");
-          sheet.cell(`C${row}`).value(nomeLoja);
-          sheet.cell(`D${row}`).value(item.codigo);
-          sheet.cell(`E${row}`).value(item.descricao);
-          sheet.cell(`F${row}`).value(item.quantidade);
+          sheet.cell("H1").value(nomeLoja);
+          sheet.cell("H2").value(gerente);
+          sheet.cell("H3").value(dataLev);
+          sheet.cell("H4").value(digitou);
           
-          const cellG = sheet.cell(`G${row}`);
-          cellG.value(String(item.unidade || 'und').trim());
-          cellG.style({ horizontalAlignment: 'center', verticalAlignment: 'center' });
+          const inicio = pagina * itensPorPagina;
+          const fim = Math.min(inicio + itensPorPagina, listaData.length);
+          const paginaItens = listaData.slice(inicio, fim);
           
-          sheet.cell(`H${row}`).value(dataFmt);
-          sheet.cell(`I${row}`).value(item.valor);
-        });
+          paginaItens.forEach((item, index) => {
+            const row = 7 + index;
+            const dataFmt = item.validade ? item.validade.split('-').reverse().join('/') : '';
+            
+            sheet.cell(`A${row}`).value(inicio + index + 1);
+            sheet.cell(`B${row}`).value("");
+            sheet.cell(`C${row}`).value(nomeLoja);
+            sheet.cell(`D${row}`).value(item.codigo);
+            sheet.cell(`E${row}`).value(item.descricao);
+            sheet.cell(`F${row}`).value(item.quantidade);
+            
+            const cellG = sheet.cell(`G${row}`);
+            cellG.value(String(item.unidade || 'und').trim());
+            cellG.style({ horizontalAlignment: 'center', verticalAlignment: 'center' });
+            
+            sheet.cell(`H${row}`).value(dataFmt);
+            sheet.cell(`I${row}`).value(item.valor);
+          });
+        }
         
       } else {
         const responsavel = el('trc_digitou').value;
         const dataTroca = el('trc_data').value ? el('trc_data').value.split('-').reverse().join('/') : new Date().toLocaleDateString('pt-BR');
         
-        sheet.cell("B7").value("X");
-        sheet.cell("A10").value(nomeLoja);
-        sheet.cell("A12").value(dataTroca);
-        sheet.cell("A41").value(responsavel);
+        const itensPorPagina = 23; // Linhas 16 a 38
+        const totalPaginas = Math.ceil(listaData.length / itensPorPagina);
         
-        listaData.forEach((item, index) => {
-          const row = 16 + index;
-          if (row <= 38) {
-            sheet.cell(`A${row}`).value(String(item.codigo).trim());
-            sheet.cell(`B${row}`).value(String(item.descricao).replace(/\s+/g, ' ').trim());
-            sheet.cell(`C${row}`).value(item.quantidade);
-            sheet.cell(`D${row}`).value(item.motivo);
-          }
-        });
+        for (let pagina = 0; pagina < totalPaginas; pagina++) {
+          let sheet = pagina === 0 ? sheetOriginal : workbook.addSheet(`Trocas_${pagina + 1}`, sheetOriginal);
+          
+          sheet.cell("B7").value("X");
+          sheet.cell("A10").value(nomeLoja);
+          sheet.cell("A12").value(dataTroca);
+          sheet.cell("A41").value(responsavel);
+          
+          const inicio = pagina * itensPorPagina;
+          const fim = Math.min(inicio + itensPorPagina, listaData.length);
+          const paginaItens = listaData.slice(inicio, fim);
+          
+          paginaItens.forEach((item, index) => {
+            const row = 16 + index;
+            if (row <= 38) {
+              sheet.cell(`A${row}`).value(String(item.codigo).trim());
+              sheet.cell(`B${row}`).value(String(item.descricao).replace(/\s+/g, ' ').trim());
+              sheet.cell(`C${row}`).value(item.quantidade);
+              sheet.cell(`D${row}`).value(item.motivo);
+            }
+          });
+        }
       }
       
       const blob = await workbook.outputAsync();
@@ -1165,7 +1187,7 @@
       a.download = `${nomeModulo.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.xlsx`;
       a.click();
       window.URL.revokeObjectURL(url);
-      alert("Relatório preenchido com sucesso no modelo oficial!");
+      alert("Relatório preenchido e paginado com sucesso no modelo oficial!");
     } catch (e) {
       alert("Erro ao exportar Excel: " + e.message);
     }
