@@ -1084,7 +1084,7 @@
     return modulo === 'trocas' ? './PERDAS E TROCA.xlsx' : './planilha_padrao_original.xlsx';
   }
   
-  // GERAÇÃO DE EXCEL PRESERVANDO O LOGOTIPO E O CABEÇALHO ORIGINAL DA PLANILHA
+  // GERAÇÃO DE EXCEL COM ABAS CLONADAS E ESTRUTURA PRESERVADA
   async function gerarExcel(modulo) {
     const listaData = modulo === 'proativo' ? itensProAtivo : itensTrocas;
     if (listaData.length === 0) {
@@ -1106,71 +1106,77 @@
       
       const nomeModulo = modulo === 'proativo' ? "Pró Ativo Frios" : "Relatório de Trocas";
       const nomeLoja = listaLojas[lojaAtualIndex];
-      let sheet = workbook.sheet(0);
+      let sheetOriginal = workbook.sheet(0);
       
       if (modulo === 'proativo') {
         const digitou = el('pro_digitou').value;
         const gerente = el('pro_gerente').value;
         const dataLev = el('pro_data').value ? el('pro_data').value.split('-').reverse().join('/') : new Date().toLocaleDateString('pt-BR');
         
-        sheet.cell("H1").value(nomeLoja);
-        sheet.cell("H2").value(gerente);
-        sheet.cell("H3").value(dataLev);
-        sheet.cell("H4").value(digitou);
+        const itensPorPagina = 32; // 32 itens por página (linhas 7 a 38)
+        const totalPaginas = Math.ceil(listaData.length / itensPorPagina);
         
-        const itensPorPagina = 32; 
-        
-        listaData.forEach((item, index) => {
-          const paginaAtual = Math.floor(index / itensPorPagina);
-          const offsetLinha = index % itensPorPagina;
-          const row = 7 + offsetLinha + (paginaAtual * 42);
+        for (let pagina = 0; pagina < totalPaginas; pagina++) {
+          let sheet = pagina === 0 ? sheetOriginal : workbook.addSheet(`Página_${pagina + 1}`, sheetOriginal);
           
-          if (paginaAtual > 0 && offsetLinha === 0) {
-            sheet.cell(`H${row - 6}`).value(nomeLoja);
-            sheet.cell(`H${row - 5}`).value(gerente);
-            sheet.cell(`H${row - 4}`).value(dataLev);
-            sheet.cell(`H${row - 3}`).value(digitou);
-          }
+          sheet.cell("H1").value(nomeLoja);
+          sheet.cell("H2").value(gerente);
+          sheet.cell("H3").value(dataLev);
+          sheet.cell("H4").value(digitou);
           
-          const dataFmt = item.validade ? item.validade.split('-').reverse().join('/') : '';
+          const inicio = pagina * itensPorPagina;
+          const fim = Math.min(inicio + itensPorPagina, listaData.length);
+          const paginaItens = listaData.slice(inicio, fim);
           
-          sheet.cell(`A${row}`).value(index + 1);
-          sheet.cell(`B${row}`).value("");
-          sheet.cell(`C${row}`).value(nomeLoja);
-          sheet.cell(`D${row}`).value(item.codigo);
-          sheet.cell(`E${row}`).value(item.descricao);
-          sheet.cell(`F${row}`).value(item.quantidade);
-          
-          const cellG = sheet.cell(`G${row}`);
-          cellG.value(String(item.unidade || 'und').trim());
-          cellG.style({ horizontalAlignment: 'center', verticalAlignment: 'center' });
-          
-          sheet.cell(`H${row}`).value(dataFmt);
-          sheet.cell(`I${row}`).value(item.valor);
-        });
+          paginaItens.forEach((item, index) => {
+            const row = 7 + index;
+            const dataFmt = item.validade ? item.validade.split('-').reverse().join('/') : '';
+            
+            sheet.cell(`A${row}`).value(inicio + index + 1);
+            sheet.cell(`B${row}`).value("");
+            sheet.cell(`C${row}`).value(nomeLoja);
+            sheet.cell(`D${row}`).value(item.codigo);
+            sheet.cell(`E${row}`).value(item.descricao);
+            sheet.cell(`F${row}`).value(item.quantidade);
+            
+            const cellG = sheet.cell(`G${row}`);
+            cellG.value(String(item.unidade || 'und').trim());
+            cellG.style({ horizontalAlignment: 'center', verticalAlignment: 'center' });
+            
+            sheet.cell(`H${row}`).value(dataFmt);
+            sheet.cell(`I${row}`).value(item.valor);
+          });
+        }
         
       } else {
         const responsavel = el('trc_digitou').value;
         const dataTroca = el('trc_data').value ? el('trc_data').value.split('-').reverse().join('/') : new Date().toLocaleDateString('pt-BR');
         
-        sheet.cell("B7").value("X");
-        sheet.cell("A10").value(nomeLoja);
-        sheet.cell("A12").value(dataTroca);
-        sheet.cell("A41").value(responsavel);
-        
         const itensPorPaginaTrc = 23; 
-        listaData.forEach((item, index) => {
-          const paginaAtual = Math.floor(index / itensPorPaginaTrc);
-          const offsetLinha = index % itensPorPaginaTrc;
-          const row = 16 + offsetLinha + (paginaAtual * 30);
+        const totalPaginas = Math.ceil(listaData.length / itensPorPaginaTrc);
+        
+        for (let pagina = 0; pagina < totalPaginas; pagina++) {
+          let sheet = pagina === 0 ? sheetOriginal : workbook.addSheet(`Trocas_${pagina + 1}`, sheetOriginal);
           
-          if (row <= 500) {
-            sheet.cell(`A${row}`).value(String(item.codigo).trim());
-            sheet.cell(`B${row}`).value(String(item.descricao).replace(/\s+/g, ' ').trim());
-            sheet.cell(`C${row}`).value(item.quantidade);
-            sheet.cell(`D${row}`).value(item.motivo);
-          }
-        });
+          sheet.cell("B7").value("X");
+          sheet.cell("A10").value(nomeLoja);
+          sheet.cell("A12").value(dataTroca);
+          sheet.cell("A41").value(responsavel);
+          
+          const inicio = pagina * itensPorPaginaTrc;
+          const fim = Math.min(inicio + itensPorPaginaTrc, listaData.length);
+          const paginaItens = listaData.slice(inicio, fim);
+          
+          paginaItens.forEach((item, index) => {
+            const row = 16 + index;
+            if (row <= 38) {
+              sheet.cell(`A${row}`).value(String(item.codigo).trim());
+              sheet.cell(`B${row}`).value(String(item.descricao).replace(/\s+/g, ' ').trim());
+              sheet.cell(`C${row}`).value(item.quantidade);
+              sheet.cell(`D${row}`).value(item.motivo);
+            }
+          });
+        }
       }
       
       const blob = await workbook.outputAsync();
@@ -1180,7 +1186,7 @@
       a.download = `${nomeModulo.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.xlsx`;
       a.click();
       window.URL.revokeObjectURL(url);
-      alert("Relatório gerado com sucesso preservando o arquivo original!");
+      alert("Relatório gerado com sucesso nas abas correspondentes!");
     } catch (e) {
       alert("Erro ao exportar Excel: " + e.message);
     }
