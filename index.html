@@ -241,6 +241,24 @@
   .item strong { display: block; font-size: 13px; }
   .item small { color: var(--text-muted); font-size: 11px; display: block; margin-top: 2px; }
   .item-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+  .item-controls-row {
+    display: flex; align-items: center; justify-content: space-between; 
+    background: #f8fafc; padding: 6px 10px; border-radius: 10px; border: 1px solid var(--border-color);
+    gap: 8px; flex-wrap: wrap; margin-top: 6px;
+  }
+  .qty-adjuster { display: flex; align-items: center; gap: 6px; }
+  .qty-btn { 
+    background: #e2e8f0; color: var(--text-main); border: none; width: 26px; height: 26px; 
+    border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; 
+    align-items: center; justify-content: center; padding: 0; 
+  }
+  .qty-btn:active { background: var(--primary); color: #fff; }
+  .qty-val { font-size: 13px; font-weight: 700; min-width: 24px; text-align: center; }
+  .item-select-motivo {
+    font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 8px;
+    border: 1px solid var(--border-color); background: #fff; color: var(--text-main);
+  }
   .item-total { font-weight: 700; font-size: 13px; color: var(--text-main); white-space: nowrap; }
   .empty { text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px; }
   .pill { display: inline-block; padding: 2px 8px; border-radius: 99px; background: #e2e8f0; font-size: 11px; font-weight: 700; }
@@ -477,7 +495,7 @@
               <label>Motivo da Troca *</label>
               <select id="trc_motivo">
                 <option value="1">1 - Avaria</option>
-                <option value="2">2 - Descarte</option>
+                <option value="2">2 - Vencido</option>
               </select>
             </div>
             <div><label>Data da Troca</label><input id="trc_data" type="date"></div>
@@ -1062,7 +1080,7 @@
       const itemEl = document.createElement('div');
       itemEl.className = 'item';
       const dataFmt = item.validade.split('-').reverse().join('/');
-      const infoExtra = item.motivo ? ` | Motivo: ${item.motivo === 1 ? '1-Avaria' : '2-Descarte'}` : '';
+      const infoExtra = item.motivo ? ` | Motivo: ${item.motivo === 1 ? '1-Avaria' : '2-Vencido'}` : '';
       
       const thumbHtml = item.imagem && item.imagem.startsWith('http') 
         ? `<div class="item-thumb"><img src="${item.imagem}" alt="Prod"></div>` 
@@ -1072,7 +1090,18 @@
         ${thumbHtml}
         <div class="item-info">
           <strong>${item.descricao}</strong>
-          <small>Cód: ${item.codigo} | Qtd: ${item.quantidade} ${item.unidade} | Val: ${dataFmt}${infoExtra}</small>
+          <small>Cód: ${item.codigo} | Val: ${dataFmt}${infoExtra}</small>
+          <div class="item-controls-row">
+            <div class="qty-adjuster">
+              <button type="button" class="qty-btn" onclick="ajustarQtdItem('${modulo}', ${item.id}, -1)">-</button>
+              <span class="qty-val">${item.quantidade} ${item.unidade}</span>
+              <button type="button" class="qty-btn" onclick="ajustarQtdItem('${modulo}', ${item.id}, 1)">+</button>
+            </div>
+            ${modulo === 'trocas' ? `<select class="item-select-motivo" onchange="alterarMotivoItem('${modulo}', ${item.id}, this.value)">
+              <option value="1" ${item.motivo === 1 ? 'selected' : ''}>1 - Avaria</option>
+              <option value="2" ${item.motivo === 2 ? 'selected' : ''}>2 - Vencido</option>
+            </select>` : ''}
+          </div>
         </div>
         <div class="item-right">
           <span class="item-total">R$ ${item.total.toFixed(2)}</span>
@@ -1091,6 +1120,27 @@
       itensTrocas = itensTrocas.filter(i => i.id !== id);
       localStorage.setItem('sys_trocas_itens', JSON.stringify(itensTrocas));
     }
+    renderizarLista(modulo);
+  }
+  
+  function ajustarQtdItem(modulo, id, delta) {
+    const listaData = modulo === 'proativo' ? itensProAtivo : itensTrocas;
+    const item = listaData.find(i => i.id === id);
+    if (!item) return;
+    let novaQtd = (parseFloat(item.quantidade) || 0) + delta;
+    if (novaQtd < 1) novaQtd = 1;
+    item.quantidade = Number(novaQtd.toFixed(2));
+    item.total = item.quantidade * (parseFloat(item.valor) || 0);
+    localStorage.setItem(modulo === 'proativo' ? 'sys_proative_itens' : 'sys_trocas_itens', JSON.stringify(listaData));
+    renderizarLista(modulo);
+  }
+
+  function alterarMotivoItem(modulo, id, novoMotivo) {
+    const listaData = modulo === 'proativo' ? itensProAtivo : itensTrocas;
+    const item = listaData.find(i => i.id === id);
+    if (!item) return;
+    item.motivo = parseInt(novoMotivo);
+    localStorage.setItem('sys_trocas_itens', JSON.stringify(itensTrocas));
     renderizarLista(modulo);
   }
   
