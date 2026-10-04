@@ -1287,7 +1287,7 @@
             });
 
             sheet.cell(`A${row}`).value(String(item.codigo).trim()).style({ horizontalAlignment: 'center' });
-            sheet.cell(`B${row}`).value(String(item.descricao).replace(/\s+/g, ' ').trim());
+            sheet.cell(`B${row}`).value(String(item.descricao).replace(/\s+/g, ' ').trim()).style({ horizontalAlignment: 'left' });
             sheet.cell(`C${row}`).value(item.quantidade).style({ horizontalAlignment: 'center' });
             sheet.cell(`D${row}`).value(item.motivo === 2 ? 2 : 1).style({ horizontalAlignment: 'center' });
           });
