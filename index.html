@@ -1248,44 +1248,53 @@
         const responsavel = el('trc_digitou').value;
         const dataTroca = el('trc_data').value ? el('trc_data').value.split('-').reverse().join('/') : new Date().toLocaleDateString('pt-BR');
         
-        const itensPorPaginaTrc = 23; 
+        const linhaInicialTrc = 17;
+        const ultimaLinhaTrc = 54;
+        const itensPorPaginaTrc = ultimaLinhaTrc - linhaInicialTrc + 1;
         const totalPaginas = Math.ceil(listaData.length / itensPorPaginaTrc);
-        
+
+        // Cria uma aba-clone (com logo e formatação) para cada página antes de preencher
+        const abasTrc = [sheetOriginal];
+        for (let pag = 1; pag < totalPaginas; pag++) {
+          abasTrc.push(workbook.addSheet(`Trocas_${pag + 1}`, sheetOriginal));
+        }
+
         for (let pagina = 0; pagina < totalPaginas; pagina++) {
-          let sheet = pagina === 0 ? sheetOriginal : workbook.addSheet(`Trocas_${pagina + 1}`, sheetOriginal);
-          
+          const sheet = abasTrc[pagina];
+
           sheet.cell("B7").value("X");
           sheet.cell("A10").value(nomeLoja);
           sheet.cell("A12").value(dataTroca);
           sheet.cell("A41").value(responsavel);
-          
+
           const inicio = pagina * itensPorPaginaTrc;
           const fim = Math.min(inicio + itensPorPaginaTrc, listaData.length);
           const paginaItens = listaData.slice(inicio, fim);
-          
-          paginaItens.forEach((item, index) => {
-            const row = 16 + index;
-            if (row <= 38) {
-              const colsTrc = ['A', 'B', 'C', 'D'];
-              colsTrc.forEach(col => {
-                sheet.cell(`${col}${row}`).style({
-                  border: {
-                    top: "thin",
-                    bottom: "thin",
-                    left: "thin",
-                    right: "thin"
-                  },
-                  verticalAlignment: "center"
-                });
-              });
 
-              sheet.cell(`A${row}`).value(String(item.codigo).trim()).style({ horizontalAlignment: 'center' });
-              sheet.cell(`B${row}`).value(String(item.descricao).replace(/\s+/g, ' ').trim());
-              sheet.cell(`C${row}`).value(item.quantidade).style({ horizontalAlignment: 'center' });
-              sheet.cell(`D${row}`).value(item.motivo).style({ horizontalAlignment: 'center' });
-            }
+          paginaItens.forEach((item, index) => {
+            const row = linhaInicialTrc + index;
+            const colsTrc = ['A', 'B', 'C', 'D'];
+            colsTrc.forEach(col => {
+              sheet.cell(`${col}${row}`).style({
+                border: {
+                  top: "thin",
+                  bottom: "thin",
+                  left: "thin",
+                  right: "thin"
+                },
+                verticalAlignment: "center"
+              });
+            });
+
+            sheet.cell(`A${row}`).value(String(item.codigo).trim()).style({ horizontalAlignment: 'center' });
+            sheet.cell(`B${row}`).value(String(item.descricao).replace(/\s+/g, ' ').trim());
+            sheet.cell(`C${row}`).value(item.quantidade).style({ horizontalAlignment: 'center' });
+            sheet.cell(`D${row}`).value(item.motivo === 2 ? 2 : 1).style({ horizontalAlignment: 'center' });
           });
         }
+
+        // Reordena as abas: página 1 (original) primeiro, depois as clones
+        workbook._sheets = [abasTrc[0], ...abasTrc.slice(1)];
       }
       
       const blob = await workbook.outputAsync();
